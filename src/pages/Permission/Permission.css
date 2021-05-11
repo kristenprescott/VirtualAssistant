@@ -1,0 +1,108 @@
+#Permission {
+  /* border: 1px solid gainsboro; */
+  /* flex-direction: column; */
+
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  width: 100vw;
+  height: 100vh;
+  background-color: #130303;
+  background-image: url("../../assets/images/bgs/bitmap.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* margin-top: 20vmin; */
+
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  gap: 4px;
+  grid-auto-flow: row;
+}
+
+textarea {
+  resize: none;
+}
+
+.virtual-assistant-container {
+  /* background-color: tomato; */
+  margin-bottom: 5rem;
+}
+.virtual-assistant {
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  height: 260px;
+  width: 260px;
+  border-radius: 150px;
+  /* margin-bottom: 2rem; */
+  animation: spin 1.8s linear infinite;
+  box-shadow: inset 0 0 62px #fff, inset 24px 0 62px violet,
+    inset -24px 0 62px #0ff, inset 24px 0 30px violet, inset -24px 0 30px #0ff,
+    0 0 62px #fff, -16px 0 62px violet, 16px 0 62px #0ff;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.main {
+  /* margin-top: 15rem; */
+}
+
+.instructions {
+  border: 1px solid gainsboro;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+/* MESSAGE SECTION */
+.message-display-wrapper {
+  /*  */
+}
+.message-textbox {
+  /*  */
+}
+.message-clear-btn {
+  /*  */
+}
+
+.glass-button {
+  display: inline-block;
+  padding: 1.4rem 2.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 3.2rem 0 rgba(31, 38, 135, 0.37);
+  font-size: 1.8rem;
+  text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.6);
+}
+.glass-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.glass-panel {
+  color: #d1cfcf;
+  border-radius: 14px;
+  backdrop-filter: blur(3px);
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+  background-color: rgba(117, 46, 126, 0.379);
+  background-color: rgba(19, 3, 3, 0.4);
+  border: 3px rgba(255, 255, 255, 0.4) solid;
+  border-bottom: 3px rgba(40, 40, 40, 0.35) solid;
+  border-right: 3px rgba(40, 40, 40, 0.35) solid;
+  font-size: 2.4rem;
+  text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.6);
+}
