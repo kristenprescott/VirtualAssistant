@@ -1,18 +1,16 @@
 import micOn from "../../assets/images/icons/mic_on.png";
 import micOff from "../../assets/images/icons/mic_off.png";
-import "../Permission/Permission.css";
+import "./Demo.css";
 import React, { useEffect, useState } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-export default function Permission() {
+export default function Demo() {
   ///////////
   // STATE //
   ///////////
-  // const [text, setText] = useState("");
   const [message, setMessage] = useState("");
-  const [active, setActive] = useState(false);
   ///////////////
   // VARIABLES //
   ///////////////
@@ -62,25 +60,13 @@ export default function Permission() {
     },
   ];
 
-  const {
-    transcript,
-    // interimTranscript,
-    // finalTranscript,
-    resetTranscript,
-    listening,
-  } = useSpeechRecognition({ commands });
+  const { transcript, resetTranscript, listening } = useSpeechRecognition({
+    commands,
+  });
   ///////////
   // HOOKS //
   ///////////
-  // useEffect(() => {
-  //   if (finalTranscript !== "") {
-  //     console.log("Transcript:", finalTranscript);
-  //     setText(finalTranscript);
-  //   }
-  // }, [interimTranscript, finalTranscript]);
-
   useEffect(() => {
-    // SpeechRecognition.startListening({ continuous: true });
     SpeechRecognition.startListening();
   }, []);
   ////////////////////
@@ -103,50 +89,25 @@ export default function Permission() {
     console.log(e.target.value);
   };
 
-  // const handleActive = () => {
-  //   if (active === false) {
-  //     SpeechRecognition.startListening({
-  //       continuous: true,
-  //       language: "en-US",
-  //     });
-  //     setActive(true);
-  //   }
-  //   if (active === true) {
-  //     SpeechRecognition.stopListening();
-  //     setActive(false);
-  //   }
-  // };
-
-  // const handleMouseDown = () => {
-  //   setActive(!isActive);
-  // };
-
-  // const handleMouseUp = () => {
-  //   setActive(isActive);
-  // };
-
   return (
-    <div className="page" id="Permission">
+    <div className="page" id="Demo">
       <div className="center-col virtual-assistant-container">
-        <div
-          className="virtual-assistant"
-          // className={active ? "virtual-assistant" : "virtual-assistant-active"}
-        ></div>
+        <div className="virtual-assistant"></div>
       </div>
 
       <div className=" center-col main">
         <div className="">
           <div className="instructions glass-panel">
             <p>
-              Hello, I'm a virtual assistant. To allow microphone access, tap
-              the button below.
+              Welcome to the demo! Here is a list of commands you can try:
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
             </p>
-            <p>
-              I can take you to the log in page or show you a demo. Which would
-              you prefer?
-            </p>
-            <p>To log in say "Log in."</p>
-            <p>To take a tour, say "Demo."</p>
           </div>
         </div>
 
@@ -180,8 +141,6 @@ export default function Permission() {
               </div>
               {/* LISTEN BTN */}
               <button
-                // className={isActive ? "blob" : "mic"}
-                // onChange={handleActive}
                 onMouseDown={listenContinuously}
                 onMouseUp={SpeechRecognition.stopListening}
                 style={{

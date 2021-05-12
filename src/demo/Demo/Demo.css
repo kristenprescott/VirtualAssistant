@@ -1,18 +1,10 @@
-#Permission {
-  /* border: 1px solid gainsboro; */
-  /* flex-direction: column; */
-
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
+#Demo {
   width: 100vw;
   height: 100vh;
   background-color: #130303;
   background-image: url("../../assets/images/bgs/bitmap.png");
   background-repeat: no-repeat;
   background-size: cover;
-  /* margin-top: 20vmin; */
-
   display: grid;
   justify-content: center;
   align-content: center;
