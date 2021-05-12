@@ -1,5 +1,6 @@
 import micOn from "../../assets/images/icons/mic_on.png";
 import micOff from "../../assets/images/icons/mic_off.png";
+import VoiceSynthesizer from "../VoiceSynthesizer/VoiceSynthesizer";
 import "./Demo.css";
 import React, { useEffect, useState } from "react";
 import SpeechRecognition, {
@@ -10,10 +11,14 @@ export default function Demo() {
   ///////////
   // STATE //
   ///////////
+  const [voiceSelector, setVoiceSelector] = useState(false);
   const [message, setMessage] = useState("");
   ///////////////
   // VARIABLES //
   ///////////////
+  const websearch = (website, searchTerm) => {
+    window.open("http://" + website.split(" ").join("") + ".com");
+  };
 
   const commands = [
     {
@@ -26,10 +31,6 @@ export default function Demo() {
       command: "(hello) my name is *",
       callback: (name) =>
         setMessage(`Hello, ${name}! I hope to remember that in the future.`),
-    },
-    {
-      command: ["reset", "clear"],
-      callback: () => resetTranscript(),
     },
     {
       command: "clear",
@@ -56,6 +57,24 @@ export default function Demo() {
       command: "demo",
       callback: () => {
         window.open("http://localhost:3000/demo", "_self");
+      },
+    },
+    {
+      command: "demo voice synthesis",
+      callback: () => {
+        setVoiceSelector(true);
+      },
+    },
+    {
+      command: "back to demo",
+      callback: () => {
+        setVoiceSelector(false);
+      },
+    },
+    {
+      command: "search google for *",
+      callback: (website) => {
+        window.open("http://" + website.split(" ").join("") + ".com");
       },
     },
   ];
@@ -97,65 +116,73 @@ export default function Demo() {
 
       <div className=" center-col main">
         <div className="">
-          <div className="instructions glass-panel">
-            <p>
-              Welcome to the demo! Here is a list of commands you can try:
-              <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-              </ul>
-            </p>
-          </div>
-        </div>
-
-        {/* RESPONSE DISPLAY */}
-        <div className="message-display-container">
-          <textarea
-            style={{ width: "500px" }}
-            className="message-textbox glass-panel"
-            placeholder={message}
-          >
-            {message}
-          </textarea>
-        </div>
-
-        <div className="form-container">
-          <form onSubmit={handleSubmit}>
-            {/* SPOKEN TEXT */}
-            <textarea
-              className="transcript glass-panel"
-              value={transcript}
-              onChange={handleChange}
-            />{" "}
-            {/* HOT MIC "BTN" */}
-            <div className="center-col">
-              <div className="hot-mic-btn">
-                <img
-                  src={listening ? micOn : micOff}
-                  alt=""
-                  style={{ with: "38px", height: "38px", margin: "5px" }}
-                />
+          <div className="" style={{}}>
+            {voiceSelector === true ? (
+              <VoiceSynthesizer />
+            ) : (
+              <div className="demo instructions glass-panel">
+                <p>
+                  Welcome to the demo! Here is a list of commands you can try:
+                </p>
+                <ul>
+                  <li>1. "demo voice synthesis"</li>
+                  <li>2</li>
+                  <li>3</li>
+                  <li>4</li>
+                  <li>5</li>
+                </ul>
+                {/* <------MESSAGE DISPLAY------> */}
+                <div className="message-display-container">
+                  <textarea
+                    style={{ height: "100px", width: "500px" }}
+                    className="message-textbox glass-panel"
+                  >
+                    {message}
+                  </textarea>
+                </div>
               </div>
-              {/* LISTEN BTN */}
-              <button
-                onMouseDown={listenContinuously}
-                onMouseUp={SpeechRecognition.stopListening}
-                style={{
-                  width: "50px",
-                  height: "50px",
-                  border: "none",
-                  borderRadius: "30px",
-                  backgroundColor: "lightgray",
-                  cursor: "pointer",
-                }}
-              >
-                🎤
-              </button>
+            )}
+            {/* <------TRANSCRIPT DISPLAY------> */}
+            <div style={{ marginTop: "20px" }} className="form-container">
+              <form onSubmit={handleSubmit}>
+                {/* <------SPOKEN TEXT------> */}
+                <textarea
+                  className="transcript glass-panel"
+                  value={transcript}
+                  onChange={handleChange}
+                />{" "}
+                {/* <------HOT MIC "BTN"------> */}
+                <div className="center-col">
+                  <div className="hot-mic-btn">
+                    <img
+                      src={listening ? micOn : micOff}
+                      alt=""
+                      style={{
+                        with: "38px",
+                        height: "38px",
+                        margin: "5px",
+                      }}
+                    />
+                  </div>
+                  {/* <------LISTEN BTN------> */}
+                  <button
+                    onMouseDown={listenContinuously}
+                    onMouseUp={SpeechRecognition.stopListening}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      border: "none",
+                      borderRadius: "30px",
+                      backgroundColor: "lightgray",
+                      cursor: "pointer",
+                    }}
+                  >
+                    🎤
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
