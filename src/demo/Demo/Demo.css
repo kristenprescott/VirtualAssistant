@@ -17,7 +17,8 @@ textarea {
 }
 .transcript {
   width: 500px;
-  height: 200px;
+  height: 100px;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, 0);
   border: 0px;
 }
@@ -96,7 +97,6 @@ div.instructions {
   padding-left: 2rem;
   padding-right: 2rem;
   width: 500px;
-  height: 200px;
   font-size: 20px;
   text-align: center;
 }
