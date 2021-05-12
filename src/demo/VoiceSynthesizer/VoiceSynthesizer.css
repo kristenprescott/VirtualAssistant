@@ -1,0 +1,42 @@
+.synth {
+  /*  */
+}
+
+.synth-h1 {
+  font-size: 2.6rem;
+  margin-bottom: 2rem;
+  height: 3rem;
+}
+
+.synth-input {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0.8rem;
+}
+
+.speak-toggle-btn {
+  margin: 1.3rem;
+}
+
+/* INPUTS */
+
+.select-wrapper {
+  /*  */
+}
+.voice-selector {
+  /*  */
+}
+select.voice-selector {
+  border: 0;
+  height: 2.5rem;
+}
+.range {
+  /*  */
+}
+input[type="range"] {
+  /* color: red; */
+}
+
+textarea.message-box {
+  border: none;
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSpeechSynthesis } from "react-speech-kit";
+import "../VoiceSynthesizer/VoiceSynthesizer.css";
 
 export default function VoiceSynthesizer() {
   ///////////
@@ -10,7 +11,7 @@ export default function VoiceSynthesizer() {
   );
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
-  const [selection, setSelection] = useState(null);
+  const [voiceIndex, setVoiceIndex] = useState(null);
   ///////////////
   // VARIABLES //
   ///////////////
@@ -20,37 +21,46 @@ export default function VoiceSynthesizer() {
   const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
     onEnd,
   });
-  const voice = voices[selection] || null;
+  const voice = voices[voiceIndex] || null;
 
   return (
-    <div className="synth instructions glass-panel" style={{ height: "300px" }}>
-      <p>Voice Synthesizer</p>
+    <div className="synth instructions glass-panel" style={{ height: "372px" }}>
+      <h1 className="synth-h1">Voice Synthesizer</h1>
 
-      <form>
+      <form className="synth-form">
         {/* <------VOICE SELECTOR------> */}
-        <label htmlFor="voice">Voices: </label>
-        <select
-          id="voice"
-          name="voice"
-          value={selection || ""}
-          onChange={(e) => {
-            setSelection(e.target.value);
-          }}
-        >
-          <option value="">-------Choose a voice-------</option>
-          {voices.map((choice, i) => {
-            <option
-              key={choice.voiceURI}
-              value={i}
-            >{`${choice.lang} - ${choice.name}`}</option>;
-          })}
-        </select>
+        <div className="synth-input">
+          <label htmlFor="voice">Voices: </label>
+          <div className="select-wrapper">
+            <select
+              className="voice-selector"
+              style={{ width: "300px" }}
+              id="voice"
+              name="voice"
+              value={voiceIndex || ""}
+              onChange={(e) => {
+                setVoiceIndex(e.target.value);
+              }}
+            >
+              <option value="">
+                «----------------- Select a voice -----------------»
+              </option>
+              {voices.map((option, index) => (
+                <option key={option.voiceURI} value={index}>
+                  {`${option.lang} - ${option.name}`}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         {/* <------RATE SELECTOR------> */}
-        <div>
+        <div className="synth-input">
           <label htmlFor="rate">
             Rate: <span>{rate}</span>
           </label>
           <input
+            className="rate-range range"
+            style={{ width: "300px" }}
             type="range"
             min="0.5"
             max="2"
@@ -64,11 +74,13 @@ export default function VoiceSynthesizer() {
         </div>
 
         {/* <------PITCH SELECTOR------> */}
-        <div>
+        <div className="synth-input">
           <label htmlFor="pitch">
             Pitch: <span>{pitch}</span>
           </label>
           <input
+            className="pitch-range range"
+            style={{ width: "300px" }}
             type="range"
             min="0"
             max="2"
@@ -82,11 +94,11 @@ export default function VoiceSynthesizer() {
         </div>
 
         {/* <------MESSAGE EDITOR------> */}
-        <div style={{ backgroundColor: "transparent" }}>
+        <div className="synth-input">
           {/* <div> */}
           <label htmlFor="message">Message: </label>
           <textarea
-            contentEditable
+            className="message-box"
             id="message"
             name="message"
             rows={3}
@@ -96,25 +108,29 @@ export default function VoiceSynthesizer() {
             }}
             style={{
               height: "75px",
+              width: "300px",
               backgroundColor: "transparent",
               color: "white",
               padding: "10px",
             }}
           />
         </div>
+
         {/* <------SUBMIT BUTTON------> */}
-        {speaking ? (
-          <button type="button" onClick={cancel}>
-            Stop
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => speak({ text, voice, rate, pitch })}
-          >
-            Speak
-          </button>
-        )}
+        <div className="speak-toggle-btn btn">
+          {speaking ? (
+            <button type="button" onClick={cancel}>
+              Stop
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => speak({ text, voice, rate, pitch })}
+            >
+              Speak
+            </button>
+          )}
+        </div>
       </form>
 
       <p>When you're finished here, just say "Back to demo."</p>
