@@ -103,19 +103,19 @@ export default function Permission() {
     console.log(e.target.value);
   };
 
-  // const handleActive = () => {
-  //   if (active === false) {
-  //     SpeechRecognition.startListening({
-  //       continuous: true,
-  //       language: "en-US",
-  //     });
-  //     setActive(true);
-  //   }
-  //   if (active === true) {
-  //     SpeechRecognition.stopListening();
-  //     setActive(false);
-  //   }
-  // };
+  const handleActive = () => {
+    if (active === false) {
+      SpeechRecognition.startListening({
+        continuous: true,
+        language: "en-US",
+      });
+      setActive(true);
+    }
+    if (active === true) {
+      SpeechRecognition.stopListening();
+      setActive(false);
+    }
+  };
 
   // const handleMouseDown = () => {
   //   setActive(!isActive);
@@ -170,26 +170,36 @@ export default function Permission() {
               onChange={handleChange}
             />{" "}
             {/* HOT MIC "BTN" */}
-            <div className="center-col">
+            <div
+              className="center-col buttons"
+              style={{ position: "relative", margin: "10px" }}
+            >
               <div className="hot-mic-btn">
                 <img
                   src={listening ? micOn : micOff}
                   alt=""
-                  style={{ with: "38px", height: "38px", margin: "5px" }}
+                  style={{
+                    top: "0",
+                    positon: "absolute",
+                    width: "70px",
+                    height: "70px",
+                  }}
                 />
               </div>
               {/* LISTEN BTN */}
               <button
                 // className={isActive ? "blob" : "mic"}
-                // onChange={handleActive}
+                onChange={handleActive}
                 onMouseDown={listenContinuously}
                 onMouseUp={SpeechRecognition.stopListening}
                 style={{
+                  top: "10px",
+                  position: "absolute",
                   width: "50px",
                   height: "50px",
                   border: "none",
                   borderRadius: "30px",
-                  backgroundColor: "lightgray",
+                  backgroundColor: "transparent",
                   cursor: "pointer",
                 }}
               >
