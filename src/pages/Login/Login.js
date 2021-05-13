@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Dashboard from "../Dashboard/Dashboard";
 import "../Login/Login.css";
 
 export default function Login() {
@@ -69,6 +70,7 @@ export default function Login() {
               <div>
                 <p>You are logged in as {loginForm.username} </p>
                 <button onClick={handleLogout}>Log out?</button>
+                <Dashboard />
               </div>
             </div>
           </>

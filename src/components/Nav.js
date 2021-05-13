@@ -8,6 +8,7 @@ const Nav = ({ history }) => {
         <NavLink to="/"></NavLink>
         <NavLink to="/login"></NavLink>
         <NavLink to="/demo"></NavLink>
+        <NavLink to="/dashboard/:user"></NavLink>
 
         {/* <NavLink to="/dialog">DiaLog</NavLink> */}
       </div>

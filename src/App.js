@@ -4,6 +4,7 @@ import Nav from "./components/Nav";
 import Permission from "./pages/Permission/Permission";
 import Login from "./pages/Login/Login";
 import Demo from "./demo/Demo/Demo";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
 
           <Route path="/demo">
             <Demo />
+          </Route>
+
+          <Route path="/dashboard/:user">
+            <Dashboard />
           </Route>
         </Switch>
       </div>
