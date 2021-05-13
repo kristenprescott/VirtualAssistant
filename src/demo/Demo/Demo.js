@@ -77,6 +77,18 @@ export default function Demo() {
         window.open("http://" + website.split(" ").join("") + ".com");
       },
     },
+    {
+      command: "what's the forecast",
+      callback: () => {
+        console.log("fetch weather forecast");
+      },
+    },
+    {
+      command: "search google for *",
+      callback: () => {
+        console.log("randomize background image");
+      },
+    },
   ];
 
   const { transcript, resetTranscript, listening } = useSpeechRecognition({
@@ -116,19 +128,29 @@ export default function Demo() {
 
       <div className=" center-col main">
         <div className="">
-          <div className="" style={{}}>
+          <div className="">
             {voiceSelector === true ? (
               <VoiceSynthesizer />
             ) : (
-              <div className="demo instructions glass-panel">
+              <div
+                className="demo instructions glass-panel"
+                style={{ height: "300px" }}
+              >
                 <p>
                   Welcome to the demo! Here is a list of commands you can try:
                 </p>
                 <ul>
-                  <li>1. "demo voice synthesis"</li>
-                  <li>2</li>
-                  <li>3</li>
-                  <li>4</li>
+                  <li>1. "Demo voice synthesis."</li>
+                  <li>2. "What's the forecast?" </li>
+                  <li>
+                    3. "Search Google for" + search term.{" "}
+                    <p>
+                      <small>
+                        <em>warning: opens new window</em>
+                      </small>
+                    </p>
+                  </li>
+                  <li>4. "Randomize background image."</li>
                   <li>5</li>
                 </ul>
                 {/* <------MESSAGE DISPLAY------> */}
