@@ -3,18 +3,18 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import "../VoiceSynthesizer/VoiceSynthesizer.css";
 
 export default function VoiceSynthesizer() {
-  ///////////
-  // STATE //
-  ///////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  // <------------------------------------------ STATE ------------------------------------------> //
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
   const [text, setText] = useState(
     "Hello, I'm a virtual assistant. How can I help you?"
   );
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
   const [voiceIndex, setVoiceIndex] = useState(null);
-  ///////////////
-  // VARIABLES //
-  ///////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  // <---------------------------------------- VARIABLES ----------------------------------------> //
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
   const onEnd = () => {
     // You could do something here after speaking has finished
   };
@@ -28,8 +28,10 @@ export default function VoiceSynthesizer() {
       <h1 className="synth-h1">Voice Synthesizer</h1>
 
       <form className="synth-form">
-        {/* <------VOICE SELECTOR------> */}
         <div className="synth-input">
+          {/* ////////////////////////////////////////////////////////////////////////// */}
+          {/* <---------------------------- VOICE SELECTOR ----------------------------> */}
+          {/* ////////////////////////////////////////////////////////////////////////// */}
           <label htmlFor="voice">Voices: </label>
           <div className="select-wrapper">
             <select
@@ -53,7 +55,9 @@ export default function VoiceSynthesizer() {
             </select>
           </div>
         </div>
-        {/* <------RATE SELECTOR------> */}
+        {/* ////////////////////////////////////////////////////////////////////////// */}
+        {/* <------------------------------ RATE RANGE ------------------------------> */}
+        {/* ////////////////////////////////////////////////////////////////////////// */}
         <div className="synth-input">
           <label htmlFor="rate">
             Rate: <span>{rate}</span>
@@ -72,8 +76,9 @@ export default function VoiceSynthesizer() {
             }}
           />
         </div>
-
-        {/* <------PITCH SELECTOR------> */}
+        {/* /////////////////////////////////////////////////////////////////////////// */}
+        {/* <------------------------------ PITCH RANGE ------------------------------> */}
+        {/* /////////////////////////////////////////////////////////////////////////// */}
         <div className="synth-input">
           <label htmlFor="pitch">
             Pitch: <span>{pitch}</span>
@@ -92,8 +97,9 @@ export default function VoiceSynthesizer() {
             }}
           />
         </div>
-
-        {/* <------MESSAGE EDITOR------> */}
+        {/* //////////////////////////////////////////////////////////////////////////// */}
+        {/* <----------------------------- MESSAGE EDITOR -----------------------------> */}
+        {/* //////////////////////////////////////////////////////////////////////////// */}
         <div className="synth-input">
           {/* <div> */}
           <label htmlFor="message">Message: </label>
@@ -115,8 +121,9 @@ export default function VoiceSynthesizer() {
             }}
           />
         </div>
-
-        {/* <------SUBMIT BUTTON------> */}
+        {/* //////////////////////////////////////////////////////////////////////////// */}
+        {/* <------------------------------- SUBMIT BTN -------------------------------> */}
+        {/* //////////////////////////////////////////////////////////////////////////// */}
         <div className="speak-toggle-btn btn">
           {speaking ? (
             <button type="button" onClick={cancel}>
@@ -137,3 +144,25 @@ export default function VoiceSynthesizer() {
     </div>
   );
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// <-------------------------------- CREATE FALLBACK BEHAVIOR --------------------------------> //
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+  if (SpeechRecognition.browserSupportsSpeechRecognition()) {
+    // continue
+  } else {
+    // Fallback behavior
+  }
+
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    console.log(
+      "I'm sorry - This browser does not support speech recognition software."
+    );
+  }
+
+    if (browserSupportsContinuousListening) {
+    SpeechRecognition.startListening({ continuous: true });
+  } else {
+    // Fallback behaviour
+  }
+*/

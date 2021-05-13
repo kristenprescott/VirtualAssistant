@@ -1,18 +1,10 @@
 #Permission {
-  /* border: 1px solid gainsboro; */
-  /* flex-direction: column; */
-
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
   width: 100vw;
   height: 100vh;
   background-color: #130303;
   background-image: url("../../assets/images/bgs/bitmap.png");
   background-repeat: no-repeat;
   background-size: cover;
-  /* margin-top: 20vmin; */
-
   display: grid;
   justify-content: center;
   align-content: center;
@@ -23,13 +15,16 @@
 textarea {
   resize: none;
 }
+
 .transcript {
   width: 500px;
   height: 200px;
   background-color: rgba(0, 0, 0, 0);
   border: 0px;
 }
-
+/* /////////////////////////////////////////////////////////////////////////////////////// */
+/* <--------------------------------- VIRTUAL ASSISTANT ---------------------------------> */
+/* /////////////////////////////////////////////////////////////////////////////////////// */
 .virtual-assistant-container {
   margin-top: 2rem;
   margin-bottom: 5rem;
@@ -88,10 +83,6 @@ textarea {
   }
 }
 
-.main {
-  /* margin-top: 15rem; */
-}
-
 div.instructions {
   border-radius: 9px;
   padding-top: 3rem;
@@ -102,8 +93,9 @@ div.instructions {
   font-size: 20px;
   text-align: center;
 }
-
-/* MESSAGE SECTION */
+/* /////////////////////////////////////////////////////////////////////////////////////// */
+/* <---------------------------------- MESSAGE SECTION ----------------------------------> */
+/* /////////////////////////////////////////////////////////////////////////////////////// */
 .message-display-wrapper {
   /*  */
 }
@@ -113,8 +105,9 @@ div.instructions {
 .message-clear-btn {
   /*  */
 }
-
-/* GLASSMORPHIC */
+/* ////////////////////////////////////////////////////////////////////////////////////// */
+/* <----------------------------------- GLASSMORPHIC -----------------------------------> */
+/* ////////////////////////////////////////////////////////////////////////////////////// */
 .glass-panel {
   color: #d1cfcf;
   border-radius: 14px;
@@ -153,34 +146,4 @@ div.instructions {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* ANIMATIONS */
-.blob {
-  background: green;
-  border-radius: 50%;
-  margin: 10px;
-  height: 20px;
-  width: 20px;
-
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-  transform: scale(1);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
-  }
-
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-  }
-
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  }
 }

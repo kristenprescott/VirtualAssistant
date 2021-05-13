@@ -87,10 +87,6 @@ textarea {
   }
 }
 
-.main {
-  /* margin-top: 15rem; */
-}
-
 div.instructions {
   border-radius: 9px;
   padding-top: 3rem;
@@ -101,7 +97,9 @@ div.instructions {
   text-align: center;
 }
 
-/* MESSAGE SECTION */
+/* /////////////////////////////////////////////////////////////////////////////////////// */
+/* <---------------------------------- MESSAGE SECTION ----------------------------------> */
+/* /////////////////////////////////////////////////////////////////////////////////////// */
 .message-display-wrapper {
   /*  */
 }
@@ -112,7 +110,9 @@ div.instructions {
   /*  */
 }
 
-/* GLASSMORPHIC */
+/* ////////////////////////////////////////////////////////////////////////////////////// */
+/* <----------------------------------- GLASSMORPHIC -----------------------------------> */
+/* ////////////////////////////////////////////////////////////////////////////////////// */
 .glass-panel {
   color: #d1cfcf;
   border-radius: 14px;
@@ -151,34 +151,4 @@ div.instructions {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* ANIMATIONS */
-.blob {
-  background: green;
-  border-radius: 50%;
-  margin: 10px;
-  height: 20px;
-  width: 20px;
-
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-  transform: scale(1);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
-  }
-
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-  }
-
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  }
 }

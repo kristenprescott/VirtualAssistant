@@ -7,16 +7,13 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 
 export default function Permission() {
-  ///////////
-  // STATE //
-  ///////////
-  // const [text, setText] = useState("");
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  // <------------------------------------------ STATE ------------------------------------------> //
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
   const [message, setMessage] = useState("");
-  const [active, setActive] = useState(false);
-  ///////////////
-  // VARIABLES //
-  ///////////////
-
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  // <---------------------------------------- VARIABLES ----------------------------------------> //
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
   const commands = [
     {
       command: ["hello", "hi"],
@@ -69,9 +66,9 @@ export default function Permission() {
     resetTranscript,
     listening,
   } = useSpeechRecognition({ commands });
-  ///////////
-  // HOOKS //
-  ///////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  // <------------------------------------------ HOOKS ------------------------------------------> //
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
   // useEffect(() => {
   //   if (finalTranscript !== "") {
   //     console.log("Transcript:", finalTranscript);
@@ -83,9 +80,9 @@ export default function Permission() {
   //   // SpeechRecognition.startListening({ continuous: true });
   //   SpeechRecognition.startListening();
   // }, []);
-  ////////////////////
-  // EVENT HANDLERS //
-  ////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  // <------------------------------------- EVENT HANDLERS -------------------------------------> //
+  //////////////////////////////////////////////////////////////////////////////////////////////////
   const handleMouseDown = (e) => {
     e.preventDefault();
     const VirtualAss = document.getElementsByClassName("virtual-assistant");
@@ -110,27 +107,10 @@ export default function Permission() {
     console.log(e.target.value);
   };
 
-  // const handleActive = () => {
-  //   if (active === false) {
-  //     SpeechRecognition.startListening({
-  //       continuous: true,
-  //       language: "en-US",
-  //     });
-  //     // setActive(true);
-  //   }
-  //   if (active === true) {
-  //     SpeechRecognition.stopListening();
-  //     // setActive(false);
-  //   }
-  // };
-
   return (
     <div className="page" id="Permission">
       <div className="center-col virtual-assistant-container">
-        <div
-          className="paused virtual-assistant"
-          // className={active ? "virtual-assistant" : "virtual-assistant-active"}
-        >
+        <div className="paused virtual-assistant">
           {/* {transcript.toString()} */}
         </div>
       </div>
@@ -139,9 +119,8 @@ export default function Permission() {
         <div className="">
           <div className="instructions glass-panel">
             <p>
-              <span>{active.toString()}</span>
-              Hello, I'm a virtual assistant. To allow microphone access, tap
-              the button below.
+              Hello, I'm a virtual assistant. To allow microphone access, press
+              and hold the button below, then allow access.
             </p>
             <p>
               I can take you to the log in page or show you a demo. Which would
@@ -151,8 +130,9 @@ export default function Permission() {
             <p>To take a tour, say "Demo."</p>
           </div>
         </div>
-
-        {/* RESPONSE DISPLAY */}
+        {/* ///////////////////////////////////////////////////////////////////////////// */}
+        {/* <-------------------------- TEXT RESPONSE DISPLAY --------------------------> */}
+        {/* ///////////////////////////////////////////////////////////////////////////// */}
         <div className="message-display-container">
           <textarea
             style={{ width: "500px" }}
@@ -162,21 +142,24 @@ export default function Permission() {
             {message}
           </textarea>
         </div>
-
         <div className="form-container">
           <div>
-            {/* SPOKEN TEXT */}
+            {/* ////////////////////////////////////////////////////////////////////////// */}
+            {/* <------------------------------ TRANSCRIPT ------------------------------> */}
+            {/* ////////////////////////////////////////////////////////////////////////// */}
             <textarea
               className="transcript glass-panel"
               value={transcript}
               onChange={handleChange}
             />{" "}
-            {/* HOT MIC "BTN" */}
             <div
               className="center-col buttons"
               style={{ position: "relative", margin: "10px" }}
             >
               <div className="hot-mic-btn">
+                {/* /////////////////////////////////////////////////////////////////////////// */}
+                {/* <----------------------------- HOT MIC "BTN" -----------------------------> */}
+                {/* /////////////////////////////////////////////////////////////////////////// */}
                 <img
                   src={listening ? micOn : micOff}
                   alt=""
@@ -188,7 +171,9 @@ export default function Permission() {
                   }}
                 />
               </div>
-              {/* LISTEN BTN */}
+              {/* //////////////////////////////////////////////////////////////////////////// */}
+              {/* <------------------------------- LISTEN BTN -------------------------------> */}
+              {/* //////////////////////////////////////////////////////////////////////////// */}
               <button
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
@@ -212,9 +197,9 @@ export default function Permission() {
     </div>
   );
 }
-//////////////////////////////////////////////////////////////////////////////
-// <---------------------- CREATE FALLBACK BEHAVIOR ----------------------> //
-//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// <-------------------------------- CREATE FALLBACK BEHAVIOR --------------------------------> //
+//////////////////////////////////////////////////////////////////////////////////////////////////
 /*
   if (SpeechRecognition.browserSupportsSpeechRecognition()) {
     // continue
