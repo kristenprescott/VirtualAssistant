@@ -11,6 +11,11 @@ export default function Demo() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
+  // Geolocation:
+  const [lat, setLat] = useState([]);
+  const [long, setLong] = useState([]);
+  // Weather:
+  const [data, setData] = useState([]);
   const [voiceSelector, setVoiceSelector] = useState(false);
   const [message, setMessage] = useState("");
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,7 +24,6 @@ export default function Demo() {
   const websearch = (website, searchTerm) => {
     window.open("http://" + website.split(" ").join("") + ".com");
   };
-
   const commands = [
     {
       command: ["hello", "hi"],
@@ -68,7 +72,26 @@ export default function Demo() {
     {
       command: "back to demo",
       callback: () => {
+        window.open("http://localhost:3000/demo", "_self");
         setVoiceSelector(false);
+      },
+    },
+    {
+      command: ["back to homepage", "(go) back home", "go home"],
+      callback: () => {
+        window.open("http://localhost:3000/", "_self");
+      },
+    },
+    {
+      command: "(go) back",
+      callback: () => {
+        window.history.history.go(-1);
+      },
+    },
+    {
+      command: "(go) forward",
+      callback: () => {
+        window.history.go(1);
       },
     },
     {
@@ -78,7 +101,12 @@ export default function Demo() {
       },
     },
     {
-      command: "what's the forecast",
+      command: [
+        "what's the forecast",
+        "what is the forecast",
+        "how is the weather",
+        "how's the weather",
+      ],
       callback: () => {
         console.log("fetch weather forecast");
       },
@@ -97,9 +125,32 @@ export default function Demo() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ HOOKS ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
+  // Listen for speech:
   useEffect(() => {
     SpeechRecognition.startListening();
   }, []);
+  // Fetch weather:
+  useEffect(() => {
+    // Geolocation:
+    const fetchData = async () => {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        setLat(position.coords.latitude);
+        setLong(position.coords.longitude);
+      });
+      // Weather:
+      await fetch(
+        `${process.env.REACT_APP_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          setData(result);
+        });
+    };
+    fetchData();
+    console.log(
+      `${process.env.REACT_APP_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
+    );
+  }, [lat, long]);
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------- EVENT HANDLERS -------------------------------------> //
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,8 +176,44 @@ export default function Demo() {
       <div className="center-col virtual-assistant-container">
         <div className="virtual-assistant"></div>
       </div>
-
+      {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+      {/* <-------------------------------------- WEATHER --------------------------------------> */}
+      {/* /////////////////////////////////////////////////////////////////////////////////////// */}
       <div className=" center-col main">
+        <div>
+          <div>
+            <h4>Timezone: {data.timezone}</h4>
+            <span>
+              Lat: {lat}
+              <br />
+              Long: {long}
+            </span>
+
+            {/* weather */}
+            <div>
+              {data.current ? (
+                <div>
+                  {data.current.weather.map((item, index) => (
+                    <div key={index}>
+                      <p>main: {item.main}</p>
+                      <p>description: {item.description}</p>
+                      <br />
+                      <span>icon: </span>
+                      <img
+                        src={`http://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div>no current data</div>
+              )}
+            </div>
+          </div>
+        </div>
+        {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+        {/* <-------------------------------------- WEATHER --------------------------------------> */}
+        {/* /////////////////////////////////////////////////////////////////////////////////////// */}
         <div className="">
           <div className="">
             {voiceSelector === true ? (
