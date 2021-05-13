@@ -39,22 +39,16 @@ textarea {
   height: 250px;
   width: 250px;
   border-radius: 150px;
-  /* animation: spin 2s linear infinite; */
-  box-shadow: inset 0 0 62px #fff, inset 24px 0 62px #f155e4,
-    inset -24px 0 62px #5dfcfc, inset 24px 0 30px #f155e4,
-    inset -24px 0 30px #5dfcfc, 0 0 62px #fff, -16px 0 62px #f155e4,
-    16px 0 62px #5dfcfc;
-}
-.virtual-assistant-active {
-  background-color: #fff;
-  height: 250px;
-  width: 250px;
-  border-radius: 150px;
   animation: spin 2s linear infinite;
   box-shadow: inset 0 0 62px #fff, inset 24px 0 62px #f155e4,
     inset -24px 0 62px #5dfcfc, inset 24px 0 30px #f155e4,
-    inset -24px 0 30px #5dfcfc, 0 0 62px #fff, -16px 0 62px #f155e4,
-    16px 0 62px #5dfcfc;
+    inset -24px 0 30px #5dfcfc, 0 0 52px #fff, -16px 0 52px #f155e4,
+    16px 0 52px #5dfcfc;
+}
+
+.paused {
+  animation-play-state: paused;
+  -webkit-animation-play-state: paused;
 }
 @keyframes spin {
   0% {
