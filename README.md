@@ -1,6 +1,58 @@
+# Virtual Assistant
+
+<!--
+<p align="center">
+<a target="_blank" rel="noopener noreferrer" href="">
+<img width="100%" src="https://user-images.githubusercontent.com/55470100/118081644-c449e280-b389-11eb-9fb0-b42104620340.gif" style="max-width:100%;">
+</a>
+</p>
+-->
+
+[Demo]()
+
+Introduction: A paragraph used to introduce interested parties to the project and needs to include one or more screenshots.
+
+Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis.
+
+![]()
+![]()
+
+---
+
+### Technologies Used:
+
+A list of all technologies, libraries, APIs, etc. used in the project.
+
+- React
+- [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition)
+- [react-speech-kit](https://github.com/MikeyParton/react-speech-kit)
+- [Web Speech API](https://wicg.github.io/speech-api/)
+
+---
+
+### Getting Started:
+
+Links to the project's planning (Trello board) and the deployed app on Heroku.
+
+---
+
+### Unsolved Problems:
+
+List any unsolved issues.
+
+---
+
+### Future Enhancements:
+
+Identify future features and enhancements planned for the project.
+
+---
+
+<details><summary>This project was bootstrapped with Create React App.</summary>
+
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 
 ## Available Scripts
 
@@ -68,3 +120,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+</details>
