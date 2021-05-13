@@ -79,18 +79,30 @@ export default function Permission() {
   //   }
   // }, [interimTranscript, finalTranscript]);
 
-  useEffect(() => {
-    // SpeechRecognition.startListening({ continuous: true });
-    SpeechRecognition.startListening();
-  }, []);
+  // useEffect(() => {
+  //   // SpeechRecognition.startListening({ continuous: true });
+  //   SpeechRecognition.startListening();
+  // }, []);
   ////////////////////
   // EVENT HANDLERS //
   ////////////////////
-  const listenContinuously = () => {
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    const VirtualAss = document.getElementsByClassName("virtual-assistant");
+
+    VirtualAss[0].classList.remove("paused");
+
     SpeechRecognition.startListening({
       continuous: true,
       language: "en-US",
     });
+  };
+  const handleMouseUp = (e) => {
+    e.preventDefault();
+
+    const VirtualAss = document.getElementsByClassName("virtual-assistant");
+    VirtualAss[0].classList.add("paused");
+    SpeechRecognition.stopListening();
   };
 
   const handleChange = (e) => {
@@ -98,46 +110,36 @@ export default function Permission() {
     console.log(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-  };
-
-  const handleActive = () => {
-    if (active === false) {
-      SpeechRecognition.startListening({
-        continuous: true,
-        language: "en-US",
-      });
-      setActive(true);
-    }
-    if (active === true) {
-      SpeechRecognition.stopListening();
-      setActive(false);
-    }
-  };
-
-  // const handleMouseDown = () => {
-  //   setActive(!isActive);
-  // };
-
-  // const handleMouseUp = () => {
-  //   setActive(isActive);
+  // const handleActive = () => {
+  //   if (active === false) {
+  //     SpeechRecognition.startListening({
+  //       continuous: true,
+  //       language: "en-US",
+  //     });
+  //     // setActive(true);
+  //   }
+  //   if (active === true) {
+  //     SpeechRecognition.stopListening();
+  //     // setActive(false);
+  //   }
   // };
 
   return (
     <div className="page" id="Permission">
       <div className="center-col virtual-assistant-container">
         <div
-          className="virtual-assistant"
+          className="paused virtual-assistant"
           // className={active ? "virtual-assistant" : "virtual-assistant-active"}
-        ></div>
+        >
+          {/* {transcript.toString()} */}
+        </div>
       </div>
 
       <div className=" center-col main">
         <div className="">
           <div className="instructions glass-panel">
             <p>
+              <span>{active.toString()}</span>
               Hello, I'm a virtual assistant. To allow microphone access, tap
               the button below.
             </p>
@@ -162,7 +164,7 @@ export default function Permission() {
         </div>
 
         <div className="form-container">
-          <form onSubmit={handleSubmit}>
+          <div>
             {/* SPOKEN TEXT */}
             <textarea
               className="transcript glass-panel"
@@ -188,10 +190,8 @@ export default function Permission() {
               </div>
               {/* LISTEN BTN */}
               <button
-                // className={isActive ? "blob" : "mic"}
-                onChange={handleActive}
-                onMouseDown={listenContinuously}
-                onMouseUp={SpeechRecognition.stopListening}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
                 style={{
                   top: "10px",
                   position: "absolute",
@@ -206,7 +206,7 @@ export default function Permission() {
                 🎤
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
