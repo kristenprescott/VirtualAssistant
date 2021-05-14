@@ -23,32 +23,7 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 
 A list of all technologies, libraries, APIs, etc. used in the project.
 
-- React
-- [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition)
-- [react-speech-kit](https://github.com/MikeyParton/react-speech-kit)
-- [Web Speech API](https://wicg.github.io/speech-api/)
-
----
-
-### Getting Started:
-
-Links to the project's planning (Trello board) and the deployed app on Heroku.
-
----
-
-### Unsolved Problems:
-
-List any unsolved issues.
-
----
-
-### Future Enhancements:
-
-Identify future features and enhancements planned for the project.
-
----
-
-<details><summary>This project was bootstrapped with Create React App.</summary>
+- <details><summary>This project was bootstrapped with Create React App.</summary>
 
 # Getting Started with Create React App
 
@@ -122,3 +97,26 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 </details>
+- [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition)
+- [react-speech-kit](https://github.com/MikeyParton/react-speech-kit)
+- [Web Speech API](https://wicg.github.io/speech-api/)
+
+---
+
+### Getting Started:
+
+Links to the project's planning (Trello board) and the deployed app on Heroku.
+
+---
+
+### Unsolved Problems:
+
+List any unsolved issues.
+
+---
+
+### Future Enhancements:
+
+Identify future features and enhancements planned for the project.
+
+---
