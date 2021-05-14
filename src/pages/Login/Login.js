@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Dashboard from "../Dashboard/Dashboard";
 import "../Login/Login.css";
 
@@ -43,6 +44,7 @@ export default function Login() {
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("username", data.username);
         setLoggedIn(true);
+        console.log("username", data.username);
       }
     } catch (error) {
       console.error(error);
@@ -102,8 +104,11 @@ export default function Login() {
                   />
                 </label>
                 <br />
-                <input type="submit" value="submit" />
+                <input type="submit" value="Log in" />
               </form>
+              <div style={{ color: "blue", cursor: "pointer" }}>
+                <Link to="/register">Sign up</Link>
+              </div>
             </div>
           </>
         )}
