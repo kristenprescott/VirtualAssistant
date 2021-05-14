@@ -1,39 +1,23 @@
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Nav from "./components/Nav";
-import Permission from "./pages/Permission/Permission";
-import Register from "./pages/Register/Register";
-import Login from "./pages/Login/Login";
-import Demo from "./demo/Demo/Demo";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import VirtualAssistant from "./pages/VirtualAssistant/VirtualAssistant";
+import VoiceSynthesizer from "./demo/VoiceSynthesizer/VoiceSynthesizer";
+// import { SpeechContext } from "./hooks/SpeechContext";
 
 function App() {
   return (
     <BrowserRouter>
-      <Nav />
-      <div className="App">
-        <Switch>
-          <Route exact path="/">
-            <Permission />
-          </Route>
+      {/* <SpeechContext.Provider value={{ state, setState, isBool, etc }}> */}
+      <Switch>
+        <Route exact path="/">
+          <VirtualAssistant />
+        </Route>
 
-          <Route path="/register">
-            <Register />
-          </Route>
-
-          <Route path="/login">
-            <Login />
-          </Route>
-
-          <Route path="/demo">
-            <Demo />
-          </Route>
-
-          <Route path="/dashboard/:user">
-            <Dashboard />
-          </Route>
-        </Switch>
-      </div>
+        <Route exact path="/voicesynthesizer">
+          <VoiceSynthesizer />
+        </Route>
+      </Switch>
+      {/* </SpeechContext.Provider> */}
     </BrowserRouter>
   );
 }
