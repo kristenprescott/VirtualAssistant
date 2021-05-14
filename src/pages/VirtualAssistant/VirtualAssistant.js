@@ -33,14 +33,24 @@ export default function VirtualAssistant() {
   const commands = [
     {
       command: ["hello", "hi"],
-      callback: () => setMessage("Hello, how can I help you?"),
-      matchInterim: true,
-      bestMatchOnly: true,
+      callback: () => {
+        setMessage("Hello, how can I help you?");
+        speak({ text: "Hello, how can I help you?", voice, rate, pitch });
+      },
+      // matchInterim: true,
+      // bestMatchOnly: true,
     },
     {
       command: "(hello) my name is *",
-      callback: (name) =>
-        setMessage(`Hello, ${name}! I hope to remember that in the future.`),
+      callback: (name) => {
+        setMessage(`Hello, ${name}! I hope to remember that in the future.`);
+        speak({
+          text: `Hello, ${name}! I hope to remember that in the future.`,
+          voice,
+          rate,
+          pitch,
+        });
+      },
     },
     {
       command: ["reset", "clear"],
@@ -185,7 +195,7 @@ export default function VirtualAssistant() {
       language: "en-US",
     });
     // setIsListening(true);
-    SpeechRecognition.listening = true;
+    // SpeechRecognition.listening = true;
   };
 
   const handleMouseUp = async (e) => {
@@ -196,7 +206,7 @@ export default function VirtualAssistant() {
 
     await SpeechRecognition.stopListening();
     // setIsListening(false);
-    SpeechRecognition.listening = false;
+    // SpeechRecognition.listening = false;
   };
 
   return (
@@ -239,21 +249,20 @@ export default function VirtualAssistant() {
           </textarea>
         </div>
 
-        <div className="speak-toggle-btn btn">
+        {/* <div className="speak-toggle-btn btn">
           {speaking ? (
-            <button type="button" onClick={cancel}>
-              Stop
-            </button>
+            <button type="button" onClick={cancel}></button>
           ) : (
             <button
               type="button"
               onClick={() => speak({ text: "howdy", voice, rate, pitch })}
             >
-              Speak
+              Howdy
             </button>
           )}
-        </div>
-        {listening && <h1 style={{ color: "white" }}>listening</h1>}
+        </div> */}
+
+        {/* {listening && <h1 style={{ color: "white" }}>listening</h1>} */}
         {/* {isListening && <h1 style={{ color: "white" }}>isListening!</h1>} */}
         <div className="form-container">
           <div>
