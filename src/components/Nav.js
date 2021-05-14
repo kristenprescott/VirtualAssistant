@@ -5,11 +5,11 @@ const Nav = ({ history }) => {
   return (
     <nav className="navbar">
       <div className="nav-item">
-        <NavLink to="/"></NavLink>
-        <NavLink to="/register"></NavLink>
-        <NavLink to="/login"></NavLink>
-        <NavLink to="/demo"></NavLink>
-        <NavLink to="/dashboard/:user"></NavLink>
+        <NavLink to="/" />
+        <NavLink to="/register" />
+        <NavLink to="/login" />
+        <NavLink to="/demo" />
+        <NavLink to="/dashboard" />
       </div>
     </nav>
   );

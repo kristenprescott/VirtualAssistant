@@ -1,106 +1,73 @@
-import { useState, useEffect } from "react";
-import "../Register/Register.css";
+import { Link } from "react-router-dom";
+import FormInput from "../../components/FormInput";
+import CTA from "../../components/CTA";
+import Prompt from "../../components/Prompt";
+import ConfirmPasswordInput from "../../components/ConfirmPasswordInput";
+import Error from "../../components/Error";
+import useForm from "../../hooks/useForm";
+import useAuth from "../../hooks/useAuth";
 
 export default function Register() {
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------------ STATE ------------------------------------------> //
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  const [registered, setRegistered] = useState(false);
-  const [registrationForm, setRegistrationForm] = useState({
-    username: "",
-    email: "",
-    password: "",
+  //////////////////////////////////////////////////////////////////////////
+  // <------------------------------- HOOKS ------------------------------->
+  //////////////////////////////////////////////////////////////////////////
+  const { values, handleChange } = useForm({
+    initialValues: {
+      email: "",
+      username: "",
+      password: "",
+      passwordConfirm: "",
+    },
   });
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------------ HOOKS ------------------------------------------> //
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setRegistered(true);
-    }
-  }, []);
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------- EVENT HANDLERS -------------------------------------> //
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  const handleRegistration = async (e) => {
-    e.preventDefault();
 
-    try {
-      const res = await fetch("http://localhost:8080/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...registrationForm }),
-      });
-      setRegistrationForm({
-        username: "",
-        email: "",
-        password: "",
-      });
-      const data = await res.json();
-      if (data.token) {
-        window.localStorage.setItem("token", data.token);
-        window.localStorage.setItem("username", data.username);
-        setRegistered(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleRegistrationChange = (e) => {
+  const { registerUser, error } = useAuth();
+  //////////////////////////////////////////////////////////////////////////
+  // <-------------------------- EVENT HANDLERS --------------------------->
+  //////////////////////////////////////////////////////////////////////////
+  const handleRegister = async (e) => {
     e.preventDefault();
-    setRegistrationForm({ ...registrationForm, [e.target.id]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    //
+    await registerUser(values);
   };
 
   return (
-    <div>
-      <h1>Registration</h1>
-      <div>
-        <form className="registration-form" onSubmit={handleRegistration}>
-          <label htmlFor="username">
-            Username:{" "}
-            <input
-              type="text"
-              name="username"
-              id="username"
-              value={registrationForm.username}
-              onChange={handleRegistrationChange}
-            />
-          </label>
-          <br />
+    <div className="page" style={{ justifyContent: "center" }}>
+      <div className="inlineForm">
+        <h3>Register</h3>
+        <div className="inlineForm__notif">
+          {error && <Error error={error.messages} />}
+        </div>
 
-          <label htmlFor="email">
-            Email:{" "}
-            <input
-              type="text"
-              name="email"
-              id="email"
-              value={registrationForm.email}
-              onChange={handleRegistrationChange}
-            />
-          </label>
-          <br />
-
-          <label htmlFor="password">
-            Password:{" "}
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={registrationForm.password}
-              onChange={handleRegistrationChange}
-            />
-          </label>
-          <br />
-          <input type="submit" value="Register" onSubmit={handleSubmit} />
+        <form onSubmit={handleRegister}>
+          <FormInput
+            type={"text"}
+            placeholder={"Email"}
+            name={"email"}
+            value={values.email}
+            handleChange={handleChange}
+          />
+          <FormInput
+            type={"text"}
+            placeholder={"Username"}
+            name={"username"}
+            value={values.username}
+            handleChange={handleChange}
+          />
+          <ConfirmPasswordInput
+            type={"password"}
+            placeholder={"Password"}
+            placeholderConfirm={"Confirm password"}
+            name={"password"}
+            nameConfirm={"passwordConfirm"}
+            value={values.password}
+            valueConfirm={"values.passwordConfirm"}
+            handleChange={handleChange}
+          />
+          <div className="inlineForm__submit">
+            <Link to="/login">
+              <Prompt prompt={"Log in"} />
+            </Link>
+            <CTA name={"register"} type={"submit"} />
+          </div>
         </form>
       </div>
     </div>

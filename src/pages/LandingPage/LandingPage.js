@@ -1,12 +1,21 @@
 import micOn from "../../assets/images/icons/mic_on.png";
 import micOff from "../../assets/images/icons/mic_off.png";
-import "../Permission/Permission.css";
-import React, { useEffect, useState } from "react";
+// import "../LandingPage/LandingPage.css";
+import "../LandingPage/Permissions.css";
+import React, { useEffect, useState, useContext } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+// import Nav from "../../components/Nav";
+import Header from "../../components/Header";
+import { Redirect } from "react-router-dom";
+import { UserContext } from "../../hooks/UserContext";
 
-export default function Permission() {
+export default function LandingPage() {
+  const { user } = useContext(UserContext);
+  if (user) {
+    <Redirect to="/dashboard" />;
+  }
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +117,13 @@ export default function Permission() {
   };
 
   return (
-    <div className="page" id="Permission">
+    <div className="page" id="LandingPage">
+      <Header />
+      <div className="page">
+        <h3 style={{ color: "white", fontSize: "42px" }}>
+          Public Landing Page
+        </h3>
+      </div>
       <div className="center-col virtual-assistant-container">
         <div className="paused virtual-assistant">
           {/* {transcript.toString()} */}

@@ -1,117 +1,60 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Dashboard from "../Dashboard/Dashboard";
-import "../Login/Login.css";
+import FormInput from "../../components/FormInput";
+import CTA from "../../components/CTA";
+import Prompt from "../../components/Prompt";
+import Error from "../../components/Error";
+import useForm from "../../hooks/useForm";
+import useAuth from "../../hooks/useAuth";
 
 export default function Login() {
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------------ STATE ------------------------------------------> //
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [loginForm, setLoginForm] = useState({
-    username: "",
-    password: "",
+  //////////////////////////////////////////////////////////////////////////
+  // <------------------------------- HOOKS ------------------------------->
+  //////////////////////////////////////////////////////////////////////////
+  const { values, handleChange } = useForm({
+    initialValues: {
+      username: "",
+      password: "",
+    },
   });
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------------ HOOKS ------------------------------------------> //
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setLoggedIn(true);
-    }
-  }, []);
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------- EVENT HANDLERS -------------------------------------> //
-  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const { loginUser, error } = useAuth();
+  //////////////////////////////////////////////////////////////////////////
+  // <-------------------------- EVENT HANDLERS --------------------------->
+  //////////////////////////////////////////////////////////////////////////
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    try {
-      const res = await fetch("http://localhost:8080/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...loginForm }),
-      });
-      setLoginForm({
-        username: "",
-        password: "",
-      });
-      const data = await res.json();
-      if (data.token) {
-        window.localStorage.setItem("token", data.token);
-        window.localStorage.setItem("username", data.username);
-        setLoggedIn(true);
-        console.log("username", data.username);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleLogout = (e) => {
-    // clear prev token
-    window.localStorage.clear();
-    setLoggedIn(false);
-  };
-
-  const handleLoginChange = (e) => {
-    e.preventDefault();
-    setLoginForm({ ...loginForm, [e.target.id]: e.target.value });
-    console.log("login target: ", e.target.value);
+    await loginUser(values);
   };
 
   return (
-    <div className="page" id="Login">
-      <div>
-        {isLoggedIn ? (
-          <>
-            <div>
-              <div>
-                <p>You are logged in as {loginForm.username} </p>
-                <button onClick={handleLogout}>Log out?</button>
-                <Dashboard />
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="login-form-wrapper">
-              <h1>Log in</h1>
-              <form className="login-form" onSubmit={handleLogin}>
-                <label htmlFor="username">
-                  Username:{" "}
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    value={loginForm.username}
-                    onChange={handleLoginChange}
-                  />
-                </label>
-                <br />
-
-                <label htmlFor="password">
-                  Password:{" "}
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={loginForm.password}
-                    onChange={handleLoginChange}
-                  />
-                </label>
-                <br />
-                <input type="submit" value="Log in" />
-              </form>
-              <div style={{ color: "blue", cursor: "pointer" }}>
-                <Link to="/register">Sign up</Link>
-              </div>
-            </div>
-          </>
-        )}
+    <div className="page" style={{ justifyContent: "center" }}>
+      <div className="inlineForm">
+        <h3>Login</h3>
+        <div className="inlineForm__notif">
+          {error && <Error error={error.messages} />}
+        </div>
+        <form onSubmit={handleLogin}>
+          <FormInput
+            type={"text"}
+            placeholder={"Username"}
+            name={"username"}
+            value={values.username}
+            handleChange={handleChange}
+          />
+          <FormInput
+            type={"password"}
+            placeholder={"Password"}
+            name={"password"}
+            value={values.password}
+            handleChange={handleChange}
+          />
+          <div className="inlineForm__submit">
+            <Link to="/register">
+              <Prompt prompt={"Sign up."} />
+            </Link>
+            <CTA name={"login"} type={"submit"} />
+          </div>
+        </form>
       </div>
     </div>
   );
