@@ -126,8 +126,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
   2. callback: a callback function to execute in response; there is one already built-in to the react-speech-recognition hook called resetTranscript() - it resets the transcript. (I use the command "clear" or "reset" here)
 - A common pattern I've used here for action commands is to:
   1. Set some state `[state, setState] = useState(default)`
-  2. Write doFunction() to setState(newState)
-  3. Call doFunction() in the callback of the command
+  2. Write `doFunction()` to `setState(newState)`
+  3. Call `doFunction()` to execute in the callback of the command
+
+#### More:
+
+For more information browse these docs:
+
+- [react-speech-recognition Docs](https://github.com/JamesBrill/react-speech-recognition/tree/98b14bfd60e7b9d72c1d6be95fdc5bfd0a5d3018/docs) (extensive and informative, highly recommend)
+- [react-speech-kit Docs](https://github.com/MikeyParton/react-speech-kit) (has great examples of how to use)
+- Web Speech API Docs:
+  - [W3C](https://wicg.github.io/speech-api/)
+  - [Mozilla](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 
 ### Unsolved Problems:
 

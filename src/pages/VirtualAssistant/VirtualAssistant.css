@@ -22,9 +22,9 @@ textarea {
   background-color: rgba(0, 0, 0, 0);
   border: 0px;
 }
-/* /////////////////////////////////////////////////////////////////////////////////////// */
-/* <--------------------------------- VIRTUAL ASSISTANT ---------------------------------> */
-/* /////////////////////////////////////////////////////////////////////////////////////// */
+/* /////////////////////////////////////////////////////////////////////////// */
+/* <--------------------------- VIRTUAL ASSISTANT ---------------------------> */
+/* /////////////////////////////////////////////////////////////////////////// */
 .virtual-assistant-container {
   margin-top: 2rem;
   margin-bottom: 5rem;
@@ -88,26 +88,28 @@ div.instructions {
   padding-top: 3rem;
   padding-left: 2rem;
   padding-right: 2rem;
-  width: 500px;
-  height: 200px;
-  font-size: 20px;
+  width: 50rem;
+  height: 20rem;
+  font-size: 2rem;
   text-align: center;
 }
-/* /////////////////////////////////////////////////////////////////////////////////////// */
-/* <---------------------------------- MESSAGE SECTION ----------------------------------> */
-/* /////////////////////////////////////////////////////////////////////////////////////// */
-.message-display-wrapper {
-  /*  */
-}
+/* /////////////////////////////////////////////////////////////////////////// */
+/* <---------------------------- MESSAGE SECTION ----------------------------> */
+/* /////////////////////////////////////////////////////////////////////////// */
+
 .message-textbox {
-  /*  */
+  border-radius: 9px;
+  padding-top: 3rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  width: 50rem;
+  height: 10rem;
+  font-size: 2rem;
+  text-align: center;
 }
-.message-clear-btn {
-  /*  */
-}
-/* ////////////////////////////////////////////////////////////////////////////////////// */
-/* <----------------------------------- GLASSMORPHIC -----------------------------------> */
-/* ////////////////////////////////////////////////////////////////////////////////////// */
+/* /////////////////////////////////////////////////////////////////////////// */
+/* <----------------------------- GLASSMORPHIC ------------------------------> */
+/* /////////////////////////////////////////////////////////////////////////// */
 .glass-panel {
   color: #d1cfcf;
   border-radius: 14px;
@@ -148,7 +150,9 @@ div.instructions {
   align-items: center;
 }
 
-/* //////////////////// MODAL ////////////////////////// */
+/* /////////////////////////////////////////////////////////////////////////// */
+/* ---------------------------------  MODAL ---------------------------------  */
+/* /////////////////////////////////////////////////////////////////////////// */
 .App {
   text-align: center;
   padding-top: 2rem;
@@ -230,3 +234,147 @@ btn {
   background: #247ba0;
   color: #fff;
 } */
+/* ////////////////////////////////////////////////////////////////////////// */
+/* <------------------------------ LISTEN BTNS -----------------------------> */
+/* ////////////////////////////////////////////////////////////////////////// */
+.mic-btn {
+  top: 10px;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 30px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.hot-mic-btn {
+  top: 0;
+  /* position: absolute; */
+  width: 70px;
+  height: 70px;
+}
+/* ////////////////////////////////////////////////////////////////////////// */
+/* <------------------------------ RESPONSIVE ------------------------------> */
+/* ////////////////////////////////////////////////////////////////////////// */
+/* ------------------------------ Ipad/Ipad Pro ------------------------------ */
+@media screen and (max-device-width: 800px) {
+  /* TRANSCRIPT DISPLAY */
+  /* GLASS */
+  .glass-panel {
+    width: 35rem;
+    height: 10rem;
+    font-size: 1.8rem;
+  }
+  /* INSTRUCTIONS DISPLAY */
+  .instructions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35rem;
+    height: 17rem;
+    margin-top: 2rem;
+  }
+  .message-textbox {
+    margin-top: 2rem;
+  }
+  /* ////////////////////////////////////////////////////////////////////////// */
+  /* <------------------------------ LISTEN BTNS -----------------------------> */
+  /* ////////////////////////////////////////////////////////////////////////// */
+  .mic-btn {
+    top: 10px;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+  }
+  .hot-mic-btn {
+    top: 0;
+    width: 50px;
+    height: 50px;
+  }
+}
+/* -------------------------------------  ------------------------------------- */
+@media screen and (max-device-width: 780px) {
+  /*  */
+}
+
+/* ---------------- Iphone 6/7/8Plus/X (6/7/8 are ~okay~ ish) ---------------- */
+@media screen and (max-device-width: 500px) {
+  /* TRANSCRIPT DISPLAY */
+  /* GLASS */
+  .glass-panel {
+    width: 35rem;
+    height: 10rem;
+    font-size: 1.8rem;
+  }
+  /* INSTRUCTIONS DISPLAY */
+  .instructions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35rem;
+    height: 17rem;
+    margin-top: 2rem;
+  }
+  .message-textbox {
+    margin-top: 2rem;
+  }
+  /* ////////////////////////////////////////////////////////////////////////// */
+  /* <------------------------------ LISTEN BTNS -----------------------------> */
+  /* ////////////////////////////////////////////////////////////////////////// */
+  .mic-btn {
+    top: 10px;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+  }
+  .hot-mic-btn {
+    top: 0;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* -------------------------------- Iphone 5/SE -------------------------------- */
+@media screen and (max-device-width: 320px) {
+  /* /////////////////////////////////////////////////////////////////////////// */
+  /* <--------------------------- VIRTUAL ASSISTANT ---------------------------> */
+  /* /////////////////////////////////////////////////////////////////////////// */
+  .virtual-assistant-container {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .virtual-assistant {
+    height: 10rem;
+    width: 10rem;
+  }
+  /* TRANSCRIPT DISPLAY */
+  /* GLASS */
+  .glass-panel {
+    width: 29rem;
+    height: 10rem;
+    font-size: 1.5rem;
+  }
+  /* INSTRUCTIONS DISPLAY */
+  .instructions-container {
+    width: 29rem;
+    height: 15rem;
+    font-size: 1.5rem;
+  }
+  #instructions {
+    width: 29rem;
+    height: 15rem;
+    font-size: 1.5rem;
+  }
+  /* ////////////////////////////////////////////////////////////////////////// */
+  /* <------------------------------ LISTEN BTNS -----------------------------> */
+  /* ////////////////////////////////////////////////////////////////////////// */
+  .mic-btn {
+    top: 10px;
+    width: 25px;
+    height: 25px;
+  }
+  .hot-mic-btn {
+    width: 45px;
+    height: 45px;
+  }
+}
