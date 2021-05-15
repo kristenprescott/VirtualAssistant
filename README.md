@@ -1,5 +1,7 @@
 # Virtual Assistant
 
+---
+
 <!--
 <p align="center">
 <a target="_blank" rel="noopener noreferrer" href="">
@@ -10,23 +12,26 @@
 
 [Demo]()
 
-Introduction: A paragraph used to introduce interested parties to the project and needs to include one or more screenshots.
+Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis. It combines the two hooks to enable voice command recognition and both visual and verbal feedback for commands.
 
-Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis.
+<!-- This is my capstone project for General Assembly's Software Engineering Immersive program. -->
 
 ![]()
 ![]()
-
----
 
 ### Technologies Used:
 
-A list of all technologies, libraries, APIs, etc. used in the project.
+---
+
+##### Dependencies:
 
 - [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition)
 - [react-speech-kit](https://github.com/MikeyParton/react-speech-kit)
 - [Web Speech API](https://wicg.github.io/speech-api/)
-<!-- - [react-modal](https://www.npmjs.com/package/react-modal#api-documentation) -->
+
+###### APIs:
+
+- [Open Weather Map](https://openweathermap.org/api)
 
 <details><summary>This project was bootstrapped with Create React App.</summary>
 
@@ -103,20 +108,42 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 </details>
 
----
-
 ### Getting Started:
 
-Links to the project's planning (Trello board) and the deployed app on Heroku.
-
 ---
+
+<!--
+#### How to use/install:
+
+- fork and clone this repository
+- install any dependencies (listed [here](#dependencies:)) with `yarn add <dependency>` or `npm install <dependency>`
+- `yarn start` or `npm start` should run the app locally in your browser at `http://localhost:3000` -->
+
+##### Making new commands:
+
+- Commands are held in an array called "commands" that currently lives inside the VirtualAssistant component. Each command is an object with two properties:
+  1. command: a string for Virtual Assistant to listen for
+  2. callback: a callback function to execute in response; there is one already built-in to the react-speech-recognition hook called resetTranscript() - it resets the transcript. (I use the command "clear" or "reset" here)
+- A common pattern I've used here for action commands is to:
+  1. Set some state `[state, setState] = useState(default)`
+  2. Write doFunction() to setState(newState)
+  3. Call doFunction() in the callback of the command
 
 ### Unsolved Problems:
 
-List any unsolved issues.
-
 ---
+
+- [ ] Make Voice Assistant global to the app
+- [ ] When fetching from weather api, a fetch command must first be made (once) before any further requests.
+
+<!--
+- [ ] works
+- [x] works too
+ -->
 
 ### Future Enhancements:
 
-Identify future features and enhancements planned for the project.
+---
+
+- [ ] Finish login/auth for user-specific information and dashboard
+- [ ] CRUD for to do list

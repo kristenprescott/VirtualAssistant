@@ -95,10 +95,10 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "(get) commands",
+      command: ["(get) commands", "show commands"],
       callback: () => {
-        setMessage("Opening commands modal.");
-        speak({ text: "Opening commands modal.", voice, rate, pitch });
+        setMessage("Opening commands.");
+        speak({ text: "Opening commands.", voice, rate, pitch });
         toggle();
       },
     },
@@ -245,14 +245,11 @@ export default function VirtualAssistant() {
       `${process.env.REACT_APP_WEATHER_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=imperial`
     );
     const weather = await res.json();
-    // const weatherText = `${weather.current.weather[0].description.toString()}`;
-    // speak({ text: weatherText });
     setWeatherData(weather);
     return weather;
   };
 
   const getCurrentWeatherDescription = async () => {
-    // const weather = fetchWeather();
     if (weatherData) {
       const weatherText = `${weatherData.current.weather[0].description}`;
       speak({ text: weatherText });
@@ -415,16 +412,18 @@ export default function VirtualAssistant() {
               {/* ///////////////////////////////////////////////////////////////// */}
 
               <div className="instructions glass-panel">
+                <p>Hello, I'm a virtual assistant.</p>
                 <p>
-                  Hello, I'm a virtual assistant. To allow microphone access,
-                  press and hold the button below, then allow access.
+                  To allow microphone access, press and hold the button below.
                 </p>
                 <p>
-                  I can take you to the log in page or show you a demo. Which
-                  would you prefer?
+                  {/* I can take you to the log in page or show you a demo. Which
+                  would you prefer? */}
+                  To log in say "Log in"
                 </p>
-                <p>To log in say "Log in."</p>
-                <p>To take a tour, say "Demo."</p>
+                {/* <p>To log in say "Log in."</p>
+                <p>To take a tour, say "Demo."</p> */}
+                To see more commands say "Show commands"
               </div>
             </div>
             <div className="message-display-container">
@@ -454,8 +453,6 @@ export default function VirtualAssistant() {
           )}
         </div> */}
 
-        {/* {listening && <h1 style={{ color: "white" }}>listening</h1>} */}
-        {/* {isListening && <h1 style={{ color: "white" }}>isListening!</h1>} */}
         <div className="form-container">
           <div>
             <div className="transcript-display">
