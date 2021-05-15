@@ -389,9 +389,13 @@ export default function VirtualAssistant() {
       {/* <------------------------ COMMANDS MODAL -----------------------> */}
       {/* ///////////////////////////////////////////////////////////////// */}
       <div>
-        <button className="btn modal-btn" onClick={toggle}>
+        {/* <button
+          style={{ display: "none" }}
+          className="btn modal-btn"
+          onClick={toggle}
+        >
           Show Commands Modal
-        </button>
+        </button> */}
         <CommandsModal isShowing={isShowing} hide={toggle} />
       </div>
       <div className="center-col virtual-assistant-container">
