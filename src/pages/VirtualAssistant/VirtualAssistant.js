@@ -148,9 +148,20 @@ export default function VirtualAssistant() {
       callback: () => setShowSettings(false),
     },
     {
+      command: "fetch weather",
+      callback: () => {
+        fetchWeather();
+        setMessage("weather fetched");
+      },
+    },
+    {
       command: "current weather",
       callback: () => {
-        getCurrentWeatherDescription();
+        if (weatherData) {
+          getCurrentWeatherDescription();
+        } else {
+          setMessage("none");
+        }
       },
     },
     {
