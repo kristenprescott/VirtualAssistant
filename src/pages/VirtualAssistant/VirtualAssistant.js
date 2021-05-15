@@ -401,17 +401,17 @@ export default function VirtualAssistant() {
         </div>
       </div>
 
-      <div className=" center-col main">
+      <div className="center-col main">
         {showSettings ? (
           <Settings {...settingsProps} />
         ) : (
           <div>
-            <div className="">
+            <div className="instructions-container">
               {/* ///////////////////////////////////////////////////////////////// */}
               {/* <--------------------- INSTRUCTIONS DISPLAY --------------------> */}
               {/* ///////////////////////////////////////////////////////////////// */}
 
-              <div className="instructions glass-panel">
+              <div className="instructions glass-panel" id="instructions">
                 <p>Hello, I'm a virtual assistant.</p>
                 <p>
                   To allow microphone access, press and hold the button below.
@@ -431,7 +431,7 @@ export default function VirtualAssistant() {
               {/* <-------------------- TEXT RESPONSE DISPLAY --------------------> */}
               {/* ///////////////////////////////////////////////////////////////// */}
               <textarea
-                style={{ width: "500px" }}
+                // style={{ width: "500px" }}
                 className="message-textbox glass-panel"
                 placeholder={message}
               >
@@ -466,19 +466,20 @@ export default function VirtualAssistant() {
               className="center-col buttons"
               style={{ position: "relative", margin: "10px" }}
             >
-              <div className="hot-mic-btn">
+              <div>
                 {/* ///////////////////////////////////////////////////////////////// */}
                 {/* <----------------------- HOT MIC "BTN" -----------------------> */}
                 {/* ///////////////////////////////////////////////////////////////// */}
                 <img
+                  className="hot-mic-btn"
                   src={listening ? micOn : micOff}
                   alt=""
-                  style={{
-                    top: "0",
-                    positon: "absolute",
-                    width: "70px",
-                    height: "70px",
-                  }}
+                  // style={{
+                  //   top: "0",
+                  //   positon: "absolute",
+                  //   width: "70px",
+                  //   height: "70px",
+                  // }}
                 />
               </div>
               {/* ///////////////////////////////////////////////////////////////// */}
@@ -487,16 +488,17 @@ export default function VirtualAssistant() {
               <button
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
-                style={{
-                  top: "10px",
-                  position: "absolute",
-                  width: "50px",
-                  height: "50px",
-                  border: "none",
-                  borderRadius: "30px",
-                  backgroundColor: "transparent",
-                  cursor: "pointer",
-                }}
+                className="mic-btn"
+                // style={{
+                //   top: "10px",
+                //   position: "absolute",
+                //   width: "50px",
+                //   height: "50px",
+                //   border: "none",
+                //   borderRadius: "30px",
+                //   backgroundColor: "transparent",
+                //   cursor: "pointer",
+                // }}
               >
                 🎤
               </button>
