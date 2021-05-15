@@ -6,11 +6,13 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { useSpeechSynthesis } from "react-speech-kit";
+import Settings from "../../components/Settings";
 
 export default function VirtualAssistant() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
+  const [showSettings, setShowSettings] = useState(false);
   const [text, setText] = useState("Hello there");
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
@@ -22,6 +24,7 @@ export default function VirtualAssistant() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <---------------------------------------- VARIABLES ----------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   const onEnd = () => {
     // You could do something here after speaking has finished
   };
@@ -128,6 +131,14 @@ export default function VirtualAssistant() {
         window.open("http://localhost:3000/voicesynthesizer", "_self");
       },
     },
+    {
+      command: "show settings",
+      callback: () => setShowSettings(true),
+    },
+    {
+      command: "hide settings",
+      callback: () => setShowSettings(false),
+    },
   ];
 
   const {
@@ -140,48 +151,7 @@ export default function VirtualAssistant() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ HOOKS ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
-  // useEffect(() => {
-  //   console.log("speak effect 😈");
-  //   if (message) {
-  //     if (!speechSynthesis.speaking) {
-  //       speak({ text: message, voice, rate, pitch });
-  //     }
-  //   }
-  // }, [message]);
 
-  // useEffect(() => {
-  //   speak({ text: "howdy", voice, rate, pitch });
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log("speak.");
-  //   if (!speechSynthesis.speaking) {
-  //     // setText(message) ONLY if !speechRecognition.listening
-  //     if (!SpeechRecognition.listening) {
-  //       // setMessage(finalTranscript);
-  //       setText(message);
-  //       // speak the text
-  //     }
-  //   }
-  // }, [listening]);
-
-  // useEffect(() => {
-  //   if (text) {
-  //     speak({ text, voice, rate, pitch });
-  //   }
-  // }, [text]);
-
-  // useEffect(() => {
-  //   if (finalTranscript !== "") {
-  //     console.log("Transcript:", finalTranscript);
-  //     setText(finalTranscript);
-  //   }
-  // }, [interimTranscript, finalTranscript]);
-
-  // useEffect(() => {
-  //   // SpeechRecognition.startListening({ continuous: true });
-  //   SpeechRecognition.startListening();
-  // }, []);
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------- EVENT HANDLERS -------------------------------------> //
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,8 +164,6 @@ export default function VirtualAssistant() {
       continuous: false,
       language: "en-US",
     });
-    // setIsListening(true);
-    // SpeechRecognition.listening = true;
   };
 
   const handleMouseUp = async (e) => {
@@ -205,8 +173,16 @@ export default function VirtualAssistant() {
     VirtualAss[0].classList.add("paused");
 
     await SpeechRecognition.stopListening();
-    // setIsListening(false);
-    // SpeechRecognition.listening = false;
+  };
+
+  const settingsProps = {
+    voiceIndex,
+    setVoiceIndex,
+    rate,
+    setRate,
+    pitch,
+    setPitch,
+    voices,
   };
 
   return (
@@ -217,38 +193,42 @@ export default function VirtualAssistant() {
         </div>
       </div>
 
-      {/* ============================================================================================================== */}
       <div className=" center-col main">
-        <div className="">
-          {/* ///////////////////////////////////////////////////////////////////////////// */}
-          {/* <--------------------------- INSTRUCTIONS DISPLAY --------------------------> */}
-          {/* ///////////////////////////////////////////////////////////////////////////// */}
-          <div className="instructions glass-panel">
-            <p>
-              Hello, I'm a virtual assistant. To allow microphone access, press
-              and hold the button below, then allow access.
-            </p>
-            <p>
-              I can take you to the log in page or show you a demo. Which would
-              you prefer?
-            </p>
-            <p>To log in say "Log in."</p>
-            <p>To take a tour, say "Demo."</p>
+        {showSettings ? (
+          <Settings {...settingsProps} />
+        ) : (
+          <div>
+            <div className="">
+              {/* ///////////////////////////////////////////////////////////////////////////// */}
+              {/* <--------------------------- INSTRUCTIONS DISPLAY --------------------------> */}
+              {/* ///////////////////////////////////////////////////////////////////////////// */}
+              <div className="instructions glass-panel">
+                <p>
+                  Hello, I'm a virtual assistant. To allow microphone access,
+                  press and hold the button below, then allow access.
+                </p>
+                <p>
+                  I can take you to the log in page or show you a demo. Which
+                  would you prefer?
+                </p>
+                <p>To log in say "Log in."</p>
+                <p>To take a tour, say "Demo."</p>
+              </div>
+            </div>
+            <div className="message-display-container">
+              {/* ///////////////////////////////////////////////////////////////////////////// */}
+              {/* <-------------------------- TEXT RESPONSE DISPLAY --------------------------> */}
+              {/* ///////////////////////////////////////////////////////////////////////////// */}
+              <textarea
+                style={{ width: "500px" }}
+                className="message-textbox glass-panel"
+                placeholder={message}
+              >
+                {message}
+              </textarea>
+            </div>
           </div>
-        </div>
-        {/* ///////////////////////////////////////////////////////////////////////////// */}
-        {/* <-------------------------- TEXT RESPONSE DISPLAY --------------------------> */}
-        {/* ///////////////////////////////////////////////////////////////////////////// */}
-        <div className="message-display-container">
-          <textarea
-            style={{ width: "500px" }}
-            className="message-textbox glass-panel"
-            placeholder={message}
-          >
-            {message}
-          </textarea>
-        </div>
-
+        )}
         {/* <div className="speak-toggle-btn btn">
           {speaking ? (
             <button type="button" onClick={cancel}></button>
@@ -272,7 +252,11 @@ export default function VirtualAssistant() {
               {/* ////////////////////////////////////////////////////////////////////////// */}
               <textarea className="transcript glass-panel" value={transcript} />{" "}
             </div>
+
             {/* ============================================================================================================== */}
+
+            {/* ============================================================================================================== */}
+
             <div
               className="center-col buttons"
               style={{ position: "relative", margin: "10px" }}
