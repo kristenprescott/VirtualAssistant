@@ -9,9 +9,9 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import Settings from "../../components/Settings";
 
 export default function VirtualAssistant() {
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------------ STATE ------------------------------------------> //
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////
+  // <------------------------- STATE -------------------------> //
+  /////////////////////////////////////////////////////////////////
   // Geolocation:
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
@@ -29,10 +29,9 @@ export default function VirtualAssistant() {
   const [message, setMessage] = useState("");
   // const [isListening, setIsListening] = useState(false);
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  // <---------------------------------------- VARIABLES ----------------------------------------> //
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-
+  /////////////////////////////////////////////////////////////////
+  // <----------------------- VARIABLES -----------------------> //
+  /////////////////////////////////////////////////////////////////
   const onEnd = () => {
     // You could do something here after speaking has finished
   };
@@ -147,6 +146,9 @@ export default function VirtualAssistant() {
       command: "hide settings",
       callback: () => setShowSettings(false),
     },
+    //////////////////////////////////////////
+    // <-------------- WEATHER -------------->
+    //////////////////////////////////////////
     {
       command: "fetch weather",
       callback: () => {
@@ -155,7 +157,12 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "current weather",
+      command: [
+        "(current) weather",
+        "what's the weather",
+        "what is the weather",
+        "tell me the weather",
+      ],
       callback: () => {
         if (weatherData) {
           getCurrentWeatherDescription();
@@ -170,6 +177,22 @@ export default function VirtualAssistant() {
         getCurrentTemperature();
       },
     },
+    {
+      command: [
+        "(current) moon phase",
+        "what's the moon phase",
+        "what phase is the moon (in)",
+      ],
+      callback: () => {
+        getMoonPhase();
+      },
+    },
+    // {
+    //   command: "current sunrise",
+    //   callback: () => {
+    //     getCurrentSunrise();
+    //   },
+    // },
   ];
 
   const {
@@ -179,9 +202,10 @@ export default function VirtualAssistant() {
     resetTranscript,
     listening,
   } = useSpeechRecognition({ commands });
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------------ HOOKS ------------------------------------------> //
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////
+  // <------------------------- HOOKS -------------------------> //
+  /////////////////////////////////////////////////////////////////
+
   // Fetch weather:
   useEffect(() => {
     // Geolocation:
@@ -192,14 +216,14 @@ export default function VirtualAssistant() {
       });
     };
     getLocation();
-    console.log("lat: ", lat, "long: ", long);
+    // console.log("lat: ", lat, "long: ", long);
   }, []);
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------ COMMAND FUNCTIONS ------------------------------------> //
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////
+  // <------------------ COMMAND FUNCTIONS---------------------> //
+  /////////////////////////////////////////////////////////////////
   const fetchWeather = async () => {
     const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
+      `${process.env.REACT_APP_WEATHER_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=imperial`
     );
     const weather = await res.json();
     // const weatherText = `${weather.current.weather[0].description.toString()}`;
@@ -224,19 +248,92 @@ export default function VirtualAssistant() {
 
   const getCurrentTemperature = async () => {
     if (weatherData) {
-      const weatherText = `${weatherData.current.temp.toString()}`;
+      const weatherText = `${weatherData.current.temp.toString()} degrees`;
       speak({ text: weatherText });
     } else {
       const weather = await fetchWeather();
       if (weather) {
-        const weatherText = `${weather.current.temp.toString()}`;
+        const weatherText = `${weather.current.temp.toString()} degrees`;
         speak({ text: weatherText });
       }
     }
   };
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // <------------------------------------- EVENT HANDLERS -------------------------------------> //
-  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const getMoonPhase = async () => {
+    //////////////////////////////////
+    // !!!!!!!! BAD LOGIC !!!!!!!!!!!
+    /////////////////////////////////
+    if (weatherData) {
+      // [daily.moon_phase] Moon phase. 0 and 1 are 'new moon', 0.25 is 'first quarter moon', 0.5 is 'full moon' and 0.75 is 'last quarter moon'. The periods in between are called 'waxing crescent', 'waxing gibous', 'waning gibous', and 'waning crescent', respectively.
+      const phase = weatherData.daily[0].moon_phase;
+      let currentPhase;
+      if (phase === 0.0 || 1) {
+        // "new moon"
+        currentPhase = "new moon";
+      } else if (phase === 0.25) {
+        // "first quarter"
+        currentPhase = "first quarter";
+      } else if (phase === 0.5) {
+        // "full moon"
+        currentPhase = "full moon";
+      } else if (phase === 0.75) {
+        // "last quarter"
+        currentPhase = "last quarter";
+      } else if (0 < phase < 0.25) {
+        // "waxing crescent"
+        currentPhase = "waxing crescent";
+      } else if (0.25 < phase < 0.5) {
+        // "waxing gibous"
+        currentPhase = "waxing gibous";
+      } else if (0.5 < phase < 0.75) {
+        // "waning gibous"
+        currentPhase = "waning gibous";
+      } else if (0.75 < phase < 1) {
+        // "waning crescent"
+        currentPhase = "waning crescent";
+      }
+      const weatherText = `${currentPhase}`;
+      speak({ text: weatherText });
+      console.log("phase: ", weatherData.daily[0].moon_phase.toString());
+    } else {
+      speak({ text: "cannot fetch data" });
+      // const weather = await fetchWeather();
+      // if (weather) {
+      //   const weatherText = `${weather.daily[0].moon_phase}`;
+      //   speak({ text: weatherText });
+      // }
+    }
+  };
+
+  // const getCurrentSunrise = async () => {
+  //   ////////////////////////////////////////////
+  //   // const timeConversion = new Date(
+  //   //   weatherData.current.sunrise
+  //   // ).toLocaleTimeString("en-US");
+  //   ////////////////////////////////////////////
+  //   if (weatherData) {
+  //     const unixTimestamp = weatherData.current.sunrise;
+  //     const date = new Date(unixTimestamp * 1e3); // 1e3 === 1000
+  //     // Now you can use built-in methods to convert to a local date.
+  //     const localized = date.toLocaleDateString();
+  //     const weatherText = `${localized}`;
+  //     speak({ text: weatherText });
+  //   } else {
+  //     const unixTimestamp = weather.current.sunrise;
+  //     const date = new Date(unixTimestamp * 1e3); // 1e3 === 1000
+  //     // Now you can use built-in methods to convert to a local date.
+  //     const localized = date.toLocaleDateString();
+  //     const weather = await fetchWeather();
+  //     if (weather) {
+  //       const weatherText = `${localized}`;
+  //       speak({ text: weatherText });
+  //     }
+  //   }
+  // };
+
+  /////////////////////////////////////////////////////////////////
+  // <-------------------- EVENT HANDLERS ---------------------> //
+  /////////////////////////////////////////////////////////////////
   const handleMouseDown = async (e) => {
     e.preventDefault();
     const VirtualAss = document.getElementsByClassName("virtual-assistant");
@@ -266,8 +363,8 @@ export default function VirtualAssistant() {
     setPitch,
     voices,
   };
-  console.log("weather data");
-  console.log(weatherData);
+  // console.log("weather data");
+  // console.log(weatherData);
 
   return (
     <div className="page" id="VirtualAssistant">
@@ -283,9 +380,10 @@ export default function VirtualAssistant() {
         ) : (
           <div>
             <div className="">
-              {/* ///////////////////////////////////////////////////////////////////////////// */}
-              {/* <--------------------------- INSTRUCTIONS DISPLAY --------------------------> */}
-              {/* ///////////////////////////////////////////////////////////////////////////// */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <--------------------- INSTRUCTIONS DISPLAY --------------------> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+
               <div className="instructions glass-panel">
                 <p>
                   Hello, I'm a virtual assistant. To allow microphone access,
@@ -300,9 +398,9 @@ export default function VirtualAssistant() {
               </div>
             </div>
             <div className="message-display-container">
-              {/* ///////////////////////////////////////////////////////////////////////////// */}
-              {/* <-------------------------- TEXT RESPONSE DISPLAY --------------------------> */}
-              {/* ///////////////////////////////////////////////////////////////////////////// */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <-------------------- TEXT RESPONSE DISPLAY --------------------> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
               <textarea
                 style={{ width: "500px" }}
                 className="message-textbox glass-panel"
@@ -331,24 +429,20 @@ export default function VirtualAssistant() {
         <div className="form-container">
           <div>
             <div className="transcript-display">
-              {/* ////////////////////////////////////////////////////////////////////////// */}
-              {/* <------------------------------ TRANSCRIPT ------------------------------> */}
-              {/* ////////////////////////////////////////////////////////////////////////// */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <-------------------------- TRANSCRIPT -------------------------> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
               <textarea className="transcript glass-panel" value={transcript} />{" "}
             </div>
-
-            {/* ============================================================================================================== */}
-
-            {/* ============================================================================================================== */}
 
             <div
               className="center-col buttons"
               style={{ position: "relative", margin: "10px" }}
             >
               <div className="hot-mic-btn">
-                {/* /////////////////////////////////////////////////////////////////////////// */}
-                {/* <----------------------------- HOT MIC "BTN" -----------------------------> */}
-                {/* /////////////////////////////////////////////////////////////////////////// */}
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <----------------------- HOT MIC "BTN" -----------------------> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
                 <img
                   src={listening ? micOn : micOff}
                   alt=""
@@ -360,9 +454,9 @@ export default function VirtualAssistant() {
                   }}
                 />
               </div>
-              {/* //////////////////////////////////////////////////////////////////////////// */}
-              {/* <------------------------------- LISTEN BTN -------------------------------> */}
-              {/* //////////////////////////////////////////////////////////////////////////// */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <------------------------- LISTEN BTN --------------------------> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
               <button
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
