@@ -7,6 +7,8 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import { useSpeechSynthesis } from "react-speech-kit";
 import Settings from "../../components/Settings";
+import CommandsModal from "../../components/CommandsModal";
+import useCommandsModal from "../../hooks/useCommandsModal";
 
 export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
@@ -80,8 +82,24 @@ export default function VirtualAssistant() {
     {
       command: "help",
       callback: () => {
-        setMessage("How can I help you?");
-        speak({ text: "How can I help you?", voice, rate, pitch });
+        setMessage(
+          "To open view all commands, say 'get commands' or simply 'commands'"
+        );
+        speak({
+          text:
+            "To open view all commands, say 'get commands' or simply 'commands'",
+          voice,
+          rate,
+          pitch,
+        });
+      },
+    },
+    {
+      command: "(get) commands",
+      callback: () => {
+        setMessage("Opening commands modal.");
+        speak({ text: "Opening commands modal.", voice, rate, pitch });
+        toggle();
       },
     },
     {
@@ -205,6 +223,7 @@ export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // <------------------------- HOOKS -------------------------> //
   /////////////////////////////////////////////////////////////////
+  const { isShowing, toggle } = useCommandsModal();
 
   // Fetch weather:
   useEffect(() => {
@@ -363,11 +382,18 @@ export default function VirtualAssistant() {
     setPitch,
     voices,
   };
-  // console.log("weather data");
-  // console.log(weatherData);
 
   return (
     <div className="page" id="VirtualAssistant">
+      {/* ///////////////////////////////////////////////////////////////// */}
+      {/* <------------------------ COMMANDS MODAL -----------------------> */}
+      {/* ///////////////////////////////////////////////////////////////// */}
+      <div>
+        <button className="btn modal-btn" onClick={toggle}>
+          Show Commands Modal
+        </button>
+        <CommandsModal isShowing={isShowing} hide={toggle} />
+      </div>
       <div className="center-col virtual-assistant-container">
         <div className="paused virtual-assistant">
           {/* {transcript.toString()} */}
