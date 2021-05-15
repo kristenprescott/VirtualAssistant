@@ -12,8 +12,16 @@ export default function VirtualAssistant() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
+  // Geolocation:
+  const [lat, setLat] = useState([]);
+  const [long, setLong] = useState([]);
+  // // Weather:
+  const [weatherData, setWeatherData] = useState([]);
+
+  // const [voiceSelector, setVoiceSelector] = useState(false);
+
   const [showSettings, setShowSettings] = useState(false);
-  const [text, setText] = useState("Hello there");
+  // const [text, setText] = useState("Hello there");
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
   const [voiceIndex, setVoiceIndex] = useState(null);
@@ -139,7 +147,45 @@ export default function VirtualAssistant() {
       command: "hide settings",
       callback: () => setShowSettings(false),
     },
+    // {
+    //   command: "fetch weather",
+    //   callback: () => {
+    //     fetchWeather().then(
+    //       setMessage(
+    //         `current weather is ${weatherData.current.weather[0].description}`
+    //       )
+    //     );
+    //     speak({ text: "How can I help you?", voice, rate, pitch });
+    //   },
+    // },
+    // {
+    //   command: "current temperature",
+    //   callback: () => getCurrentTemp(),
+    // },
   ];
+
+  // const getCurrentTemp = () => {
+  //   fetchWeather();
+  //   // {
+  //   //   weatherData.current.temp
+  //   //     ? speak({
+  //   //         text: `the current temperature is ${weatherData.current.temp}`,
+  //   //         voice,
+  //   //         rate,
+  //   //         pitch,
+  //   //       })
+  //   //     : setMessage("could not fetch data.");
+  //   // }
+  //   if (weatherData.current.temp) {
+  //     setMessage(`the current temperature is ${weatherData.current.temp}`);
+  //     speak({
+  //       text: `the current temperature is ${weatherData.current.temp}`,
+  //       voice,
+  //       rate,
+  //       pitch,
+  //     });
+  //   }
+  // };
 
   const {
     transcript,
@@ -151,7 +197,39 @@ export default function VirtualAssistant() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ HOOKS ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
-
+  const fetchWeather = async () => {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
+    );
+    console.log(res.json());
+    console.log("res: ", res);
+    console.log(
+      `${process.env.REACT_APP_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
+    );
+  };
+  // Fetch weather:
+  useEffect(() => {
+    // Geolocation:
+    const fetchData = async () => {
+      await navigator.geolocation.getCurrentPosition(function (position) {
+        setLat(position.coords.latitude);
+        setLong(position.coords.longitude);
+      });
+      // // Weather:
+      // await fetch(
+      //   `${process.env.REACT_APP_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
+      // )
+      //   .then((res) => res.json())
+      //   .then((result) => {
+      //     setData(result);
+      //   });
+    };
+    fetchData();
+    console.log("lat: ", lat, "long: ", long);
+    // console.log(
+    //   `${process.env.REACT_APP_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
+    // );
+  }, []);
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------- EVENT HANDLERS -------------------------------------> //
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -298,6 +376,52 @@ export default function VirtualAssistant() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* ======================================================== */}
+      <div
+      // style={{
+      //   display: "hidden",
+      //   border: "none",
+      // }}
+      >
+        {weatherData.current ? (
+          <div className="data-container">
+            <div className="fetched-data">
+              <ul>
+                Current:
+                <li>dt: {weatherData.current.dt} </li>
+                <li>sunrise: {weatherData.current.sunrise}</li>
+                <li>sunset: {weatherData.current.sunset}</li>
+                <li>temp: {weatherData.current.temp}</li>
+                <li>feels_like: {weatherData.current.feels_like}</li>
+                <li>pressure: {weatherData.current.pressure}</li>
+                <li>humidity: {weatherData.current.humidity}</li>
+                <li>dew_point: {weatherData.current.dew_point}</li>
+                <li>uvi: {weatherData.current.uvi}</li>
+                <li>clouds: {weatherData.current.clouds}</li>
+                <li>visibility: {weatherData.current.visibility}</li>
+                <li>wind_speed: {weatherData.current.wind_speed}</li>
+                <li>wind_deg: {weatherData.current.wind_deg}</li>
+                <li>wind_gust: {weatherData.current.wind_gust}</li>
+              </ul>
+            </div>
+            {weatherData.current.weather.map((item, index) => (
+              <ul className="data-map" key={index}>
+                Weather:
+                <li>id: {item.id}</li>
+                <li>main: {item.main}</li>
+                <li>description: {item.description}</li>
+                {/* <span>icon: </span> */}
+                <img
+                  src={`http://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                />
+              </ul>
+            ))}
+          </div>
+        ) : (
+          <div>no current data</div>
+        )}
       </div>
     </div>
   );
