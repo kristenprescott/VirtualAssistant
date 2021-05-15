@@ -26,6 +26,7 @@ A list of all technologies, libraries, APIs, etc. used in the project.
 - [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition)
 - [react-speech-kit](https://github.com/MikeyParton/react-speech-kit)
 - [Web Speech API](https://wicg.github.io/speech-api/)
+<!-- - [react-modal](https://www.npmjs.com/package/react-modal#api-documentation) -->
 
 <details><summary>This project was bootstrapped with Create React App.</summary>
 
