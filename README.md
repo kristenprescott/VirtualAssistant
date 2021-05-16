@@ -18,9 +18,11 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 
 <p align="center">
 <a target="_blank" rel="noopener noreferrer" href="">
-<img width="350px" src="https://user-images.githubusercontent.com/55470100/118386248-1ede7b00-b5e4-11eb-89ab-c580895a6e67.gif" style="max-width:100%;">
+<img width="350px" src="https://user-images.githubusercontent.com/55470100/118386539-22730180-b5e6-11eb-936c-a867e0a90cd2.gif" style="max-width:100%;">
 </a>
 </p>
+
+<!-- ![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/55470100/118386539-22730180-b5e6-11eb-936c-a867e0a90cd2.gif) -->
 
 ![]()
 
