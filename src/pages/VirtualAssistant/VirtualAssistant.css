@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cutive&display=swap");
 #VirtualAssistant {
   width: 100vw;
   height: 100vh;
@@ -16,23 +17,17 @@ textarea {
   resize: none;
 }
 
-.transcript {
-  width: 500px;
-  height: 200px;
-  background-color: rgba(0, 0, 0, 0);
-  border: 0px;
-}
 /* /////////////////////////////////////////////////////////////////////////// */
 /* <--------------------------- VIRTUAL ASSISTANT ---------------------------> */
 /* /////////////////////////////////////////////////////////////////////////// */
 .virtual-assistant-container {
   margin-top: 2rem;
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
 }
 .virtual-assistant {
   background-color: #fff;
-  height: 250px;
-  width: 250px;
+  height: 175px;
+  width: 175px;
   border-radius: 150px;
   animation: spin 2s linear infinite;
   box-shadow: inset 0 0 62px #fff, inset 24px 0 62px #f155e4,
@@ -82,46 +77,34 @@ textarea {
       16px 0 62px #5dfcfc;
   }
 }
-
-div.instructions {
-  border-radius: 9px;
-  padding-top: 3rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  width: 50rem;
-  height: 20rem;
-  font-size: 2rem;
-  text-align: center;
-}
-/* /////////////////////////////////////////////////////////////////////////// */
-/* <---------------------------- MESSAGE SECTION ----------------------------> */
-/* /////////////////////////////////////////////////////////////////////////// */
-
-.message-textbox {
-  border-radius: 9px;
-  padding-top: 3rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  width: 50rem;
-  height: 10rem;
-  font-size: 2rem;
-  text-align: center;
-}
 /* /////////////////////////////////////////////////////////////////////////// */
 /* <----------------------------- GLASSMORPHIC ------------------------------> */
 /* /////////////////////////////////////////////////////////////////////////// */
 .glass-panel {
   color: #d1cfcf;
-  border-radius: 14px;
+  border-radius: 9px;
   backdrop-filter: blur(3px);
   box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-  background-color: rgba(117, 46, 126, 0.379);
+  /* background-color: rgba(117, 46, 126, 0.379); */
   background-color: rgba(19, 3, 3, 0.4);
   border: 3px rgba(255, 255, 255, 0.4) solid;
   border-bottom: 3px rgba(40, 40, 40, 0.35) solid;
   border-right: 3px rgba(40, 40, 40, 0.35) solid;
-  font-size: 2.4rem;
   text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.6);
+  width: 48rem;
+  height: 13rem;
+  padding: 2rem;
+  padding-bottom: 5rem;
+  font-size: 1.6rem;
+  text-align: center;
+  font-family: "Cutive", serif;
+  line-height: 1.9rem;
+}
+#transcript {
+  margin-bottom: 10px;
+}
+#messages {
+  margin-top: 2px;
 }
 .glass-button {
   display: inline-block;
@@ -131,7 +114,6 @@ div.instructions {
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(30px);
   color: rgba(255, 255, 255, 0.8);
-  font-size: 12px;
   cursor: pointer;
   text-transform: uppercase;
   -webkit-backdrop-filter: blur(10px);
@@ -142,21 +124,21 @@ div.instructions {
 .glass-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
-
-/*  */
+#messages {
+  height: 10rem;
+}
 .center-col {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 /* /////////////////////////////////////////////////////////////////////////// */
 /* ---------------------------------  MODAL ---------------------------------  */
 /* /////////////////////////////////////////////////////////////////////////// */
-.App {
+/* .App {
   text-align: center;
   padding-top: 2rem;
-}
+} */
 
 .modal-overlay {
   position: fixed;
@@ -183,14 +165,9 @@ div.instructions {
 
 .modal {
   z-index: 100;
-  /* background: white; */
   position: relative;
   margin: 1.75rem auto;
-  /* border-radius: 3px; */
-  /* max-width: 500px; */
   max-width: 650px;
-  /* padding: 2rem; */
-  /* -------------- */
   color: #d1cfcf;
   border-radius: 14px;
   backdrop-filter: blur(3px);
@@ -203,7 +180,6 @@ div.instructions {
   font-size: 1.6rem;
   text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.6);
   padding: 1rem;
-  /* -------------- */
 }
 
 .modal-header {
@@ -220,20 +196,6 @@ div.instructions {
   cursor: pointer;
   border: none;
 }
-/* 
-btn {
-  font-size: 0.9rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 3px;
-  padding: 0.3rem 1rem;
-  margin-left: 0.5rem;
-}
-
-.modal-btn {
-  background: #247ba0;
-  color: #fff;
-} */
 /* ////////////////////////////////////////////////////////////////////////// */
 /* <------------------------------ LISTEN BTNS -----------------------------> */
 /* ////////////////////////////////////////////////////////////////////////// */
@@ -253,6 +215,7 @@ btn {
   width: 70px;
   height: 70px;
 }
+
 /* ////////////////////////////////////////////////////////////////////////// */
 /* <------------------------------ RESPONSIVE ------------------------------> */
 /* ////////////////////////////////////////////////////////////////////////// */

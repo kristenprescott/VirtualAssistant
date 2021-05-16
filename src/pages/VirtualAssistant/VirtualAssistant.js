@@ -411,7 +411,7 @@ export default function VirtualAssistant() {
               {/* <--------------------- INSTRUCTIONS DISPLAY --------------------> */}
               {/* ///////////////////////////////////////////////////////////////// */}
 
-              <div className="instructions glass-panel" id="instructions">
+              <div className="glass-panel" id="instructions">
                 <p>Hello, I'm a virtual assistant.</p>
                 <p>
                   To allow microphone access, press and hold the button below.
@@ -432,7 +432,8 @@ export default function VirtualAssistant() {
               {/* ///////////////////////////////////////////////////////////////// */}
               <textarea
                 // style={{ width: "500px" }}
-                className="message-textbox glass-panel"
+                className="glass-panel"
+                id="messages"
                 placeholder={message}
               >
                 {message}
@@ -459,7 +460,11 @@ export default function VirtualAssistant() {
               {/* ///////////////////////////////////////////////////////////////// */}
               {/* <-------------------------- TRANSCRIPT -------------------------> */}
               {/* ///////////////////////////////////////////////////////////////// */}
-              <textarea className="transcript glass-panel" value={transcript} />{" "}
+              <textarea
+                className="glass-panel"
+                id="transcript"
+                value={transcript}
+              />{" "}
             </div>
 
             <div
