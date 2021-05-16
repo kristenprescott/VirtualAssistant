@@ -16,7 +16,12 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 
 <!-- This is my capstone project for General Assembly's Software Engineering Immersive program. -->
 
-![]()
+<p align="center">
+<a target="_blank" rel="noopener noreferrer" href="">
+<img width="350px" src="https://user-images.githubusercontent.com/55470100/118386248-1ede7b00-b5e4-11eb-89ab-c580895a6e67.gif" style="max-width:100%;">
+</a>
+</p>
+
 ![]()
 
 ### Technologies Used:

@@ -431,7 +431,6 @@ export default function VirtualAssistant() {
               {/* <-------------------- TEXT RESPONSE DISPLAY --------------------> */}
               {/* ///////////////////////////////////////////////////////////////// */}
               <textarea
-                // style={{ width: "500px" }}
                 className="glass-panel"
                 id="messages"
                 placeholder={message}
@@ -475,17 +474,7 @@ export default function VirtualAssistant() {
                 {/* ///////////////////////////////////////////////////////////////// */}
                 {/* <----------------------- HOT MIC "BTN" -----------------------> */}
                 {/* ///////////////////////////////////////////////////////////////// */}
-                <img
-                  className="hot-mic-btn"
-                  src={listening ? micOn : micOff}
-                  alt=""
-                  // style={{
-                  //   top: "0",
-                  //   positon: "absolute",
-                  //   width: "70px",
-                  //   height: "70px",
-                  // }}
-                />
+                <img className="hot-mic-btn" src={listening ? micOn : micOff} />
               </div>
               {/* ///////////////////////////////////////////////////////////////// */}
               {/* <------------------------- LISTEN BTN --------------------------> */}
@@ -494,16 +483,6 @@ export default function VirtualAssistant() {
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
                 className="mic-btn"
-                // style={{
-                //   top: "10px",
-                //   position: "absolute",
-                //   width: "50px",
-                //   height: "50px",
-                //   border: "none",
-                //   borderRadius: "30px",
-                //   backgroundColor: "transparent",
-                //   cursor: "pointer",
-                // }}
               >
                 🎤
               </button>

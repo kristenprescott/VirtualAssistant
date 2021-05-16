@@ -45,36 +45,36 @@ textarea {
     transform: rotate(0deg);
     box-shadow: inset 0 0 62px #fff, inset 24px 0 62px #f155e4,
       inset -24px 0 62px #5dfcfc, inset 24px 0 30px #f155e4,
-      inset -24px 0 30px #5dfcfc, 0 0 62px #fff, -16px 0 62px #f155e4,
-      16px 0 62px #5dfcfc;
+      inset -24px 0 30px #5dfcfc, 0 0 50px #fff, -16px 0 50px #f155e4,
+      16px 0 50px #5dfcfc;
   }
   25% {
     transform: rotate(90deg);
     box-shadow: inset 0 0 62px #fff, inset 24px 0 62px #f155e4,
       inset -24px 0 62px #0ff, inset 24px 0 30px #f155e4,
-      inset -24px 0 30px #0ff, 0 0 67px #fff, -16px 0 67px #f155e4,
-      16px 0 67px #0ff;
+      inset -24px 0 30px #0ff, 0 0 60px #fff, -16px 0 60px #f155e4,
+      16px 0 60px #0ff;
   }
   50% {
     transform: rotate(180deg);
     box-shadow: inset 0 0 62px #fff, inset 24px 0 62px #f155e4,
       inset -24px 0 62px #5dfcfc, inset 24px 0 30px #f155e4,
-      inset -24px 0 30px #5dfcfc, 0 0 72px #fff, -16px 0 72px #f155e4,
-      16px 0 72px #5dfcfc;
+      inset -24px 0 30px #5dfcfc, 0 0 70px #fff, -16px 0 70px #f155e4,
+      16px 0 70px #5dfcfc;
   }
   75% {
     transform: rotate(270deg);
     box-shadow: inset 0 0 62px #fff, inset 24px 0 62px #f155e4,
       inset -24px 0 62px #0ff, inset 24px 0 30px #f155e4,
-      inset -24px 0 30px #0ff, 0 0 67px #fff, -16px 0 67px #f155e4,
-      16px 0 67px #0ff;
+      inset -24px 0 30px #0ff, 0 0 60px #fff, -16px 0 60px #f155e4,
+      16px 0 60px #0ff;
   }
   100% {
     transform: rotate(360deg);
     box-shadow: inset 0 0 62px #fff, inset 24px 0 62px #f155e4,
       inset -24px 0 62px #5dfcfc, inset 24px 0 30px #f155e4,
-      inset -24px 0 30px #5dfcfc, 0 0 62px #fff, -16px 0 62px #f155e4,
-      16px 0 62px #5dfcfc;
+      inset -24px 0 30px #5dfcfc, 0 0 50px #fff, -16px 0 50px #f155e4,
+      16px 0 50px #5dfcfc;
   }
 }
 /* /////////////////////////////////////////////////////////////////////////// */
@@ -135,10 +135,6 @@ textarea {
 /* /////////////////////////////////////////////////////////////////////////// */
 /* ---------------------------------  MODAL ---------------------------------  */
 /* /////////////////////////////////////////////////////////////////////////// */
-/* .App {
-  text-align: center;
-  padding-top: 2rem;
-} */
 
 .modal-overlay {
   position: fixed;

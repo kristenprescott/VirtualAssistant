@@ -126,7 +126,7 @@ export default function Settings(props) {
       */}
       </form>
 
-      <p>When you're finished here, just say "Back to demo."</p>
+      <p>When you're finished here, just say "Hide settings"</p>
     </div>
   );
 }

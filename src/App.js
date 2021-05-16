@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import VirtualAssistant from "./pages/VirtualAssistant/VirtualAssistant";
 import VoiceSynthesizer from "./demo/VoiceSynthesizer/VoiceSynthesizer";
+import Login from "./pages/Login/Login";
 // import { SpeechContext } from "./hooks/SpeechContext";
 
 function App() {
@@ -15,6 +16,10 @@ function App() {
 
         <Route exact path="/voicesynthesizer">
           <VoiceSynthesizer />
+        </Route>
+
+        <Route exact path="/login">
+          <Login />
         </Route>
       </Switch>
       {/* </SpeechContext.Provider> */}
