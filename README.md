@@ -2,6 +2,8 @@
 
 # Virtual Assistant
 
+</div>
+
 [Demo]()
 
 Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis. It combines the two hooks to enable voice command recognition and both visual and verbal feedback for commands.
@@ -17,6 +19,8 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 <!-- ![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/55470100/118386539-22730180-b5e6-11eb-936c-a867e0a90cd2.gif) -->
 
 ![]()
+
+<div align="center">
 
 ### Technologies Used:
 
