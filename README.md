@@ -1,3 +1,5 @@
+<div align="center">
+
 # Virtual Assistant
 
 ---
@@ -29,6 +31,8 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 ### Technologies Used:
 
 ---
+
+</div>
 
 ##### Dependencies:
 
@@ -115,6 +119,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 </details>
 
+<div align="center">
+
 ### Getting Started:
 
 ---
@@ -125,6 +131,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - fork and clone this repository
 - install any dependencies (listed [here](#dependencies:)) with `yarn add <dependency>` or `npm install <dependency>`
 - `yarn start` or `npm start` should run the app locally in your browser at `http://localhost:3000` -->
+</div>
 
 ##### Making new commands:
 
@@ -136,7 +143,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
   2. Write `doFunction()` to `setState(newState)`
   3. Call `doFunction()` to execute in the callback of the command
 
-#### More:
+##### More:
 
 For more information browse these docs:
 
@@ -146,7 +153,11 @@ For more information browse these docs:
   - [W3C](https://wicg.github.io/speech-api/)
   - [Mozilla](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
 
+<div align="center">
+
 ### Unsolved Problems:
+
+</div>
 
 ---
 
@@ -158,7 +169,11 @@ For more information browse these docs:
 - [x] works too
  -->
 
+<div align="center">
+
 ### Future Enhancements:
+
+</div>
 
 ---
 
