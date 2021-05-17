@@ -180,6 +180,7 @@ export default function VirtualAssistant() {
         "what's the weather",
         "what is the weather",
         "tell me the weather",
+        "how's the weather",
       ],
       callback: () => {
         if (weatherData) {
@@ -253,6 +254,7 @@ export default function VirtualAssistant() {
     if (weatherData) {
       const weatherText = `${weatherData.current.weather[0].description}`;
       speak({ text: weatherText });
+      setMessage(weatherText);
     } else {
       const weather = await fetchWeather();
       if (weather) {
@@ -266,6 +268,7 @@ export default function VirtualAssistant() {
     if (weatherData) {
       const weatherText = `${weatherData.current.temp.toString()} degrees`;
       speak({ text: weatherText });
+      setMessage(weatherText);
     } else {
       const weather = await fetchWeather();
       if (weather) {
@@ -310,9 +313,11 @@ export default function VirtualAssistant() {
       }
       const weatherText = `${currentPhase}`;
       speak({ text: weatherText });
+      setMessage(weatherText);
       console.log("phase: ", weatherData.daily[0].moon_phase.toString());
     } else {
       speak({ text: "cannot fetch data" });
+
       // const weather = await fetchWeather();
       // if (weather) {
       //   const weatherText = `${weather.daily[0].moon_phase}`;
