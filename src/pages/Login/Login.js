@@ -10,6 +10,7 @@ export default function Login() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({
     username: "",
+    email: "",
     password: "",
   });
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,6 +38,7 @@ export default function Login() {
       });
       setLoginForm({
         username: "",
+        email: "",
         password: "",
       });
       const data = await res.json();
@@ -88,6 +90,18 @@ export default function Login() {
                     name="username"
                     id="username"
                     value={loginForm.username}
+                    onChange={handleLoginChange}
+                  />
+                </label>
+                <br />
+
+                <label htmlFor="email">
+                  Email:{" "}
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={loginForm.email}
                     onChange={handleLoginChange}
                   />
                 </label>

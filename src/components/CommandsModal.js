@@ -59,6 +59,7 @@ const CommandsModal = ({ isShowing, hide }) =>
                   window; **currently does not offer 'go back' functionality -
                   note to self :|: fix that.)
                 </li>
+                <li>▸ "register" :|: open registration page</li>
                 <li>▸ "demo" :|: opens demo</li>
                 <li>
                   ▸ "go to voice synthesizer" :|: opens voice synthesizer(*note

@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import Login from "../Login/Login";
 import "../Register/Register.css";
 
 export default function Register() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
+  const [state, setState] = useState(false);
   const [registered, setRegistered] = useState(false);
   const [registrationForm, setRegistrationForm] = useState({
     username: "",
@@ -57,52 +60,57 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //
+    // change this later its janky and probs unsafe
+    setState(true);
   };
 
   return (
     <div>
-      <h1>Registration</h1>
-      <div>
-        <form className="registration-form" onSubmit={handleRegistration}>
-          <label htmlFor="username">
-            Username:{" "}
-            <input
-              type="text"
-              name="username"
-              id="username"
-              value={registrationForm.username}
-              onChange={handleRegistrationChange}
-            />
-          </label>
-          <br />
-
-          <label htmlFor="email">
-            Email:{" "}
-            <input
-              type="text"
-              name="email"
-              id="email"
-              value={registrationForm.email}
-              onChange={handleRegistrationChange}
-            />
-          </label>
-          <br />
-
-          <label htmlFor="password">
-            Password:{" "}
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={registrationForm.password}
-              onChange={handleRegistrationChange}
-            />
-          </label>
-          <br />
-          <input type="submit" value="Register" onSubmit={handleSubmit} />
-        </form>
-      </div>
+      {state ? (
+        <Login />
+      ) : (
+        <div>
+          <h1>Registration</h1>
+          <div>
+            <form className="registration-form" onSubmit={handleRegistration}>
+              <label htmlFor="username">
+                Username:{" "}
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  value={registrationForm.username}
+                  onChange={handleRegistrationChange}
+                />
+              </label>
+              <br />
+              <label htmlFor="email">
+                Email:{" "}
+                <input
+                  type="text"
+                  name="email"
+                  id="email"
+                  value={registrationForm.email}
+                  onChange={handleRegistrationChange}
+                />
+              </label>
+              <br />
+              <label htmlFor="password">
+                Password:{" "}
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  value={registrationForm.password}
+                  onChange={handleRegistrationChange}
+                />
+              </label>
+              <br />
+              <input type="submit" value="Register" onSubmit={handleSubmit} />
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

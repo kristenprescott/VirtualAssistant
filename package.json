@@ -1,8 +1,17 @@
 {
-  "name": "virtualassistant_client",
-  "version": "0.1.0",
-  "private": true,
+  "name": "virtualassistant",
+  "version": "0.0.1",
+  "description": "Virtual Assistant uses the react-speech-recognition and react-speech-kit hooks to utilize the Web Speech API for Speech Recognition and Voice Synthesis.",
+  "main": "server.js",
+  "author": "Kristen Prescott <prescottdarling@gmail.com>",
+  "license": "MIT",
+  "private": false,
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.9",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -16,6 +25,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "heroku-postbuild": "cd client && yarn && yarn run build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -109,6 +109,12 @@ export default function VirtualAssistant() {
       },
     },
     {
+      command: "register",
+      callback: () => {
+        window.open("http://localhost:3000/register", "_self");
+      },
+    },
+    {
       command: "demo",
       callback: () => {
         window.open("http://localhost:3000/demo", "_self");
