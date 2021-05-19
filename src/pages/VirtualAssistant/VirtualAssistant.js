@@ -65,6 +65,12 @@ export default function VirtualAssistant() {
       },
     },
     {
+      command: "show me my to do list",
+      callback: () => {
+        window.open("http://localhost:3000/todos", "_self");
+      },
+    },
+    {
       command: ["reset", "clear"],
       callback: () => resetTranscript(),
     },
@@ -109,7 +115,7 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "register",
+      command: ["register", "sign up", "signup"],
       callback: () => {
         window.open("http://localhost:3000/register", "_self");
       },
@@ -427,14 +433,9 @@ export default function VirtualAssistant() {
                 <p>
                   To allow microphone access, press and hold the button below.
                 </p>
-                <p>
-                  {/* I can take you to the log in page or show you a demo. Which
-                  would you prefer? */}
-                  To log in say "Log in"
-                </p>
-                {/* <p>To log in say "Log in."</p>
-                <p>To take a tour, say "Demo."</p> */}
-                To see more commands say "Show commands"
+                <p>To log in say "Log in"</p>
+                <p>To make a new account say "Sign up"</p>
+                <p>To see more commands say "Show commands"</p>
               </div>
             </div>
             <div className="message-display-container">

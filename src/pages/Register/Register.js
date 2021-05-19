@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Login from "../Login/Login";
 import "../Register/Register.css";
 
 export default function Register() {
+  const history = useHistory();
+  const redirect = () => {
+    history.push("/login");
+  };
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +51,7 @@ export default function Register() {
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("username", data.username);
         setRegistered(true);
+        redirect();
       }
     } catch (error) {
       console.error(error);

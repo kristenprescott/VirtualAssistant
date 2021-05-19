@@ -59,7 +59,9 @@ const CommandsModal = ({ isShowing, hide }) =>
                   window; **currently does not offer 'go back' functionality -
                   note to self :|: fix that.)
                 </li>
-                <li>▸ "register" :|: open registration page</li>
+                <li>
+                  ▸ ["register", "sign up", "signup"] :|: open registration page
+                </li>
                 <li>▸ "demo" :|: opens demo</li>
                 <li>
                   ▸ "go to voice synthesizer" :|: opens voice synthesizer(*note
@@ -72,6 +74,7 @@ const CommandsModal = ({ isShowing, hide }) =>
                 <li>
                   ▸ "google search exact *" :|: searches google for exact *
                 </li>
+                <li>"show me my to do list" :|: opens the todo list route</li>
                 <li>▸ "show settings" :|: conditionally shows settings view</li>
                 <li>▸ "hide settings" :|: conditionally hides settings view</li>
                 <center>
