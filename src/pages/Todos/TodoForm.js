@@ -58,7 +58,9 @@ export default function TodoForm() {
 
     setNewTodo({ ...newTodo, [e.target.task]: e.target.value });
   };
-
+  ///////////////////////////////////
+  // delete todos
+  ///////////////////
   const handleDelete = async (e, id, idx) => {
     e.preventDefault();
 

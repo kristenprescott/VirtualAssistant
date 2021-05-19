@@ -135,7 +135,11 @@ export default function Login() {
                   />
                 </label>
                 <br />
-                <input type="submit" value="Log in" />
+                <input
+                  style={{ cursor: "pointer" }}
+                  type="submit"
+                  value="Log in"
+                />
               </form>
               <div style={{ color: "blue", cursor: "pointer" }}>
                 <Link to="/register">Sign up</Link>

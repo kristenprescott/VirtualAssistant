@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap");
 .Clock {
   width: 100vw;
   height: 36vh;
@@ -9,28 +9,18 @@
   background-color: #140303;
 }
 .clock-face {
-  /* background-color: #140303; */
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 16px;
   margin: 20px;
   width: 450px;
-  /* background-color: rgba(20, 3, 3, 0.9); */
   font-size: 52px;
   font-family: "Orbitron", sans-serif;
   box-shadow: 0px 0px 60px 40px rgba(221, 174, 126, 0.3);
   border: 1px solid #4a6670;
 }
-.hours {
-  /* border: 1px solid lightgreen; */
-}
-.mins {
-  /* border: 1px solid lightgreen; */
-}
-.secs {
-  /* border: 1px solid lightgreen; */
-}
+
 .time {
   width: 150px;
   height: 150px;
@@ -42,7 +32,6 @@
     0 0 6px #ddae7e, 0 0 10px #ddae7e, 0 0 10px #ddae7e, 0 0 1px #ddae7e,
     0 0 12px #ddae7e;
 }
-/* --- blink --- */
 .blink-text {
   animation: 1s blinker step-end infinite;
   -webkit-animation: 1s blinker step-end infinite;
@@ -64,4 +53,4 @@
   67% {
     opacity: 0;
   }
-}
+} */

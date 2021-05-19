@@ -111,7 +111,12 @@ export default function Register() {
                 />
               </label>
               <br />
-              <input type="submit" value="Register" onSubmit={handleSubmit} />
+              <input
+                style={{ cursor: "pointer" }}
+                type="submit"
+                value="Register"
+                onSubmit={handleSubmit}
+              />
             </form>
           </div>
         </div>
