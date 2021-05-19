@@ -11,7 +11,7 @@ export default function Login() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({
     username: "",
-    email: "",
+    // email: "",
     password: "",
   });
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ export default function Login() {
       });
       setLoginForm({
         username: "",
-        email: "",
+        // email: "",
         password: "",
       });
       const data = await res.json();
@@ -50,7 +50,7 @@ export default function Login() {
         setLoggedIn(true);
         setLoginForm({
           username: data.username,
-          email: data.email,
+          // email: data.email,
           password: data.password,
         });
         console.log("username", data.username);
@@ -72,14 +72,9 @@ export default function Login() {
       ...loginForm,
       [e.target.id]: e.target.value,
       [e.target.username]: e.target.value,
-      [e.target.email]: e.target.value,
+      // [e.target.email]: e.target.value,
       [e.target.password]: e.target.value,
     });
-    // console.log("login target: ", e.target.value);
-    // console.log("id: ", e.target.id);
-    // console.log("username: ", e.target.username);
-    // console.log("email: ", e.target.email);
-    // console.log("password: ", e.target.password);
   };
 
   return (
@@ -112,7 +107,7 @@ export default function Login() {
                 </label>
                 <br />
 
-                <label htmlFor="email">
+                {/* <label htmlFor="email">
                   Email:{" "}
                   <input
                     type="email"
@@ -122,7 +117,7 @@ export default function Login() {
                     onChange={handleLoginChange}
                   />
                 </label>
-                <br />
+                <br /> */}
 
                 <label htmlFor="password">
                   Password:{" "}
