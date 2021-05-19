@@ -1,0 +1,11 @@
+.Test {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+h1 {
+  padding: 5vmax;
+  width: 100vw;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.9);
+}

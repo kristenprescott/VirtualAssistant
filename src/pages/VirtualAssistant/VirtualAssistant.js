@@ -14,6 +14,100 @@ export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // <------------------------- STATE -------------------------> //
   /////////////////////////////////////////////////////////////////
+  // time
+  //////////////////////
+  // const [timer, setTimer] = useState(null);
+  // const [seconds, setSeconds] = useState(0);
+  // const [minutes, setMinutes] = useState(0);
+  // const [hours, setHours] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  // Seconds timer:
+  const setSecondsTimer = (timeout) => {
+    const countdown = parseInt(timeout) * 1000;
+    console.log("countdown: ", countdown);
+    setTimeout(function (countdown) {
+      console.log("Timer set for: ", timeout, " seconds");
+
+      let counter = 0;
+      while (countdown > 0) {
+        countdown--;
+        console.log("time elapsed: ", counter);
+      }
+      setMessage("beep.");
+      speak({ text: "beep.", voice, rate, pitch });
+      return;
+    }, countdown);
+
+    console.log("setTimeout() example...");
+  };
+  // Minutes timer:
+  const setMinutesTimer = (timeout) => {
+    const countdown = parseInt(timeout) * 60000;
+    console.log("countdown: ", countdown);
+    setTimeout(function (countdown) {
+      console.log("Timer set for: ", timeout, " minutes");
+      while (countdown > 0) {
+        countdown--;
+        console.log(countdown);
+      }
+      setMessage("beep.");
+      speak({ text: "beep.", voice, rate, pitch });
+      return;
+    }, countdown);
+
+    console.log("setTimeout() example...");
+  };
+  // current time:
+  const fetchTime = () => {
+    const today = new Date();
+    const time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    // const time = new Date().getTime();
+    // const time = Date.now().setSeconds(num);
+    setMessage(time);
+    speak({ text: `${time} seconds`, voice, rate, pitch });
+  };
+  // current date:
+  const fetchDate = () => {
+    const today = new Date();
+    const date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    setMessage(date);
+    speak({ text: `the date is ${date}`, voice, rate, pitch });
+  };
+  // current day:
+  const fetchDay = () => {
+    // Get the day of week, from 0 (Sunday) to 6 (Saturday).
+    const today = new Date();
+    const day = today.getDay();
+    if (day === 0) {
+      setMessage("Today is Sunday.");
+      speak({ text: "sunday", voice, rate, pitch });
+    } else if (day === 1) {
+      setMessage("Today is Monday.");
+      speak({ text: "monday", voice, rate, pitch });
+    } else if (day === 2) {
+      setMessage("Today is Tuesday.");
+      speak({ text: "tuesday", voice, rate, pitch });
+    } else if (day === 3) {
+      setMessage("Today is Wednesday.");
+      speak({ text: "wednesday", voice, rate, pitch });
+    } else if (day === 4) {
+      setMessage("Today is Thursday.");
+      speak({ text: "thursday", voice, rate, pitch });
+    } else if (day === 5) {
+      setMessage("Today is Friday.");
+      speak({ text: "friday", voice, rate, pitch });
+    } else if (day === 6) {
+      setMessage("Today is Saturday.");
+      speak({ text: "saturday", voice, rate, pitch });
+    }
+  };
+
   // Geolocation:
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
@@ -51,6 +145,13 @@ export default function VirtualAssistant() {
       },
       // matchInterim: true,
       // bestMatchOnly: true,
+    },
+    {
+      command: "thank you",
+      callback: () => {
+        speak({ text: "you're welcome" });
+        setMessage("You're welcome.");
+      },
     },
     {
       command: "(hello) my name is *",
@@ -121,9 +222,15 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "demo",
+      command: "go to demo",
       callback: () => {
         window.open("http://localhost:3000/demo", "_self");
+      },
+    },
+    {
+      command: "go to test",
+      callback: () => {
+        window.open("http://localhost:3000/test", "_self");
       },
     },
     {
@@ -175,6 +282,42 @@ export default function VirtualAssistant() {
     {
       command: "hide settings",
       callback: () => setShowSettings(false),
+    },
+    //////////////////////////////////////////
+    // <--------------- TIME --------------->
+    //////////////////////////////////////////
+    {
+      command: "set (a) timer for :timeout seconds",
+      callback: (timeout) => {
+        setIsActive(true);
+        setSecondsTimer(timeout);
+        setMessage(`Timer set for ${timeout} seconds`);
+        speak({ text: `Timer set for ${timeout} seconds`, voice, rate, pitch });
+      },
+    },
+    {
+      command: [
+        "set (a) timer for :timeout minutes",
+        "set a timer for :timeout minute",
+      ],
+      callback: (timeout) => {
+        setIsActive(true);
+        setMinutesTimer(timeout);
+        setMessage(`Timer set for ${timeout} minutes`);
+        speak({ text: `Timer set for ${timeout} minutes`, voice, rate, pitch });
+      },
+    },
+    {
+      command: "what time is it",
+      callback: () => fetchTime(),
+    },
+    {
+      command: ["what is todays date", "what's the date"],
+      callback: () => fetchDate(),
+    },
+    {
+      command: "what day is it",
+      callback: () => fetchDay(),
     },
     //////////////////////////////////////////
     // <-------------- WEATHER -------------->
