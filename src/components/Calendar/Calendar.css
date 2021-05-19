@@ -1,0 +1,78 @@
+.Calendar {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #130303;
+}
+.Jan {
+  background-color: #343434;
+  background-color: #d36336;
+  width: 100%;
+  height: 7vmax;
+  text-align: center;
+  color: #fafafa;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  padding-top: 5px;
+  border-bottom: 1px solid #ce5b3b;
+  font-size: 42px;
+  text-shadow: -3px 2px 2px rgba(128, 0, 0, 0.7);
+}
+.Month {
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+  background-color: gainsboro;
+  border: 1px solid gainsboro;
+}
+.Week {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    ". . . . . ."
+    ". . . . . ."
+    ". . . . . ."
+    ". . . . . ."
+    ". . . . . .";
+  grid-gap: 1px;
+  border: 1px solid gainsboro;
+}
+.Day {
+  width: 100px;
+  height: 100px;
+  border: 1px solid gainsboro;
+  border-radius: 4px;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  padding-top: 1vmin;
+  font-size: 16px;
+  text-shadow: 1px -1px 0px rgba(255, 255, 255, 0.7);
+}
+.Day:hover {
+  background-color: #a9bec6;
+}
+.Day:active {
+  background-color: #7899a5;
+  text-shadow: 1px -1px 0px rgba(255, 255, 255, 0.9);
+  border: 3px solid #654c4f;
+}
+span.num {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  background-color: gainsboro;
+  text-align: right;
+}
+span.num:active {
+  background-color: #20283d;
+  color: #fafafa;
+}

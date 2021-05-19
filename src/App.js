@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import TodoForm from "./pages/Todos/TodoForm";
 // import { SpeechContext } from "./hooks/SpeechContext";
+import Test from "./components/test/Test";
 
 function App() {
   return (
@@ -30,6 +31,10 @@ function App() {
 
         <Route exact path="/todos">
           <TodoForm />
+        </Route>
+
+        <Route exact path="/test">
+          <Test />
         </Route>
       </Switch>
       {/* </SpeechContext.Provider> */}
