@@ -4,6 +4,7 @@ import VirtualAssistant from "./pages/VirtualAssistant/VirtualAssistant";
 import VoiceSynthesizer from "./demo/VoiceSynthesizer/VoiceSynthesizer";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import TodoForm from "./pages/Todos/TodoForm";
 // import { SpeechContext } from "./hooks/SpeechContext";
 
 function App() {
@@ -25,6 +26,10 @@ function App() {
 
         <Route exact path="/register">
           <Register />
+        </Route>
+
+        <Route exact path="/todos">
+          <TodoForm />
         </Route>
       </Switch>
       {/* </SpeechContext.Provider> */}

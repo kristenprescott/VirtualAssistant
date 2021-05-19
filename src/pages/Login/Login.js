@@ -7,6 +7,7 @@ export default function Login() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({
     username: "",
@@ -20,6 +21,7 @@ export default function Login() {
     const token = localStorage.getItem("token");
     if (token) {
       setLoggedIn(true);
+      console.log(token);
     }
   }, []);
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,6 +48,11 @@ export default function Login() {
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("username", data.username);
         setLoggedIn(true);
+        setLoginForm({
+          username: data.username,
+          email: data.email,
+          password: data.password,
+        });
         console.log("username", data.username);
       }
     } catch (error) {
@@ -61,8 +68,18 @@ export default function Login() {
 
   const handleLoginChange = (e) => {
     e.preventDefault();
-    setLoginForm({ ...loginForm, [e.target.id]: e.target.value });
-    console.log("login target: ", e.target.value);
+    setLoginForm({
+      ...loginForm,
+      [e.target.id]: e.target.value,
+      [e.target.username]: e.target.value,
+      [e.target.email]: e.target.value,
+      [e.target.password]: e.target.value,
+    });
+    // console.log("login target: ", e.target.value);
+    // console.log("id: ", e.target.id);
+    // console.log("username: ", e.target.username);
+    // console.log("email: ", e.target.email);
+    // console.log("password: ", e.target.password);
   };
 
   return (
