@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Dashboard from "../Dashboard/Dashboard";
 import "../Login/Login.css";
 
 export default function Login() {
+  // const history = useHistory();
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
-
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({
     username: "",
-    // email: "",
     password: "",
   });
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,7 @@ export default function Login() {
     const token = localStorage.getItem("token");
     if (token) {
       setLoggedIn(true);
-      console.log(token);
+      // console.log(token);
     }
   }, []);
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,6 @@ export default function Login() {
       });
       setLoginForm({
         username: "",
-        // email: "",
         password: "",
       });
       const data = await res.json();
@@ -50,10 +49,10 @@ export default function Login() {
         setLoggedIn(true);
         setLoginForm({
           username: data.username,
-          // email: data.email,
           password: data.password,
         });
-        console.log("username", data.username);
+        // history.push("/");
+        console.log(data.username, " is now logged in.");
       }
     } catch (error) {
       console.error(error);
@@ -64,6 +63,7 @@ export default function Login() {
     // clear prev token
     window.localStorage.clear();
     setLoggedIn(false);
+    history.push("/login");
   };
 
   const handleLoginChange = (e) => {
@@ -72,7 +72,6 @@ export default function Login() {
       ...loginForm,
       [e.target.id]: e.target.value,
       [e.target.username]: e.target.value,
-      // [e.target.email]: e.target.value,
       [e.target.password]: e.target.value,
     });
   };
@@ -107,18 +106,6 @@ export default function Login() {
                 </label>
                 <br />
 
-                {/* <label htmlFor="email">
-                  Email:{" "}
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={loginForm.email}
-                    onChange={handleLoginChange}
-                  />
-                </label>
-                <br /> */}
-
                 <label htmlFor="password">
                   Password:{" "}
                   <input
@@ -130,6 +117,7 @@ export default function Login() {
                   />
                 </label>
                 <br />
+
                 <input
                   style={{ cursor: "pointer" }}
                   type="submit"
