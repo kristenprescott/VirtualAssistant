@@ -63,7 +63,7 @@ export default function Login() {
     // clear prev token
     window.localStorage.clear();
     setLoggedIn(false);
-    history.push("/login");
+    // history.push("/login");
   };
 
   const handleLoginChange = (e) => {
