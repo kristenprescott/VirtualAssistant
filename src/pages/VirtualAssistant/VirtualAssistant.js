@@ -600,10 +600,10 @@ export default function VirtualAssistant() {
                 <p>
                   To allow microphone access, press and hold the button below.
                 </p>
-                <p>To log in say "Log in"</p>
-                <p>To make a new account say "Sign up"</p>
+                {/* <p>To log in say "Log in"</p> */}
+                {/* <p>To make a new account say "Sign up"</p> */}
                 <p>To see more commands say "Show commands"</p>
-                <p>To make a to-do list, say "Set to-dos"</p>
+                <p>To make a to-do list, say "Set to-do list"</p>
               </div>
             </div>
             <div className="message-display-container">
