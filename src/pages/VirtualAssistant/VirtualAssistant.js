@@ -166,7 +166,7 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "show me my to do list",
+      command: ["show me my to do list", "show me my to-do list"],
       callback: () => {
         window.open("http://localhost:3000/todos", "_self");
       },
