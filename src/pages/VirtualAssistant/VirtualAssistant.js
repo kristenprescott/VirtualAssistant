@@ -9,6 +9,7 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import Settings from "../../components/Settings";
 import CommandsModal from "../../components/CommandsModal";
 import useCommandsModal from "../../hooks/useCommandsModal";
+// import TodoList from "../Todos/TodoForm";
 
 export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
@@ -166,7 +167,12 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: ["show me my to do list", "show me my to-do list"],
+      command: [
+        "show me my to do list",
+        "show me my to-do list",
+        "set to-do list",
+        "add to to-do list",
+      ],
       callback: () => {
         window.open("http://localhost:3000/todos", "_self");
       },
@@ -546,6 +552,18 @@ export default function VirtualAssistant() {
     voices,
   };
 
+  /////////////////////////////////////////////////////////////////
+  // <------------------------- TODOS -------------------------> //
+  /////////////////////////////////////////////////////////////////
+  //////////////////////////////
+  // Modal
+  ///////////////
+  // ---
+  //////////////////////////////
+  // Functions
+  ///////////////
+  // ---
+
   return (
     <div className="page" id="VirtualAssistant">
       {/* ///////////////////////////////////////////////////////////////// */}
@@ -585,6 +603,7 @@ export default function VirtualAssistant() {
                 <p>To log in say "Log in"</p>
                 <p>To make a new account say "Sign up"</p>
                 <p>To see more commands say "Show commands"</p>
+                <p>To make a to-do list, say "Set to-dos"</p>
               </div>
             </div>
             <div className="message-display-container">

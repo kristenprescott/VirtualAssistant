@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import TodoAPIHelper from "../../helpers/TodoAPIHelper";
+// import SpeechRecognition, {
+//   useSpeechRecognition,
+// } from "react-speech-recognition";
+// import { useSpeechSynthesis } from "react-speech-kit";
 
 export default function TodoForm() {
   ///////////////////////////////////
@@ -59,6 +63,14 @@ export default function TodoForm() {
     }
   };
 
+  // const {
+  //   transcript,
+  //   interimTranscript,
+  //   finalTranscript,
+  //   resetTranscript,
+  //   listening,
+  // } = useSpeechRecognition({ commands });
+
   return (
     <div
       style={{
@@ -87,7 +99,7 @@ export default function TodoForm() {
           </button>
         </div>
 
-        <ul>
+        <ol>
           {todos.map(({ _id, task, done }, i) => (
             <li
               style={{ cursor: "pointer", backgroundColor: "gainsboro" }}
@@ -104,7 +116,7 @@ export default function TodoForm() {
               </span>
             </li>
           ))}
-        </ul>
+        </ol>
       </div>
     </div>
   );

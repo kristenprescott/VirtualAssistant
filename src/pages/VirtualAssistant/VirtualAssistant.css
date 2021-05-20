@@ -100,10 +100,71 @@ textarea {
   font-family: "Cutive", serif;
   line-height: 1.9rem;
 }
+#instructions {
+  color: #d1cfcf;
+  border-radius: 9px;
+  backdrop-filter: blur(3px);
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+  /* background-color: rgba(117, 46, 126, 0.379); */
+  background-color: rgba(19, 3, 3, 0.4);
+  border: 3px rgba(255, 255, 255, 0.4) solid;
+  border-bottom: 3px rgba(40, 40, 40, 0.35) solid;
+  border-right: 3px rgba(40, 40, 40, 0.35) solid;
+  text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.6);
+  width: 48rem;
+  height: 13rem;
+  padding: 2rem;
+  padding-bottom: 5rem;
+  font-size: 1.6rem;
+  text-align: center;
+  font-family: "Cutive", serif;
+  line-height: 1.9rem;
+  /* --------------------- */
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
 #transcript {
+  color: #d1cfcf;
+  border-radius: 9px;
+  backdrop-filter: blur(3px);
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+  /* background-color: rgba(117, 46, 126, 0.379); */
+  background-color: rgba(19, 3, 3, 0.4);
+  border: 3px rgba(255, 255, 255, 0.4) solid;
+  border-bottom: 3px rgba(40, 40, 40, 0.35) solid;
+  border-right: 3px rgba(40, 40, 40, 0.35) solid;
+  text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.6);
+  width: 48rem;
+  height: 13rem;
+  padding: 2rem;
+  padding-bottom: 5rem;
+  font-size: 1.6rem;
+  text-align: center;
+  font-family: "Cutive", serif;
+  line-height: 1.9rem;
+  /* --------------------- */
   margin-bottom: 10px;
 }
 #messages {
+  color: #d1cfcf;
+  border-radius: 9px;
+  backdrop-filter: blur(3px);
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+  /* background-color: rgba(117, 46, 126, 0.379); */
+  background-color: rgba(19, 3, 3, 0.4);
+  border: 3px rgba(255, 255, 255, 0.4) solid;
+  border-bottom: 3px rgba(40, 40, 40, 0.35) solid;
+  border-right: 3px rgba(40, 40, 40, 0.35) solid;
+  text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.6);
+  width: 48rem;
+  height: 13rem;
+  padding: 2rem;
+  padding-bottom: 5rem;
+  font-size: 1.6rem;
+  text-align: center;
+  font-family: "Cutive", serif;
+  line-height: 1.9rem;
+  /* --------------------- */
   margin-top: 2px;
 }
 .glass-button {

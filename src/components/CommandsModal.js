@@ -74,7 +74,11 @@ const CommandsModal = ({ isShowing, hide }) =>
                 <li>
                   ▸ "google search exact *" :|: searches google for exact *
                 </li>
-                <li>"show me my to do list" :|: opens the todo list route</li>
+                <li>
+                  [ "show me my to do list", "show me my to-do list", "show me
+                  my to-dos", "set to-dos", "add to to-do list", ] :|: opens
+                  to-do list
+                </li>
                 <li>▸ "show settings" :|: conditionally shows settings view</li>
                 <li>▸ "hide settings" :|: conditionally hides settings view</li>
                 <center>
