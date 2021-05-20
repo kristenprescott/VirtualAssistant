@@ -174,7 +174,7 @@ export default function VirtualAssistant() {
         "add to to-do list",
       ],
       callback: () => {
-        window.open("http://localhost:3000/todos", "_self");
+        window.open("https://virtual-asst.herokuapp.com/todos", "_self");
       },
     },
     {
@@ -218,31 +218,31 @@ export default function VirtualAssistant() {
     {
       command: ["log in", "login"],
       callback: () => {
-        window.open("http://localhost:3000/login", "_self");
+        window.open("https://virtual-asst.herokuapp.com/login", "_self");
       },
     },
     {
       command: ["log out", "logout"],
       callback: () => {
-        window.open("http://localhost:3000/login", "_self");
+        window.open("https://virtual-asst.herokuapp.com/login", "_self");
       },
     },
     {
       command: ["register", "sign up", "signup"],
       callback: () => {
-        window.open("http://localhost:3000/register", "_self");
+        window.open("https://virtual-asst.herokuapp.com/register", "_self");
       },
     },
     {
       command: "go to demo",
       callback: () => {
-        window.open("http://localhost:3000/demo", "_self");
+        window.open("https://virtual-asst.herokuapp.com/demo", "_self");
       },
     },
     {
       command: "go to test",
       callback: () => {
-        window.open("http://localhost:3000/test", "_self");
+        window.open("https://virtual-asst.herokuapp.com/test", "_self");
       },
     },
     {
@@ -284,7 +284,10 @@ export default function VirtualAssistant() {
     {
       command: "go to voice synthesizer",
       callback: () => {
-        window.open("http://localhost:3000/voicesynthesizer", "_self");
+        window.open(
+          "https://virtual-asst.herokuapp.com/voicesynthesizer",
+          "_self"
+        );
       },
     },
     {

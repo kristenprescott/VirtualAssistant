@@ -57,13 +57,13 @@ export default function Permission() {
     {
       command: ["log in", "login"],
       callback: () => {
-        window.open("http://localhost:3000/login", "_self");
+        window.open("https://virtual-asst.herokuapp.com/login", "_self");
       },
     },
     {
       command: "demo",
       callback: () => {
-        window.open("http://localhost:3000/demo", "_self");
+        window.open("https://virtual-asst.herokuapp.com/demo", "_self");
       },
     },
     {
