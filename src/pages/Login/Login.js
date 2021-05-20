@@ -4,7 +4,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import "../Login/Login.css";
 
 export default function Login() {
-  const history = useHistory();
+  // const history = useHistory();
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
@@ -47,11 +47,11 @@ export default function Login() {
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("username", data.username);
         setLoggedIn(true);
-        history.push("/");
         setLoginForm({
           username: data.username,
           password: data.password,
         });
+        // history.push("/");
         console.log(data.username, " is now logged in.");
       }
     } catch (error) {
@@ -63,6 +63,7 @@ export default function Login() {
     // clear prev token
     window.localStorage.clear();
     setLoggedIn(false);
+    history.push("/login");
   };
 
   const handleLoginChange = (e) => {
@@ -74,14 +75,6 @@ export default function Login() {
       [e.target.password]: e.target.value,
     });
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     await
-  //   }
-  // };
 
   return (
     <div className="page" id="Login">
@@ -124,11 +117,11 @@ export default function Login() {
                   />
                 </label>
                 <br />
+
                 <input
                   style={{ cursor: "pointer" }}
                   type="submit"
                   value="Log in"
-                  // onChange={handleSubmit}
                 />
               </form>
               <div style={{ color: "blue", cursor: "pointer" }}>
