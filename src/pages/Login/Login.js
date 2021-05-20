@@ -1,19 +1,11 @@
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
-import { Link } from "react-router-dom";
-// import { Link, useHistory } from "react-router-dom";
-=======
 import { Link, useHistory } from "react-router-dom";
->>>>>>> b82c2e394d7687722648aa419f6743875b597b34
 import Dashboard from "../Dashboard/Dashboard";
 import "../Login/Login.css";
 
 export default function Login() {
   // const history = useHistory();
-<<<<<<< HEAD
-=======
 
->>>>>>> b82c2e394d7687722648aa419f6743875b597b34
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,11 +52,7 @@ export default function Login() {
           password: data.password,
         });
         // history.push("/");
-<<<<<<< HEAD
-        console.log("username", data.username);
-=======
         console.log(data.username, " is now logged in.");
->>>>>>> b82c2e394d7687722648aa419f6743875b597b34
       }
     } catch (error) {
       console.error(error);
@@ -75,7 +63,7 @@ export default function Login() {
     // clear prev token
     window.localStorage.clear();
     setLoggedIn(false);
-    history.push("/login");
+    // history.push("/login");
   };
 
   const handleLoginChange = (e) => {
