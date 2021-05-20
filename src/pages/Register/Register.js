@@ -5,7 +5,7 @@ import "../Register/Register.css";
 
 export default function Register() {
   const history = useHistory();
-  const redirect = () => {
+  const redirectToLogin = () => {
     history.push("/login");
   };
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +51,7 @@ export default function Register() {
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("username", data.username);
         setRegistered(true);
-        redirect();
+        redirectToLogin();
       }
     } catch (error) {
       console.error(error);

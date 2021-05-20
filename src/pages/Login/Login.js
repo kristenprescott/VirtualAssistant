@@ -4,7 +4,13 @@ import Dashboard from "../Dashboard/Dashboard";
 import "../Login/Login.css";
 
 export default function Login() {
-  // const history = useHistory();
+  const history = useHistory();
+  const redirectHome = () => {
+    history("/");
+  };
+  const redirectToLogin = () => {
+    history("/login");
+  };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
@@ -52,6 +58,7 @@ export default function Login() {
           password: data.password,
         });
         // history.push("/");
+        redirectHome();
         console.log(data.username, " is now logged in.");
       }
     } catch (error) {
@@ -64,6 +71,7 @@ export default function Login() {
     window.localStorage.clear();
     setLoggedIn(false);
     // history.push("/login");
+    redirectToLogin();
   };
 
   const handleLoginChange = (e) => {
