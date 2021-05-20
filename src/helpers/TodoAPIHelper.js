@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/todos";
+const API_URL = "https://virtual-asst.herokuapp.com/todos";
 
 //GET all
 async function getAllTodos() {
