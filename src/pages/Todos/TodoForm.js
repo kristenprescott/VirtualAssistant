@@ -1,86 +1,61 @@
 import { useEffect, useState } from "react";
+import TodoAPIHelper from "../../helpers/TodoAPIHelper";
 
 export default function TodoForm() {
   ///////////////////////////////////
   // STATE
   ///////////////////////////////////
-  const [updatedTodo, setUpdatedTodo] = useState(false);
-  const [todo, setTodo] = useState([]);
-  const [newTodo, setNewTodo] = useState({
-    task: "",
-    done: null,
-    createdAt: null,
-    user_id: "",
-  });
-  //////////////////////
-  // get todos
-  /////////////////
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState("");
+  // const [todo, setTodo] = useState("");
+  // GET ALL
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch("http://localhost:8080/todos/");
-        const data = await res.json();
-        setTodo(data);
-      } catch (error) {
-        console.error(error);
-      }
-    })();
+    const fetchTodoAndSetTodos = async () => {
+      const todos = await TodoAPIHelper.getAllTodos();
+      setTodos(todos);
+    };
+    fetchTodoAndSetTodos();
   }, []);
-  ///////////////////////////////////
-  // EVENT LISTENERS
-  ///////////////////////////////////
-  // set new todos
-  ///////////////////
-  const handleSubmit = async (e) => {
+  // // GET one
+  // const fetchTodo = async () => {
+  //   const todo = await TodoAPIHelper.getTodo();
+  //   setTodo();
+  // };
+  // CREATE
+  const createTodo = async (e) => {
     e.preventDefault();
-
-    try {
-      const res = await fetch("http://localhost:8080/todos/addTodo/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTodo),
-      });
-      const data = await res.json();
-      setTodo([...todo, data]);
-      // clear input
-      setNewTodo({
-        task: "",
-      });
-    } catch (error) {
-      console.error(error);
+    // check if todo is empty:
+    if (!newTodo) {
+      console.log("no todo entered.");
+      return;
     }
+    // check if todo already exists:
+    if (todos.some(({ task }) => task === newTodo)) {
+      alert(`Task: ${newTodo} already exists`);
+      return;
+    }
+    // create todo:
+    const newTask = await TodoAPIHelper.createTodo(newTodo);
+    // add todo to the list:
+    setTodos([...todos, newTask]);
   };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-
-    setNewTodo({ ...newTodo, [e.target.task]: e.target.value });
+  // UPDATE
+  const updateTodo = async (e, id) => {
+    e.stopPropagation();
+    const payload = {
+      done: !todos.find((todo) => todo._id === id).done,
+    };
+    const updatedTodo = await TodoAPIHelper.updateTodo(id, payload);
+    setTodos(todos.map((todo) => (todo._id === id ? updatedTodo : todo)));
   };
-  ///////////////////////////////////
-  // delete todos
-  ///////////////////
-  const handleDelete = async (e, id, idx) => {
-    e.preventDefault();
-
-    // make del req to api
+  // DELETE
+  const deleteTodo = async (e, id) => {
     try {
-      const res = await fetch(`http://localhost:8080/todos/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application.json",
-        },
-      });
-      const data = res.json();
-      // remove todo from list
-      const copyTask = [...todo];
-      // remove item at index
-      copyTask.splice(idx, 1);
-      // setTodo
-      setTodo(copyTask);
-    } catch (error) {
-      console.error(error);
+      e.stopPropagation();
+      await TodoAPIHelper.deleteTodo(id);
+      setTodos(todos.filter(({ _id: i }) => id !== i));
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -99,47 +74,42 @@ export default function TodoForm() {
 
       <hr></hr>
 
-      <div
-        style={{
-          margin: "30px",
-          padding: "30px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-around",
-          alignItems: "flex-start",
-        }}
-        id="todo"
-      >
-        {todo.map((todo, idx) => (
-          <div key={todo.id}>
-            <p>{todo.task}</p>
-            <button
-              onClick={(e) => {
-                handleDelete(e, todo.id, idx);
-              }}
+      <div className="">
+        <div>
+          <input
+            id="todo-input"
+            type="text"
+            value={newTodo}
+            onChange={({ target }) => setNewTodo(target.value)}
+          />
+          <button type="button" onClick={createTodo}>
+            Add
+          </button>
+        </div>
+
+        <ul>
+          {todos.map(({ _id, task, done }, i) => (
+            <li
+              style={{ cursor: "pointer", backgroundColor: "gainsboro" }}
+              key={i}
+              onClick={(e) => updateTodo(e, _id)}
+              className={done ? "done" : ""}
             >
-              Delete
-            </button>
-          </div>
-        ))}
-      </div>
-
-      <hr></hr>
-
-      <div>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="task">
-            Task:{" "}
-            <input
-              type="text"
-              name="task"
-              value={newTodo.task}
-              onChange={handleChange}
-            />
-          </label>
-          <input type="submit" />
-        </form>
+              {task}{" "}
+              <span
+                style={{ backgroundColor: "red", cursor: "pointer" }}
+                onClick={(e) => deleteTodo(e, _id)}
+              >
+                X
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
 }
+/////////////////////////
+/*
+We start by creating two states: todo and todos. States are like information about your components. todo will store the user input when creating a new todo and todos will store all of our todos.
+*/
