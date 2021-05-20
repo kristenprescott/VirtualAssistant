@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+// import { Link, useHistory } from "react-router-dom";
 import Dashboard from "../Dashboard/Dashboard";
 import "../Login/Login.css";
 
 export default function Login() {
+  // const history = useHistory();
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,7 +13,6 @@ export default function Login() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({
     username: "",
-    // email: "",
     password: "",
   });
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +41,6 @@ export default function Login() {
       });
       setLoginForm({
         username: "",
-        // email: "",
         password: "",
       });
       const data = await res.json();
@@ -50,9 +50,9 @@ export default function Login() {
         setLoggedIn(true);
         setLoginForm({
           username: data.username,
-          // email: data.email,
           password: data.password,
         });
+        // history.push("/");
         console.log("username", data.username);
       }
     } catch (error) {
@@ -64,6 +64,7 @@ export default function Login() {
     // clear prev token
     window.localStorage.clear();
     setLoggedIn(false);
+    history.push("/login");
   };
 
   const handleLoginChange = (e) => {
@@ -72,7 +73,6 @@ export default function Login() {
       ...loginForm,
       [e.target.id]: e.target.value,
       [e.target.username]: e.target.value,
-      // [e.target.email]: e.target.value,
       [e.target.password]: e.target.value,
     });
   };
@@ -106,18 +106,6 @@ export default function Login() {
                   />
                 </label>
                 <br />
-
-                {/* <label htmlFor="email">
-                  Email:{" "}
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={loginForm.email}
-                    onChange={handleLoginChange}
-                  />
-                </label>
-                <br /> */}
 
                 <label htmlFor="password">
                   Password:{" "}
