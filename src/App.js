@@ -4,6 +4,7 @@ import VirtualAssistant from "./pages/VirtualAssistant/VirtualAssistant";
 import VoiceSynthesizer from "./demo/VoiceSynthesizer/VoiceSynthesizer";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import TodoForm from "./pages/Todos/TodoForm";
 // import { SpeechContext } from "./hooks/SpeechContext";
 import Test from "./components/test/Test";
@@ -13,29 +14,39 @@ function App() {
     <BrowserRouter>
       {/* <SpeechContext.Provider value={{ state, setState, isBool, etc }}> */}
       <Switch>
-        <Route exact path="/">
+        <Route path="/" exact component={VirtualAssistant} />
+        {/* <Route exact path="/">
           <VirtualAssistant />
-        </Route>
+        </Route> */}
 
-        <Route exact path="/voicesynthesizer">
+        <Route path="/voicesynthesizer" component={VoiceSynthesizer} />
+
+        {/* <Route path="/voicesynthesizer">
           <VoiceSynthesizer />
-        </Route>
+        </Route> */}
 
-        <Route exact path="/login">
+        {/* <Route path="/login" component={Login} /> */}
+        <Route path="/login">
+          {/* {loggedIn ? <Redirect to="/" /> : <VirtualAssistant />} */}
           <Login />
         </Route>
 
-        <Route exact path="/register">
+        <Route path="/register">
           <Register />
         </Route>
 
-        <Route exact path="/todos">
+        <Route path="/dashboard/:username" component={Dashboard} />
+        {/* <Route path="/dashboard/:username">
+          <Dashboard />
+        </Route> */}
+
+        <Route path="/todos">
           <TodoForm />
         </Route>
-
-        <Route exact path="/test">
+        {/* 
+        <Route  path="/test">
           <Test />
-        </Route>
+        </Route> */}
       </Switch>
       {/* </SpeechContext.Provider> */}
     </BrowserRouter>
