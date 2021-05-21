@@ -246,11 +246,6 @@ For more information browse these docs:
 - [ ] Make Voice Assistant global to the app - currently, components are rendered conditionally right on the Voice Assistant page
 - [ ] When fetching from weather api, a fetch command must first be made (once) before any further requests can be made to the weather API
 
-<!--
-- [ ] works
-- [x] works too
- -->
-
 <div align="center">
 
 ### Future Enhancements:
@@ -260,5 +255,6 @@ For more information browse these docs:
 ---
 
 - [ ] Login/registration for user-specific todo lists
+- [ ] User restricted data access
 - [ ] User varibale memory (for example, when you say "My name is :name", it is stored to memory)
 - [ ] Delete/update todo list tasks by voice command
