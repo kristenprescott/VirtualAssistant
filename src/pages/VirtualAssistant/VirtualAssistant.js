@@ -1,7 +1,7 @@
 import micOn from "../../assets/images/icons/mic_on.png";
 import micOff from "../../assets/images/icons/mic_off.png";
 import "./VirtualAssistant.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -13,12 +13,28 @@ import TodoAPIHelper from "../../helpers/TodoAPIHelper";
 import TodoList from "../Todos/TodoForm";
 
 export default function VirtualAssistant() {
+  const SpeechContext = React.createContext();
   ///////////////////////////////////
-  // TODOS
+  // STATE
   ///////////////////////////////////
+  // timer
+  const [isActive, setIsActive] = useState(false);
+  // todos
   const [showTodos, setShowTodos] = useState(false);
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+  // conditional settings toggle
+  const [showSettings, setShowSettings] = useState(false);
+  // Geolocation:
+  const [lat, setLat] = useState([]);
+  const [long, setLong] = useState([]);
+  // // Weather:
+  const [weatherData, setWeatherData] = useState(null);
+  // voice synth:
+  const [pitch, setPitch] = useState(1);
+  const [rate, setRate] = useState(1);
+  const [voiceIndex, setVoiceIndex] = useState(null);
+  const [message, setMessage] = useState("");
   // GET ALL
   useEffect(() => {
     const fetchTodoAndSetTodos = async () => {
@@ -86,7 +102,6 @@ export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // <------------------------- TIME -------------------------> //
   /////////////////////////////////////////////////////////////////
-  const [isActive, setIsActive] = useState(false);
   // Seconds timer:
   const setSecondsTimer = (timeout) => {
     const countdown = parseInt(timeout) * 1000;
@@ -171,19 +186,6 @@ export default function VirtualAssistant() {
       speak({ text: "saturday", voice, rate, pitch });
     }
   };
-
-  // conditional settings toggle
-  const [showSettings, setShowSettings] = useState(false);
-  // Geolocation:
-  const [lat, setLat] = useState([]);
-  const [long, setLong] = useState([]);
-  // // Weather:
-  const [weatherData, setWeatherData] = useState(null);
-  // voice synth:
-  const [pitch, setPitch] = useState(1);
-  const [rate, setRate] = useState(1);
-  const [voiceIndex, setVoiceIndex] = useState(null);
-  const [message, setMessage] = useState("");
 
   /////////////////////////////////////////////////////////////////
   // <----------------------- VARIABLES -----------------------> //
@@ -667,61 +669,63 @@ export default function VirtualAssistant() {
   };
 
   return (
-    <div className="page" id="VirtualAssistant">
-      {/* ///////////////////////////////////////////////////////////////// */}
-      {/* <------------------------ COMMANDS MODAL -----------------------> */}
-      {/* ///////////////////////////////////////////////////////////////// */}
-      <div>
+    <SpeechContext.Provider value={() => {}}>
+      <div className="page" id="VirtualAssistant">
+        {/* ///////////////////////////////////////////////////////////////// */}
+        {/* <------------------------ COMMANDS MODAL -----------------------> */}
+        {/* ///////////////////////////////////////////////////////////////// */}
+        {/* <div> */}
         <CommandsModal isShowing={isShowing} hide={toggle} />
-      </div>
-      <div className="center-col virtual-assistant-container">
-        <div className="paused virtual-assistant"></div>
-      </div>
+        {/* </div> */}
 
-      <div className="center-col main">
-        {showSettings && <Settings {...settingsProps} />}
-        {showTodos && <TodoList />}
-        {!showSettings && !showTodos && (
-          <div>
+        <div className="center-col virtual-assistant-container">
+          <div className="paused virtual-assistant"></div>
+        </div>
+
+        <div className="center-col main">
+          {showSettings && <Settings {...settingsProps} />}
+          {showTodos && <TodoList />}
+          {!showSettings && !showTodos && (
             <div>
-              <div className="instructions-container">
-                {/* ///////////////////////////////////////////////////////////////// */}
-                {/* <--------------------- INSTRUCTIONS DISPLAY --------------------> */}
-                {/* ///////////////////////////////////////////////////////////////// */}
+              <div>
+                <div className="instructions-container">
+                  {/* ///////////////////////////////////////////////////////////////// */}
+                  {/* <--------------------- INSTRUCTIONS DISPLAY --------------------> */}
+                  {/* ///////////////////////////////////////////////////////////////// */}
 
-                <div
-                  className=" glass-panel"
-                  id="instructions"
-                  style={{
-                    height: "150px",
-                    width: "550px",
-                    marginBottom: "1px",
-                    value: { message },
-                  }}
-                >
-                  <p className="fade-out-text">
-                    Hello, I'm a virtual assistant.
-                  </p>
-                  <p className="fade-out-text">
-                    To allow microphone access, press the button below; hold
-                    down to talk.
-                  </p>
-                  {/* <p>To log in say "Log in"</p> */}
-                  {/* <p>To make a new account say "Sign up"</p> */}
-                  <p className="fade-out-text">
-                    To see more commands say "Show commands"
-                  </p>
-                  <p className="fade-out-text">
-                    To add a task to the to-do list, say "Add new task",
-                    followed by the task to add; then, say "add to list"
-                  </p>
+                  <div
+                    className=" glass-panel"
+                    id="instructions"
+                    style={{
+                      height: "150px",
+                      width: "550px",
+                      marginBottom: "1px",
+                      value: { message },
+                    }}
+                  >
+                    <p className="fade-out-text">
+                      Hello, I'm a virtual assistant.
+                    </p>
+                    <p className="fade-out-text">
+                      To allow microphone access, press the button below; hold
+                      down to talk.
+                    </p>
+                    {/* <p>To log in say "Log in"</p> */}
+                    {/* <p>To make a new account say "Sign up"</p> */}
+                    <p className="fade-out-text">
+                      To see more commands say "Show commands"
+                    </p>
+                    <p className="fade-out-text">
+                      To add a task to the to-do list, say "Add new task",
+                      followed by the task to add; then, say "add to list"
+                    </p>
+                  </div>
                 </div>
-              </div>
-              {/* <div className="message-display-container"> */}
-              {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <----------------------- MESSAGE DISPLAY -----------------------> */}
-              {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <textarea
+                {/* <div className="message-display-container"> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <----------------------- MESSAGE DISPLAY -----------------------> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <textarea
                   style={{
                     height: "150px",
                     width: "550px",
@@ -736,52 +740,53 @@ export default function VirtualAssistant() {
                 >
                   {message}
                 </textarea> */}
-              {/* </div> */}
+                {/* </div> */}
+              </div>
+              <div className="transcript-display">
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <-------------------------- TRANSCRIPT -------------------------> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
+                <textarea
+                  style={{
+                    margin: "0px",
+                    marginTop: "0px",
+                    height: "150px",
+                    width: "550px",
+                  }}
+                  className="glass-panel"
+                  id="transcript"
+                  // placeholder="transcript"
+                  value={transcript}
+                />{" "}
+              </div>
             </div>
-            <div className="transcript-display">
-              {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <-------------------------- TRANSCRIPT -------------------------> */}
-              {/* ///////////////////////////////////////////////////////////////// */}
-              <textarea
-                style={{
-                  margin: "0px",
-                  marginTop: "0px",
-                  height: "150px",
-                  width: "550px",
-                }}
-                className="glass-panel"
-                id="transcript"
-                // placeholder="transcript"
-                value={transcript}
-              />{" "}
-            </div>
-          </div>
-        )}
-        <div className="form-container">
-          <div
-            className="center-col buttons"
-            style={{ position: "relative", margin: "10px" }}
-          >
-            <div>
-              {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <------------------------ HOT MIC "BTN" ------------------------> */}
-              {/* ///////////////////////////////////////////////////////////////// */}
-              <img className="hot-mic-btn" src={listening ? micOn : micOff} />
-            </div>
-            {/* ///////////////////////////////////////////////////////////////// */}
-            {/* <------------------------- LISTEN BTN --------------------------> */}
-            {/* ///////////////////////////////////////////////////////////////// */}
-            <button
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              className="mic-btn"
+          )}
+          <div className="form-container">
+            <div
+              className="center-col buttons"
+              style={{ position: "relative", margin: "10px" }}
             >
-              🎤
-            </button>
+              <div>
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <------------------------ HOT MIC "BTN" ------------------------> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
+                <img className="hot-mic-btn" src={listening ? micOn : micOff} />
+              </div>
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <------------------------- LISTEN BTN --------------------------> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              <button
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                className="mic-btn"
+              >
+                🎤
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </SpeechContext.Provider>
   );
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
