@@ -16,12 +16,9 @@ export default function VirtualAssistant() {
   ///////////////////////////////////
   // TODOS
   ///////////////////////////////////
-  const [lastTodo, setLastTodo] = useState("");
-  const [firstTodo, setFirstTodo] = useState("");
   const [showTodos, setShowTodos] = useState(false);
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
-  // const [todo, setTodo] = useState("");
   // GET ALL
   useEffect(() => {
     const fetchTodoAndSetTodos = async () => {
@@ -40,29 +37,6 @@ export default function VirtualAssistant() {
     const firstTodo = await TodoAPIHelper.getMostRecentTodo();
     return firstTodo.data[firstTodo.data.length - 1];
   };
-  // // UPDATE most recent
-  // const updateMostRecentTodo = async (transcript) => {
-  //   // get last todo
-  //   const lastTodo = await TodoAPIHelper.getMostRecentTodo();
-  //   const lastTodoId = lastTodo.data[0]._id;
-  //   if (lastTodo) {
-  //     // Fix transcript var below: <---------------------------------
-  //     console.log(transcript);
-  //     TodoAPIHelper.updateTodo(lastTodoId, transcript.toString());
-  //   }
-  // };
-  // //UPDATE oldest
-  // const updateOldestTodo = async (transcript) => {
-  //   // get first added todo
-  //   const firstTodo = await TodoAPIHelper.getMostRecentTodo();
-  //   const firstTodoId = lastTodo.data[lastTodo.data.length - 1]._id;
-  //   if (firstTodo) {
-  //     // Fix transcript var below: <---------------------------------
-  //     console.log(transcript);
-  //     TodoAPIHelper.updateTodo(firstTodoId, transcript.toString());
-  //   }
-  // };
-
   // DELETE most recent task
   const deleteMostRecentTodo = async () => {
     const lastTodo = await TodoAPIHelper.getMostRecentTodo();
@@ -109,26 +83,9 @@ export default function VirtualAssistant() {
       console.log(err);
     }
   };
-
-  // const addNewTodo = () => {
-  //   // const newTask = task.toString();
-  //   // setNewTodo(newTask);
-  //   if (newTodo) {
-  //     createTodo();
-  //   } else {
-  //     setMessage("no todo added");
-  //     speak({ text: "no todo added" });
-  //   }
-  // };
   /////////////////////////////////////////////////////////////////
-  // <------------------------- STATE -------------------------> //
+  // <------------------------- TIME -------------------------> //
   /////////////////////////////////////////////////////////////////
-  // time
-  //////////////////////
-  // const [timer, setTimer] = useState(null);
-  // const [seconds, setSeconds] = useState(0);
-  // const [minutes, setMinutes] = useState(0);
-  // const [hours, setHours] = useState(0);
   const [isActive, setIsActive] = useState(false);
   // Seconds timer:
   const setSecondsTimer = (timeout) => {
@@ -171,8 +128,6 @@ export default function VirtualAssistant() {
     const today = new Date();
     const time =
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    // const time = new Date().getTime();
-    // const time = Date.now().setSeconds(num);
     setMessage(time);
     speak({ text: `${time}`, voice, rate, pitch });
   };
@@ -217,22 +172,18 @@ export default function VirtualAssistant() {
     }
   };
 
+  // conditional settings toggle
+  const [showSettings, setShowSettings] = useState(false);
   // Geolocation:
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
   // // Weather:
   const [weatherData, setWeatherData] = useState(null);
-
-  // const [voiceSelector, setVoiceSelector] = useState(false);
-
-  const [showSettings, setShowSettings] = useState(false);
-  // const [text, setText] = useState("Hello there");
+  // voice synth:
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
   const [voiceIndex, setVoiceIndex] = useState(null);
-
   const [message, setMessage] = useState("");
-  // const [isListening, setIsListening] = useState(false);
 
   /////////////////////////////////////////////////////////////////
   // <----------------------- VARIABLES -----------------------> //
@@ -244,7 +195,9 @@ export default function VirtualAssistant() {
     onEnd,
   });
   const voice = voices[1] || null;
-
+  /////////////////////////////////////////////////////////////////
+  // <----------------------- COMMANDS -----------------------> //
+  /////////////////////////////////////////////////////////////////
   const commands = [
     {
       command: ["hello", "hi"],
@@ -439,18 +392,6 @@ export default function VirtualAssistant() {
         setShowTodos(false);
       },
     },
-    // {
-    //   command: "(add) new task *",
-    //   callback: (task) => {
-    //     setMessage(`${task} added to list`);
-    //     speak({ text: `${task} added to list` });
-    //     const newTodo = task.toString();
-    //     console.log(`task: ${task}`);
-    //     setNewTodo(task.toString());
-    //     console.log(newTodo);
-    //     addNewTodo();
-    //   },
-    // },
     {
       command: [
         "(add) new task *",
@@ -480,38 +421,6 @@ export default function VirtualAssistant() {
         createTodo();
       },
     },
-    // {
-    //   command: "get last added item",
-    //   callback: () => {
-    //     setMessage("okay");
-    //     speak({ text: "okay" });
-    //     getMostRecentTodo();
-    //   },
-    // },
-    // {
-    //   command: "update first task with *",
-    //   callback: (transcript) => {
-    //     setMessage("okay");
-    //     speak({ text: "okay" });
-    //     updateOldestTodo(transcript);
-    //   },
-    // },
-    // {
-    //   command: "update most recent task with *",
-    //   callback: (transcript) => {
-    //     setMessage("okay");
-    //     speak({ text: "okay" });
-    //     updateMostRecentTodo(transcript);
-    //   },
-    // },
-    // {
-    //   command: "get first added item",
-    //   callback: () => {
-    //     setMessage("okay");
-    //     speak({ text: "okay" });
-    //     getOldestTodo();
-    //   },
-    // },
     {
       command: [
         "delete most recent task",
@@ -618,12 +527,6 @@ export default function VirtualAssistant() {
         getMoonPhase();
       },
     },
-    // {
-    //   command: "current sunrise",
-    //   callback: () => {
-    //     getCurrentSunrise();
-    //   },
-    // },
   ];
 
   const {
@@ -648,7 +551,6 @@ export default function VirtualAssistant() {
       });
     };
     getLocation();
-    // console.log("lat: ", lat, "long: ", long);
   }, []);
   /////////////////////////////////////////////////////////////////
   // <------------------ COMMAND FUNCTIONS---------------------> //
@@ -729,41 +631,8 @@ export default function VirtualAssistant() {
       console.log("phase: ", weatherData.daily[0].moon_phase.toString());
     } else {
       speak({ text: "cannot fetch data" });
-
-      // const weather = await fetchWeather();
-      // if (weather) {
-      //   const weatherText = `${weather.daily[0].moon_phase}`;
-      //   speak({ text: weatherText });
-      // }
     }
   };
-
-  // const getCurrentSunrise = async () => {
-  //   ////////////////////////////////////////////
-  //   // const timeConversion = new Date(
-  //   //   weatherData.current.sunrise
-  //   // ).toLocaleTimeString("en-US");
-  //   ////////////////////////////////////////////
-  //   if (weatherData) {
-  //     const unixTimestamp = weatherData.current.sunrise;
-  //     const date = new Date(unixTimestamp * 1e3); // 1e3 === 1000
-  //     // Now you can use built-in methods to convert to a local date.
-  //     const localized = date.toLocaleDateString();
-  //     const weatherText = `${localized}`;
-  //     speak({ text: weatherText });
-  //   } else {
-  //     const unixTimestamp = weather.current.sunrise;
-  //     const date = new Date(unixTimestamp * 1e3); // 1e3 === 1000
-  //     // Now you can use built-in methods to convert to a local date.
-  //     const localized = date.toLocaleDateString();
-  //     const weather = await fetchWeather();
-  //     if (weather) {
-  //       const weatherText = `${localized}`;
-  //       speak({ text: weatherText });
-  //     }
-  //   }
-  // };
-
   /////////////////////////////////////////////////////////////////
   // <-------------------- EVENT HANDLERS ---------------------> //
   /////////////////////////////////////////////////////////////////
@@ -796,18 +665,6 @@ export default function VirtualAssistant() {
     setPitch,
     voices,
   };
-
-  /////////////////////////////////////////////////////////////////
-  // <------------------------- TODOS -------------------------> //
-  /////////////////////////////////////////////////////////////////
-  //////////////////////////////
-  // Modal
-  ///////////////
-  // ---
-  //////////////////////////////
-  // Functions
-  ///////////////
-  // ---
 
   return (
     <div className="page" id="VirtualAssistant">
@@ -896,7 +753,6 @@ export default function VirtualAssistant() {
             </div>
           </div>
         )}
-        {/* <div> */}
         <div className="form-container">
           <div
             className="center-col buttons"
@@ -904,7 +760,7 @@ export default function VirtualAssistant() {
           >
             <div>
               {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <----------------------- HOT MIC "BTN" -----------------------> */}
+              {/* <------------------------ HOT MIC "BTN" ------------------------> */}
               {/* ///////////////////////////////////////////////////////////////// */}
               <img className="hot-mic-btn" src={listening ? micOn : micOff} />
             </div>
@@ -920,8 +776,6 @@ export default function VirtualAssistant() {
             </button>
           </div>
         </div>
-
-        {/* </div> */}
       </div>
     </div>
   );
