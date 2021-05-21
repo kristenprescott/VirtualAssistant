@@ -30,37 +30,29 @@ export default function VirtualAssistant() {
     };
     fetchTodoAndSetTodos();
   }, []);
-  // GET most recently aded item
+  // GET most recently aded task
   const getLastAddedTodo = async () => {
     const lastTodo = await TodoAPIHelper.getLastAddedTodo();
-    console.log(lastTodo.data[0]);
     return lastTodo.data[0];
   };
-  // GET oldest item
+  // GET oldest task
   const getFirstAddedTodo = async () => {
     const lastTodo = await TodoAPIHelper.getLastAddedTodo();
-    console.log(lastTodo.data[lastTodo.data.length - 1]);
     return lastTodo.data[lastTodo.data.length - 1];
   };
-  // DELETE most recent item
+  // DELETE most recent task
   const deleteLastAddedTodo = async () => {
     const lastTodo = await TodoAPIHelper.getLastAddedTodo();
-    console.log(lastTodo.data[0]._id);
     const lastTodoId = lastTodo.data[0]._id;
-    // then delete (/:id)
     if (lastTodoId) {
-      // delete
       TodoAPIHelper.deleteTodo(lastTodoId);
     }
   };
-  // DELETE oldest item
+  // DELETE oldest task
   const deleteFirstAddedTodo = async () => {
     const lastTodo = await TodoAPIHelper.getLastAddedTodo();
-    console.log(lastTodo.data[lastTodo.data.length - 1]._id);
     const firstTodoId = lastTodo.data[lastTodo.data.length - 1]._id;
-    // then delete (/:id)
     if (firstTodoId) {
-      // delete
       TodoAPIHelper.deleteTodo(firstTodoId);
     }
   };
