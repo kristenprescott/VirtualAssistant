@@ -4,7 +4,8 @@
 
 </div>
 
-[Demo]()
+[Demo](https://virtual-asst.herokuapp.com/)
+[Link to backend repo](https://github.com/kristenprescott/VoiceAsst_backend)
 
 Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis. It combines the two hooks to enable voice command recognition and both visual and verbal feedback for commands.
 
@@ -129,7 +130,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ##### Making new commands:
 
-- Commands are held in an array called "commands" that currently lives inside the VirtualAssistant component. Each command is an object with two properties:
+- Commands are held in an array called "commands", located inside the VirtualAssistant component. Each command is an object with two properties:
   1. command: a string for Virtual Assistant to listen for
   2. callback: a callback function to execute in response; there is one already built-in to the react-speech-recognition hook called resetTranscript() - it resets the transcript. (I use the command "clear" or "reset" here)
 - A common pattern I've used here for action commands is to:
@@ -171,5 +172,5 @@ For more information browse these docs:
 
 ---
 
-- [ ] Finish login/auth for user-specific information and dashboard
-- [ ] CRUD for to do list
+- [ ] Login/registration for user-specific todo lists
+- [ ] User varibale memory (for example, when you say "My name is :name", it is stored to memory)

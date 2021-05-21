@@ -144,8 +144,6 @@ export default function VirtualAssistant() {
         setMessage("Hello, how can I help you?");
         speak({ text: "Hello, how can I help you?", voice, rate, pitch });
       },
-      // matchInterim: true,
-      // bestMatchOnly: true,
     },
     {
       command: "thank you",
@@ -170,7 +168,7 @@ export default function VirtualAssistant() {
       command: [
         "show me my to do list",
         "show me my to-do list",
-        "set to-do list",
+        "set (my) to-do list",
         "add to to-do list",
       ],
       callback: () => {
@@ -196,11 +194,10 @@ export default function VirtualAssistant() {
       command: "help",
       callback: () => {
         setMessage(
-          "To open view all commands, say 'get commands' or simply 'commands'"
+          "To view all commands, say 'get commands' or simply 'commands'"
         );
         speak({
-          text:
-            "To open view all commands, say 'get commands' or simply 'commands'",
+          text: "To view all commands, say 'get commands' or simply 'commands'",
           voice,
           rate,
           pitch,
@@ -270,9 +267,13 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "up up down down left right left right b a (start)",
+      command: [
+        "up up down down left right left right b a (start)",
+        "up up down down left right left right ba (start)",
+      ],
       callback: () => {
         setMessage("nerd.");
+        speak({ text: "nerd.", voice, rate, pitch });
       },
     },
     {
@@ -324,7 +325,11 @@ export default function VirtualAssistant() {
       callback: () => fetchTime(),
     },
     {
-      command: ["what is todays date", "what's the date"],
+      command: [
+        "what is todays date",
+        "what's today's date",
+        "what's the date",
+      ],
       callback: () => fetchDate(),
     },
     {
@@ -570,19 +575,10 @@ export default function VirtualAssistant() {
       {/* <------------------------ COMMANDS MODAL -----------------------> */}
       {/* ///////////////////////////////////////////////////////////////// */}
       <div>
-        {/* <button
-          style={{ display: "none" }}
-          className="btn modal-btn"
-          onClick={toggle}
-        >
-          Show Commands Modal
-        </button> */}
         <CommandsModal isShowing={isShowing} hide={toggle} />
       </div>
       <div className="center-col virtual-assistant-container">
-        <div className="paused virtual-assistant">
-          {/* {transcript.toString()} */}
-        </div>
+        <div className="paused virtual-assistant"></div>
       </div>
 
       <div className="center-col main">
@@ -620,18 +616,6 @@ export default function VirtualAssistant() {
             </div>
           </div>
         )}
-        {/* <div className="speak-toggle-btn btn">
-          {speaking ? (
-            <button type="button" onClick={cancel}></button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => speak({ text: "howdy", voice, rate, pitch })}
-            >
-              Howdy
-            </button>
-          )}
-        </div> */}
 
         <div className="form-container">
           <div>

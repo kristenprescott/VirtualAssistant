@@ -1,4 +1,3 @@
-// https://upmostly.com/tutorials/modal-components-react-custom-hooks
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -38,35 +37,32 @@ const CommandsModal = ({ isShowing, hide }) =>
                 <li>▸ ["hello", "hi"]</li>
                 <li>▸ "(hello) my name is *"</li>
                 <li>▸ "help"</li>
-                <li>▸ "up up down down left right left right b a (start)"</li>
+                {/* <li>▸ "up up down down left right left right b a (start)"</li> */}
               </ul>
               <ul>
                 <center>
                   <h2>Action response:</h2>
                 </center>
-                <li>
+                {/* <li>
                   ▸ "reset" <strong>:|:</strong> reset transcript
-                </li>
-                <li>▸ "clear" :|: clear transcript</li>
-                <li>
-                  ▸ ["quit", "end", "exit"] :|: end listening(no longer needed)
-                </li>
+                </li> */}
+                <li>▸ "clear" :|: clear transcript(spoken words)</li>
                 <li>
                   ["(get) commands", "show commands"] :|: open commands modal
                 </li>
-                <li>
+                {/* <li>
                   ▸ ["log in", "login"] :|: open login page(opens in same
                   window; **currently does not offer 'go back' functionality -
                   note to self :|: fix that.)
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   ▸ ["register", "sign up", "signup"] :|: open registration page
-                </li>
-                <li>▸ "demo" :|: opens demo</li>
-                <li>
+                </li> */}
+                {/* <li>▸ "demo" :|: opens demo</li> */}
+                {/* <li>
                   ▸ "go to voice synthesizer" :|: opens voice synthesizer(*note
                   to self* :|: should be deprecated)
-                </li>
+                </li> */}
                 <li>▸ "(go) back" :|: browser back</li>
                 <li>▸ "(go) forward" :|: browser forward</li>
                 <li>▸ "open webpage *" :|: opens "http:// * .com"</li>
@@ -75,12 +71,14 @@ const CommandsModal = ({ isShowing, hide }) =>
                   ▸ "google search exact *" :|: searches google for exact *
                 </li>
                 <li>
-                  [ "show me my to do list", "show me my to-do list", "show me
-                  my to-dos", "set to-dos", "add to to-do list", ] :|: opens
-                  to-do list
+                  [ "show me my to-do list", "show me my to-dos", "set to-dos",
+                  "add to to-do list", ] :|: opens to-do list
                 </li>
-                <li>▸ "show settings" :|: conditionally shows settings view</li>
-                <li>▸ "hide settings" :|: conditionally hides settings view</li>
+                <li>
+                  ▸ "show settings" :|: shows settings view; changes made here
+                  persist
+                </li>
+                <li>▸ "hide settings" :|: hides settings view</li>
                 <center>
                   <li>
                     <h4>Weather:</h4>
@@ -104,11 +102,28 @@ const CommandsModal = ({ isShowing, hide }) =>
                   believe, I need to work on that function...) the current moon
                   phase.
                 </li>
-                <li>
+                {/* <li>
                   ▸ "current sunrise" :|: gives today's sunrise time.(or, it
                   would if I could figure out that UTC/Linux time conversion
                   thing)
+                </li> */}
+                <li>
+                  "set (a) timer for :timeout seconds" :|: sets a timer for
+                  :number seconds
                 </li>
+                <li>
+                  "set a timer for :timeout minute" :|: sets a timer for :number
+                  minutes
+                </li>
+                <li>
+                  "what time is it" :|: responds with the time (24hr only for
+                  now)
+                </li>
+                <li>
+                  [ "what is todays date", "what's today's date", "what's the
+                  date" ] :|: responds with the date (YYYY-MM-DD)
+                </li>
+                <li>"what day is it" :|: responds with the weekday</li>
               </ul>
             </div>
           </div>
@@ -119,11 +134,3 @@ const CommandsModal = ({ isShowing, hide }) =>
 // }
 
 export default CommandsModal;
-/*
-Most of the code above is self-explanatory. Modal is a stateless functional component that takes two props and only returns HTML when isShowing is true.
-
-- Portals - allow React components to render in another part of the DOM that is outside of their parent component.
-We can use a Portal to mount our Modal component to the end of the document.body element, rather than as a child of another component.
-
-Specify two arguments to the createPortal function: the modal component we want to render and the location of where we want to append the component.
-*/

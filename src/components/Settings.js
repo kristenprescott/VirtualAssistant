@@ -1,5 +1,4 @@
 import { useSpeechSynthesis } from "react-speech-kit";
-// import Clock from "../components/Clock/Clock";
 
 export default function Settings(props) {
   //
@@ -10,7 +9,6 @@ export default function Settings(props) {
   const { voices } = useSpeechSynthesis();
   return (
     <div className="synth instructions glass-panel" style={{ height: "372px" }}>
-      {/* <Clock /> */}
       <h1 className="synth-h1">Voice Synthesizer</h1>
 
       <form className="synth-form">
