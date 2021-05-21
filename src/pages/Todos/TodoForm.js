@@ -104,9 +104,6 @@ export default function TodoForm() {
                   className="list-item"
                 >
                   {task}{" "}
-                  {/* <div className="todo-delete" onClick={(e) => deleteTodo(e, _id)}>
-                &times;
-              </div> */}
                 </li>
                 <div
                   className="todo-delete"
