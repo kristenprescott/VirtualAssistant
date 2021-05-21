@@ -818,7 +818,7 @@ export default function VirtualAssistant() {
                   id="instructions"
                   style={{
                     height: "150px",
-                    width: "600px",
+                    width: "550px",
                     marginBottom: "1px",
                   }}
                 >
@@ -843,7 +843,7 @@ export default function VirtualAssistant() {
                 <textarea
                   style={{
                     height: "150px",
-                    width: "600px",
+                    width: "550px",
                     margin: "0px",
                     marginTop: "1px",
                     marginBottom: "0px",
@@ -867,7 +867,7 @@ export default function VirtualAssistant() {
                   margin: "0px",
                   marginTop: "0px",
                   height: "150px",
-                  width: "600px",
+                  width: "550px",
                 }}
                 className="glass-panel"
                 id="transcript"
