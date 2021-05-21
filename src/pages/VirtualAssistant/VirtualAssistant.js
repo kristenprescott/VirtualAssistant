@@ -458,11 +458,10 @@ export default function VirtualAssistant() {
         console.log(`task: ${task}`);
         setNewTodo(task.toString());
         console.log(newTodo);
-        // createTodo();
       },
     },
     {
-      command: ["(yes) create to-do", "(yes) add to list"],
+      command: ["yes", "(yes) create to-do", "(yes) add to list"],
       callback: () => {
         setMessage(`creating to-do ${newTodo}.`);
         speak({ text: "okay" });
