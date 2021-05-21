@@ -16,6 +16,8 @@ export default function VirtualAssistant() {
   ///////////////////////////////////
   // TODOS
   ///////////////////////////////////
+  const [lastTodo, setLastTodo] = useState("");
+  const [firstTodo, setFirstTodo] = useState("");
   const [showTodos, setShowTodos] = useState(false);
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
@@ -28,20 +30,30 @@ export default function VirtualAssistant() {
     };
     fetchTodoAndSetTodos();
   }, []);
-  // // GET one
-  // const fetchTodo = async () => {
-  //   const todo = await TodoAPIHelper.getTodo();
-  //   setTodo();
-  // };
+  // GET most recently aded item
+  const getLastAddedTodo = async () => {
+    const lastTodo = await TodoAPIHelper.getLastAddedTodo();
+    console.log(lastTodo.data[0]);
+    return lastTodo.data[0];
+  };
+  // GET oldest item
+  const getFirstAddedTodo = async () => {
+    const lastTodo = await TodoAPIHelper.getLastAddedTodo();
+    console.log(lastTodo.data[lastTodo.data.length - 1]);
+    return lastTodo.data[lastTodo.data.length - 1];
+  };
+  // DELETE most recent item
+  const deleteLastAddedTodo = async () => {
+    getFirstAddedTodo();
+    // delete it
+  };
+  // DELETE oldest item
+  const deleteFirstAddedTodo = async () => {
+    getFirstAddedTodo();
+    // delete it
+  };
   // CREATE
   const createTodo = async (e) => {
-    // e.preventDefault();
-    // // check if todo is empty:
-    // if (!newTodo) {
-    //   console.log("no todo entered.");
-    //   return;
-    // }
-    // check if todo already exists:
     if (todos.some(({ task }) => task === newTodo)) {
       alert(`Task: ${newTodo} already exists`);
       return;
@@ -71,16 +83,16 @@ export default function VirtualAssistant() {
     }
   };
 
-  const addNewTodo = () => {
-    // const newTask = task.toString();
-    // setNewTodo(newTask);
-    if (newTodo) {
-      createTodo();
-    } else {
-      setMessage("no todo added");
-      speak({ text: "no todo added" });
-    }
-  };
+  // const addNewTodo = () => {
+  //   // const newTask = task.toString();
+  //   // setNewTodo(newTask);
+  //   if (newTodo) {
+  //     createTodo();
+  //   } else {
+  //     setMessage("no todo added");
+  //     speak({ text: "no todo added" });
+  //   }
+  // };
   /////////////////////////////////////////////////////////////////
   // <------------------------- STATE -------------------------> //
   /////////////////////////////////////////////////////////////////
@@ -397,7 +409,12 @@ export default function VirtualAssistant() {
     //   },
     // },
     {
-      command: "(add) new task *",
+      command: [
+        "(add) new task *",
+        "set new task *",
+        "add new to-do *",
+        "add new to do *",
+      ],
       callback: (task) => {
         setMessage(`add ${task} to to-do list?`);
         speak({
@@ -414,11 +431,28 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "(yes) create to-do",
+      command: ["(yes) create to-do", "(yes) add to list"],
       callback: () => {
         setMessage(`creating to-do ${newTodo}.`);
         speak({ text: "okay" });
         createTodo();
+      },
+    },
+    {
+      command: "get last added item",
+      callback: () => {
+        setMessage("okay");
+        speak({ text: "okay" });
+        getLastAddedTodo();
+        // console.log(todos.createdAt[0]);
+      },
+    },
+    {
+      command: "get first added item",
+      callback: () => {
+        setMessage("okay");
+        speak({ text: "okay" });
+        getFirstAddedTodo();
       },
     },
     //////////////////////////////////////////

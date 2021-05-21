@@ -27,12 +27,25 @@ async function updateTodo(id, payload) {
 }
 // DELETE
 async function deleteTodo(id) {
-  const message = await axios.delete(`${API_URL}/${id}`);
+  const deleted = await axios.delete(`${API_URL}/${id}`);
   // console.log("deleted todo id: ", id);
-  return message;
+  return deleted;
 }
 
-export default { getAllTodos, getTodo, createTodo, updateTodo, deleteTodo };
+// DELETE most current
+async function getLastAddedTodo() {
+  const lastTodo = await axios.get(`${API_URL}/`);
+  return lastTodo;
+}
+
+export default {
+  getAllTodos,
+  getTodo,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+  getLastAddedTodo,
+};
 //////////////////////////////////////////////////////////////////////////////////
 // getAllTodos:                                                                 //
 //      fetching all the todos from our API via axios.get                       //
