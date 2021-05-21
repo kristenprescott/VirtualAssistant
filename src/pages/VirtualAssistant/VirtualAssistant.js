@@ -10,12 +10,13 @@ import Settings from "../../components/Settings";
 import CommandsModal from "../../components/CommandsModal";
 import useCommandsModal from "../../hooks/useCommandsModal";
 import TodoAPIHelper from "../../helpers/TodoAPIHelper";
-// import TodoList from "../Todos/TodoForm";
+import TodoList from "../Todos/TodoForm";
 
 export default function VirtualAssistant() {
   ///////////////////////////////////
   // TODOS
   ///////////////////////////////////
+  const [showTodos, setShowTodos] = useState(false);
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
   // const [todo, setTodo] = useState("");
@@ -67,6 +68,17 @@ export default function VirtualAssistant() {
       setTodos(todos.filter(({ _id: i }) => id !== i));
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const addNewTodo = () => {
+    // const newTask = task.toString();
+    // setNewTodo(newTask);
+    if (newTodo) {
+      createTodo();
+    } else {
+      setMessage("no todo added");
+      speak({ text: "no todo added" });
     }
   };
   /////////////////////////////////////////////////////////////////
@@ -362,9 +374,28 @@ export default function VirtualAssistant() {
         "add to to-do list",
       ],
       callback: () => {
-        window.open("../todos", "_self");
+        setShowTodos(true);
+        // window.open("../todos", "_self");
       },
     },
+    {
+      command: ["hide to-do list", "hide to do list", "hide to-dos"],
+      callback: () => {
+        setShowTodos(false);
+      },
+    },
+    // {
+    //   command: "(add) new task *",
+    //   callback: (task) => {
+    //     setMessage(`${task} added to list`);
+    //     speak({ text: `${task} added to list` });
+    //     const newTodo = task.toString();
+    //     console.log(`task: ${task}`);
+    //     setNewTodo(task.toString());
+    //     console.log(newTodo);
+    //     addNewTodo();
+    //   },
+    // },
     {
       command: "(add) new task *",
       callback: (task) => {
@@ -676,43 +707,40 @@ export default function VirtualAssistant() {
       </div>
 
       <div className="center-col main">
-        {showSettings ? (
-          <Settings {...settingsProps} />
-        ) : (
+        {showSettings && <Settings {...settingsProps} />}
+        {showTodos && <TodoList />}
+        {!showSettings && !showTodos && (
           <div>
-            <div className="instructions-container">
-              {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <--------------------- INSTRUCTIONS DISPLAY --------------------> */}
-              {/* ///////////////////////////////////////////////////////////////// */}
+            <div>
+              <div className="instructions-container">
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <--------------------- INSTRUCTIONS DISPLAY --------------------> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
 
-              <div className="glass-panel" id="instructions">
-                <p>Hello, I'm a virtual assistant.</p>
-                <p>
-                  To allow microphone access, press and hold the button below.
-                </p>
-                {/* <p>To log in say "Log in"</p> */}
-                {/* <p>To make a new account say "Sign up"</p> */}
-                <p>To see more commands say "Show commands"</p>
-                <p>To make a to-do list, say "Set to-do list"</p>
+                <div className="glass-panel" id="instructions">
+                  <p>Hello, I'm a virtual assistant.</p>
+                  <p>
+                    To allow microphone access, press and hold the button below.
+                  </p>
+                  {/* <p>To log in say "Log in"</p> */}
+                  {/* <p>To make a new account say "Sign up"</p> */}
+                  <p>To see more commands say "Show commands"</p>
+                  <p>To make a to-do list, say "Set to-do list"</p>
+                </div>
+              </div>
+              <div className="message-display-container">
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <-------------------- TEXT RESPONSE DISPLAY --------------------> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
+                <textarea
+                  className="glass-panel"
+                  id="messages"
+                  placeholder={message}
+                >
+                  {message}
+                </textarea>
               </div>
             </div>
-            <div className="message-display-container">
-              {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <-------------------- TEXT RESPONSE DISPLAY --------------------> */}
-              {/* ///////////////////////////////////////////////////////////////// */}
-              <textarea
-                className="glass-panel"
-                id="messages"
-                placeholder={message}
-              >
-                {message}
-              </textarea>
-            </div>
-          </div>
-        )}
-
-        <div className="form-container">
-          <div>
             <div className="transcript-display">
               {/* ///////////////////////////////////////////////////////////////// */}
               {/* <-------------------------- TRANSCRIPT -------------------------> */}
@@ -723,30 +751,34 @@ export default function VirtualAssistant() {
                 value={transcript}
               />{" "}
             </div>
-
-            <div
-              className="center-col buttons"
-              style={{ position: "relative", margin: "10px" }}
-            >
-              <div>
-                {/* ///////////////////////////////////////////////////////////////// */}
-                {/* <----------------------- HOT MIC "BTN" -----------------------> */}
-                {/* ///////////////////////////////////////////////////////////////// */}
-                <img className="hot-mic-btn" src={listening ? micOn : micOff} />
-              </div>
+          </div>
+        )}
+        {/* <div> */}
+        <div className="form-container">
+          <div
+            className="center-col buttons"
+            style={{ position: "relative", margin: "10px" }}
+          >
+            <div>
               {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <------------------------- LISTEN BTN --------------------------> */}
+              {/* <----------------------- HOT MIC "BTN" -----------------------> */}
               {/* ///////////////////////////////////////////////////////////////// */}
-              <button
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                className="mic-btn"
-              >
-                🎤
-              </button>
+              <img className="hot-mic-btn" src={listening ? micOn : micOff} />
             </div>
+            {/* ///////////////////////////////////////////////////////////////// */}
+            {/* <------------------------- LISTEN BTN --------------------------> */}
+            {/* ///////////////////////////////////////////////////////////////// */}
+            <button
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              className="mic-btn"
+            >
+              🎤
+            </button>
           </div>
         </div>
+
+        {/* </div> */}
       </div>
     </div>
   );
