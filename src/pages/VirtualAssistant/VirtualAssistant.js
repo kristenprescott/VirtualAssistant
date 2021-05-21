@@ -816,11 +816,12 @@ export default function VirtualAssistant() {
                 <div
                   className="glass-panel"
                   id="instructions"
-                  style={{ height: "150px", marginBottom: "0px" }}
+                  style={{ height: "150px", marginBottom: "1px" }}
                 >
                   <p>Hello, I'm a virtual assistant.</p>
                   <p>
-                    To allow microphone access, press and hold the button below.
+                    To allow microphone access, press the button below; hold
+                    down to talk.
                   </p>
                   {/* <p>To log in say "Log in"</p> */}
                   {/* <p>To make a new account say "Sign up"</p> */}
@@ -838,7 +839,7 @@ export default function VirtualAssistant() {
                 <textarea
                   style={{
                     margin: "0px",
-                    marginTop: "0px",
+                    marginTop: "1px",
                     marginBottom: "0px",
                   }}
                   className="glass-panel"
