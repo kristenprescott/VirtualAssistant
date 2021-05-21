@@ -2,21 +2,19 @@
 
 # Virtual Assistant
 
-<!-- --- -->
-
 </div>
 
-Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis. It combines the two hooks to enable voice command recognition and both visual and verbal feedback for commands.
+Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis. It combines the two hooks to enable voice command recognition and both visual and verbal feedback for commands. Users have the ability to add items to a to-do list and view that list. Items may be deleted manually.
 
 <!-- This is my capstone project for General Assembly's Software Engineering Immersive program. -->
 
 <br>
 
-<center>
+<div align="center">
 
 [Live Demo](https://virtual-asst.herokuapp.com/)
 
-</center>
+</div>
 
 <!-- ![ez-showCommands](https://user-images.githubusercontent.com/55470100/119111518-242b3380-b9f1-11eb-8982-479dfa52cdae.gif) -->
 
