@@ -174,7 +174,7 @@ export default function VirtualAssistant() {
     // const time = new Date().getTime();
     // const time = Date.now().setSeconds(num);
     setMessage(time);
-    speak({ text: `${time} seconds`, voice, rate, pitch });
+    speak({ text: `${time}`, voice, rate, pitch });
   };
   // current date:
   const fetchDate = () => {
