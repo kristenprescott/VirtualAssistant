@@ -138,13 +138,43 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 </details>
 
+### Planning Stages:
+
+---
+
+My original plans for the app were somewhat vague - I wasn't quite sure yet what the API could do (or what I could do with it). You can see from the wireframes (below) I had something different in mind. That being said, it was actually a really important step in the process. Figuring out how to represent voice controlled components was an interesting challenge, and one I hope to continue to expand upon in the future.
+
+<details><summary>Original wireframes</summary>
+
+<p align="center">
+<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/55470100/119117484-43c55a80-b9f7-11eb-9764-6f80be6e7511.PNG">
+<img width="350px" src="https://user-images.githubusercontent.com/55470100/119117484-43c55a80-b9f7-11eb-9764-6f80be6e7511.PNG" style="max-width:100%;">
+</a>
+
+<p align="center">
+<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/55470100/119116542-5723f600-b9f6-11eb-868f-853b71d25550.PNG">
+<img width="350px" src="https://user-images.githubusercontent.com/55470100/119116542-5723f600-b9f6-11eb-868f-853b71d25550.PNG" style="max-width:100%;">
+</a>
+
+<a target="_blank" rel="noopener noreferer" href="https://user-images.githubusercontent.com/55470100/119116668-76228800-b9f6-11eb-989e-715dd7eba15f.PNG">
+<img width="350px" src="https://user-images.githubusercontent.com/55470100/119116668-76228800-b9f6-11eb-989e-715dd7eba15f.PNG" style="max-width:100%;">
+</a>
+</p>
+
+<p align="center">
+<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/55470100/119117400-314b2100-b9f7-11eb-87ad-74cad557bce7.PNG">
+<img width="350px" src="https://user-images.githubusercontent.com/55470100/119117400-314b2100-b9f7-11eb-87ad-74cad557bce7.PNG" style="max-width:100%;">
+</a>
+
+</details>
+
 ### Getting Started:
 
 ---
 
-#### How to use/install:
+<!-- #### How to use/install:
 
-<!-- - Fork and clone this repository
+- Fork and clone this repository
 - [Create-react-app README.md](https://github.com/facebook/create-react-app/blob/master/README.md)
 - Install any dependencies (listed [here](#dependencies:)) with `yarn add <dependency>` or `npm install <dependency>`
 - `yarn start` or `npm start` should run the app locally in your browser at `http://localhost:3000`
