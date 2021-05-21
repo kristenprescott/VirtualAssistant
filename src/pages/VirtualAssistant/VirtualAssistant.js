@@ -690,33 +690,38 @@ export default function VirtualAssistant() {
                 {/* ///////////////////////////////////////////////////////////////// */}
 
                 <div
-                  className="glass-panel"
+                  className=" glass-panel"
                   id="instructions"
                   style={{
                     height: "150px",
                     width: "550px",
                     marginBottom: "1px",
+                    value: { message },
                   }}
                 >
-                  <p>Hello, I'm a virtual assistant.</p>
-                  <p>
+                  <p className="fade-out-text">
+                    Hello, I'm a virtual assistant.
+                  </p>
+                  <p className="fade-out-text">
                     To allow microphone access, press the button below; hold
                     down to talk.
                   </p>
                   {/* <p>To log in say "Log in"</p> */}
                   {/* <p>To make a new account say "Sign up"</p> */}
-                  <p>To see more commands say "Show commands"</p>
-                  <p>
+                  <p className="fade-out-text">
+                    To see more commands say "Show commands"
+                  </p>
+                  <p className="fade-out-text">
                     To add a task to the to-do list, say "Add new task",
                     followed by the task to add; then, say "add to list"
                   </p>
                 </div>
               </div>
-              <div className="message-display-container">
-                {/* ///////////////////////////////////////////////////////////////// */}
-                {/* <----------------------- MESSAGE DISPLAY -----------------------> */}
-                {/* ///////////////////////////////////////////////////////////////// */}
-                <textarea
+              {/* <div className="message-display-container"> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <----------------------- MESSAGE DISPLAY -----------------------> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <textarea
                   style={{
                     height: "150px",
                     width: "550px",
@@ -727,12 +732,11 @@ export default function VirtualAssistant() {
                   className="glass-panel"
                   id="messages"
                   placeholder={message}
-                  // placeholder="messages"
                   value={message}
                 >
                   {message}
-                </textarea>
-              </div>
+                </textarea> */}
+              {/* </div> */}
             </div>
             <div className="transcript-display">
               {/* ///////////////////////////////////////////////////////////////// */}
