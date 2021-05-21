@@ -35,7 +35,7 @@ function App() {
           <Register />
         </Route>
 
-        <Route path="/dashboard/:username" component={Dashboard} />
+        <Route path="/dashboard" component={Dashboard} />
         {/* <Route path="/dashboard/:username">
           <Dashboard />
         </Route> */}
