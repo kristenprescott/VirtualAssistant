@@ -37,7 +37,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://virtual-asst.herokuapp.com/login", {
+      const res = await fetch("../login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

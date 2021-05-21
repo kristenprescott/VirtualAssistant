@@ -34,7 +34,7 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://virtual-asst.herokuapp.com/register", {
+      const res = await fetch("../register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

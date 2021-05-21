@@ -174,7 +174,7 @@ export default function VirtualAssistant() {
         "add to to-do list",
       ],
       callback: () => {
-        window.open("https://virtual-asst.herokuapp.com/todos", "_self");
+        window.open("../todos", "_self");
       },
     },
     {
@@ -218,31 +218,31 @@ export default function VirtualAssistant() {
     {
       command: ["log in", "login"],
       callback: () => {
-        window.open("https://virtual-asst.herokuapp.com/login", "_self");
+        window.open("../login", "_self");
       },
     },
     {
       command: ["log out", "logout"],
       callback: () => {
-        window.open("https://virtual-asst.herokuapp.com/login", "_self");
+        window.open("../login", "_self");
       },
     },
     {
       command: ["register", "sign up", "signup"],
       callback: () => {
-        window.open("https://virtual-asst.herokuapp.com/register", "_self");
+        window.open("../register", "_self");
       },
     },
     {
       command: "go to demo",
       callback: () => {
-        window.open("https://virtual-asst.herokuapp.com/demo", "_self");
+        window.open("../demo", "_self");
       },
     },
     {
       command: "go to test",
       callback: () => {
-        window.open("https://virtual-asst.herokuapp.com/test", "_self");
+        window.open("../test", "_self");
       },
     },
     {
@@ -284,10 +284,7 @@ export default function VirtualAssistant() {
     {
       command: "go to voice synthesizer",
       callback: () => {
-        window.open(
-          "https://virtual-asst.herokuapp.com/voicesynthesizer",
-          "_self"
-        );
+        window.open("../voicesynthesizer", "_self");
       },
     },
     {
