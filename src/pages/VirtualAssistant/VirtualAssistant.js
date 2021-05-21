@@ -9,9 +9,66 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import Settings from "../../components/Settings";
 import CommandsModal from "../../components/CommandsModal";
 import useCommandsModal from "../../hooks/useCommandsModal";
+import TodoAPIHelper from "../../helpers/TodoAPIHelper";
 // import TodoList from "../Todos/TodoForm";
 
 export default function VirtualAssistant() {
+  ///////////////////////////////////
+  // TODOS
+  ///////////////////////////////////
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState("");
+  // const [todo, setTodo] = useState("");
+  // GET ALL
+  useEffect(() => {
+    const fetchTodoAndSetTodos = async () => {
+      const todos = await TodoAPIHelper.getAllTodos();
+      setTodos(todos);
+    };
+    fetchTodoAndSetTodos();
+  }, []);
+  // // GET one
+  // const fetchTodo = async () => {
+  //   const todo = await TodoAPIHelper.getTodo();
+  //   setTodo();
+  // };
+  // CREATE
+  const createTodo = async (e) => {
+    // e.preventDefault();
+    // // check if todo is empty:
+    // if (!newTodo) {
+    //   console.log("no todo entered.");
+    //   return;
+    // }
+    // check if todo already exists:
+    if (todos.some(({ task }) => task === newTodo)) {
+      alert(`Task: ${newTodo} already exists`);
+      return;
+    }
+    // create todo:
+    const newTask = await TodoAPIHelper.createTodo(newTodo);
+    // add todo to the list:
+    setTodos([...todos, newTask]);
+  };
+  // UPDATE
+  const updateTodo = async (e, id) => {
+    e.stopPropagation();
+    const payload = {
+      done: !todos.find((todo) => todo._id === id).done,
+    };
+    const updatedTodo = await TodoAPIHelper.updateTodo(id, payload);
+    setTodos(todos.map((todo) => (todo._id === id ? updatedTodo : todo)));
+  };
+  // DELETE
+  const deleteTodo = async (e, id) => {
+    try {
+      e.stopPropagation();
+      await TodoAPIHelper.deleteTodo(id);
+      setTodos(todos.filter(({ _id: i }) => id !== i));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /////////////////////////////////////////////////////////////////
   // <------------------------- STATE -------------------------> //
   /////////////////////////////////////////////////////////////////
@@ -165,17 +222,6 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: [
-        "show me my to do list",
-        "show me my to-do list",
-        "set (my) to-do list",
-        "add to to-do list",
-      ],
-      callback: () => {
-        window.open("../todos", "_self");
-      },
-    },
-    {
       command: ["reset", "clear"],
       callback: () => resetTranscript(),
     },
@@ -308,14 +354,42 @@ export default function VirtualAssistant() {
     //////////////////////////////////////////
     // <--------------- TODOS --------------->
     //////////////////////////////////////////
-    // {
-    //   command: "create new task *",
-    //   callback: (task) => {
-    //     doSomething(task);
-    //     setMessage(`${task}`)
-    //     speak({text: `${task}`, voice, rate, pitch})
-    //   }
-    // },
+    {
+      command: [
+        "show me my to do list",
+        "show me my to-do list",
+        "show (my) to-do list",
+        "add to to-do list",
+      ],
+      callback: () => {
+        window.open("../todos", "_self");
+      },
+    },
+    {
+      command: "(add) new task *",
+      callback: (task) => {
+        setMessage(`add ${task} to to-do list?`);
+        speak({
+          text: `add ${task} to to-do list?`,
+          voice,
+          rate,
+          pitch,
+        });
+        const newTodo = task.toString();
+        console.log(`task: ${task}`);
+        setNewTodo(task.toString());
+        console.log(newTodo);
+        // createTodo();
+      },
+    },
+    {
+      command: "(yes) create to-do",
+      callback: () => {
+        setMessage(`creating to-do ${newTodo}.`);
+        speak({ text: "okay" });
+        createTodo();
+      },
+    },
     //////////////////////////////////////////
     // <--------------- TIME --------------->
     //////////////////////////////////////////
