@@ -261,11 +261,23 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "(hello) my name is *",
+      command: ["(hi) my name is *", "(hello) my name is *"],
       callback: (name) => {
         setMessage(`Hello, ${name}! I hope to remember that in the future.`);
         speak({
           text: `Hello, ${name}! I hope to remember that in the future.`,
+          voice,
+          rate,
+          pitch,
+        });
+      },
+    },
+    {
+      command: "I'm :hungry",
+      callback: (hungry) => {
+        setMessage("Hi, hungry, I'm dad.");
+        speak({
+          text: "Hi hungry, I'm dad.",
           voice,
           rate,
           pitch,
