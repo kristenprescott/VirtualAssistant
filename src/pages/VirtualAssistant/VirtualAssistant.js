@@ -568,7 +568,7 @@ export default function VirtualAssistant() {
     // <-------------- WEATHER -------------->
     //////////////////////////////////////////
     {
-      command: "fetch weather",
+      command: ["get (the) weather", "fetch weather"],
       callback: () => {
         fetchWeather();
         setMessage("weather fetched");
@@ -591,7 +591,7 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "current temperature",
+      command: ["what's the temperature", "current temperature"],
       callback: () => {
         getCurrentTemperature();
       },
