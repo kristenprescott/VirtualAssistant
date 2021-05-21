@@ -6,10 +6,10 @@ import "../Login/Login.css";
 export default function Login() {
   const history = useHistory();
   const redirectHome = () => {
-    history("/");
+    history("../");
   };
   const redirectToLogin = () => {
-    history("/login");
+    history("../login");
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -6,7 +6,7 @@ import "../Register/Register.css";
 export default function Register() {
   const history = useHistory();
   const redirectToLogin = () => {
-    history.push("/login");
+    history.push("../login");
   };
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
