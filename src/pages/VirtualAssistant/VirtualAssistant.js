@@ -44,13 +44,25 @@ export default function VirtualAssistant() {
   };
   // DELETE most recent item
   const deleteLastAddedTodo = async () => {
-    getFirstAddedTodo();
-    // delete it
+    const lastTodo = await TodoAPIHelper.getLastAddedTodo();
+    console.log(lastTodo.data[0]._id);
+    const lastTodoId = lastTodo.data[0]._id;
+    // then delete (/:id)
+    if (lastTodoId) {
+      // delete
+      TodoAPIHelper.deleteTodo(lastTodoId);
+    }
   };
   // DELETE oldest item
   const deleteFirstAddedTodo = async () => {
-    getFirstAddedTodo();
-    // delete it
+    const lastTodo = await TodoAPIHelper.getLastAddedTodo();
+    console.log(lastTodo.data[lastTodo.data.length - 1]._id);
+    const firstTodoId = lastTodo.data[lastTodo.data.length - 1]._id;
+    // then delete (/:id)
+    if (firstTodoId) {
+      // delete
+      TodoAPIHelper.deleteTodo(firstTodoId);
+    }
   };
   // CREATE
   const createTodo = async (e) => {
@@ -457,6 +469,22 @@ export default function VirtualAssistant() {
         setMessage("okay");
         speak({ text: "okay" });
         getFirstAddedTodo();
+      },
+    },
+    {
+      command: "delete last added item",
+      callback: () => {
+        setMessage("okay");
+        speak({ text: "okay" });
+        deleteLastAddedTodo();
+      },
+    },
+    {
+      command: "delete first added item",
+      callback: () => {
+        setMessage("okay");
+        speak({ text: "okay" });
+        deleteFirstAddedTodo();
       },
     },
     //////////////////////////////////////////
