@@ -26,8 +26,8 @@ textarea {
 }
 .virtual-assistant {
   background-color: #fff;
-  height: 250px;
-  width: 250px;
+  height: 230px;
+  width: 230px;
   border-radius: 150px;
   animation: spin 2s linear infinite;
   box-shadow: inset 0 0 62px #fff, inset 24px 0 62px #f155e4,
