@@ -41,11 +41,8 @@ function App() {
         <Route path="/todos">
           <TodoForm />
         </Route>
-        {/* 
-        <Route  path="/test">
-          <Test />
-        </Route> */}
       </Switch>
+
       {/* </SpeechContext.Provider> */}
     </BrowserRouter>
   );

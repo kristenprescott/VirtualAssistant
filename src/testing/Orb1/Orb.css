@@ -1,0 +1,66 @@
+.Orb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0a0f0d;
+}
+.wrapper {
+  overflow: hidden;
+  height: 400px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.loading::before {
+  width: 100%;
+  height: 100%;
+  content: " ";
+  border-radius: 50%;
+  box-shadow: 0 0 20px 12px rgba(10, 0, 190, 0.35);
+  position: absolute;
+}
+.loading {
+  color: #000;
+  background: linear-gradient(0deg, #db2b39, #1b998b, #f3a712);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate_animation 4s ease-in-out infinite alternate,
+    pulse_animation 3s ease-out infinite;
+}
+.loading::after {
+  width: calc(120px - 6px);
+  height: calc(120px - 6px);
+  background-color: currentColor;
+  content: " ";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  border-radius: 50%;
+  animation: pulse_animation 3s ease-out infinite;
+  animation-delay: 0.2s;
+}
+
+@keyframes rotate_animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(600deg);
+  }
+}
+
+@keyframes pulse_animation {
+  0%,
+  40% {
+    box-shadow: 0 0 5px 0px rgba(210, 0, 190, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 5px 80px rgba(200, 200, 55, 0);
+  }
+}

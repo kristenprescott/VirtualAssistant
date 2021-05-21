@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #151514;
+  height: 100vh;
+  width: 100vw;
+}
+/* GLOWING */
+.glowing-gold {
+  width: 200px;
+  height: 200px;
+  border-radius: 200px;
+  -webkit-animation: gold-glow 1.8s ease-out infinite alternate;
+  -moz-animation: gold-glow 1.8s ease-out infinite alternate;
+  animation: gold-glow 1.8s ease-out infinite alternate;
+}
+
+@keyframes gold-glow {
+  from {
+    box-shadow: 0 0 10px #ff9505, 0 0 20px #ff9505, 0 0 30px #ff9505,
+      0 0 40px #ec4e20, 0 0 70px #ec4e20, 0 0 80px #ec4e20, 0 0 100px #ec4e20,
+      0 0 150px #ec4e20;
+  }
+  to {
+    box-shadow: 0 0 5px #ff9505, 0 0 10px #ff9505, 0 0 15px #ff9505,
+      0 0 20px #ec4e20, 0 0 35px #ec4e20, 0 0 40px #ec4e20, 0 0 50px #ec4e20,
+      0 0 75px #ec4e20;
+  }
+}
