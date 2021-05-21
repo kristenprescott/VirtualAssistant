@@ -25,11 +25,11 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 ![ez-showActivated](https://user-images.githubusercontent.com/55470100/119111659-43c25c00-b9f1-11eb-8a27-fdde8a9ff1da.gif) -->
 
 <p align="center">
-<a target="_blank" rel="noopener noreferrer" href="">
+<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/55470100/119111659-43c25c00-b9f1-11eb-8a27-fdde8a9ff1da.gif">
 <img width="350px" src="https://user-images.githubusercontent.com/55470100/119111659-43c25c00-b9f1-11eb-8a27-fdde8a9ff1da.gif" style="max-width:100%;">
 </a>
 
-<a target="_blank" rel="noopener noreferer" href="">
+<a target="_blank" rel="noopener noreferer" href="https://user-images.githubusercontent.com/55470100/119111607-36a56d00-b9f1-11eb-8fac-fd79894a4b0f.gif">
 <img width="350px" src="https://user-images.githubusercontent.com/55470100/119111607-36a56d00-b9f1-11eb-8fac-fd79894a4b0f.gif" style="max-width:100%;">
 </a>
 </p>
