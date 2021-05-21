@@ -1,7 +1,7 @@
 import micOn from "../../assets/images/icons/mic_on.png";
 import micOff from "../../assets/images/icons/mic_off.png";
 import "./VirtualAssistant.css";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -13,19 +13,20 @@ import TodoAPIHelper from "../../helpers/TodoAPIHelper";
 import TodoList from "../Todos/TodoForm";
 
 export default function VirtualAssistant() {
-  const SpeechContext = React.createContext();
-  ///////////////////////////////////
-  // STATE
-  ///////////////////////////////////
-  // timer
-  const [isActive, setIsActive] = useState(false);
-  // todos
-  const [showTodos, setShowTodos] = useState(false);
-  const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState("");
-  // conditional settings toggle
+  /////////////////////////////////////////////////////////////////
+  // <------------------------- STATE -------------------------> //
+  /////////////////////////////////////////////////////////////////
+  // commands(direct) : toggle show settings
   const [showSettings, setShowSettings] = useState(false);
-  // Geolocation:
+  // commands(direct) : sec/min timers
+  const [isActive, setIsActive] = useState(false);
+  // commands(direct) : toggle show todo list
+  const [showTodos, setShowTodos] = useState(false);
+  // todos fetches(from APIHelper)
+  const [todos, setTodos] = useState([]);
+  // todos fetches & commands(direct)
+  const [newTodo, setNewTodo] = useState("");
+  // Geolocation(weather):
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
   // // Weather:
@@ -35,6 +36,9 @@ export default function VirtualAssistant() {
   const [rate, setRate] = useState(1);
   const [voiceIndex, setVoiceIndex] = useState(null);
   const [message, setMessage] = useState("");
+  /////////////////////////////////////////////////////////////////
+  // <------------------------- TODOS -------------------------> //
+  /////////////////////////////////////////////////////////////////
   // GET ALL
   useEffect(() => {
     const fetchTodoAndSetTodos = async () => {
@@ -186,17 +190,86 @@ export default function VirtualAssistant() {
       speak({ text: "saturday", voice, rate, pitch });
     }
   };
-
   /////////////////////////////////////////////////////////////////
-  // <----------------------- VARIABLES -----------------------> //
+  // <------------------------ Weather ------------------------> //
   /////////////////////////////////////////////////////////////////
-  const onEnd = () => {
-    // You could do something here after speaking has finished
+  // Geolocation:
+  useEffect(() => {
+    const getLocation = async () => {
+      await navigator.geolocation.getCurrentPosition(function (position) {
+        setLat(position.coords.latitude);
+        setLong(position.coords.longitude);
+      });
+    };
+    getLocation();
+  }, []);
+  // fetch weather:
+  const fetchWeather = async () => {
+    const res = await fetch(
+      `${process.env.REACT_APP_WEATHER_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=imperial`
+    );
+    const weather = await res.json();
+    setWeatherData(weather);
+    return weather;
   };
-  const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
-    onEnd,
-  });
-  const voice = voices[1] || null;
+  // get current weather description:
+  const getCurrentWeatherDescription = async () => {
+    if (weatherData) {
+      const weatherText = `${weatherData.current.weather[0].description}`;
+      speak({ text: weatherText });
+      setMessage(weatherText);
+    } else {
+      const weather = await fetchWeather();
+      if (weather) {
+        const weatherText = `${weather.current.weather[0].description}`;
+        speak({ text: weatherText });
+      }
+    }
+  };
+  // get current temp:
+  const getCurrentTemperature = async () => {
+    if (weatherData) {
+      const weatherText = `${weatherData.current.temp.toString()} degrees`;
+      speak({ text: weatherText });
+      setMessage(weatherText);
+    } else {
+      const weather = await fetchWeather();
+      if (weather) {
+        const weatherText = `${weather.current.temp.toString()} degrees`;
+        speak({ text: weatherText });
+      }
+    }
+  };
+  // get current moon phase
+  const getMoonPhase = async () => {
+    if (weatherData) {
+      const phase = weatherData.daily[0].moon_phase;
+      let currentPhase = "new moon";
+      if (phase === 0.25) {
+        currentPhase = "first quarter";
+      } else if (phase === 0.5) {
+        currentPhase = "full moon";
+      } else if (phase === 0.75) {
+        currentPhase = "last quarter";
+      } else if (phase === 1 || phase === 0) {
+        currentPhase = "new moon";
+      } else if (phase > 0.75 && phase < 1) {
+        currentPhase = "waning crescent";
+      } else if (phase > 0.5 && phase < 0.75) {
+        currentPhase = "waning gibous";
+      } else if (phase > 0.25 && phase < 0.5) {
+        currentPhase = "waxing gibous";
+      } else if (phase > 0 && phase < 0.25) {
+        currentPhase = "waxing crescent";
+      }
+      const weatherText = `${currentPhase}`;
+      speak({ text: weatherText });
+      setMessage(weatherText);
+      console.log("phase: ", weatherData.daily[0].moon_phase.toString());
+    } else {
+      speak({ text: "cannot fetch data" });
+    }
+  };
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
   /////////////////////////////////////////////////////////////////
@@ -374,9 +447,7 @@ export default function VirtualAssistant() {
         setShowSettings(false);
       },
     },
-    //////////////////////////////////////////
     // <--------------- TODOS --------------->
-    //////////////////////////////////////////
     {
       command: [
         "show me my to do list",
@@ -385,7 +456,6 @@ export default function VirtualAssistant() {
       ],
       callback: () => {
         setShowTodos(true);
-        // window.open("../todos", "_self");
       },
     },
     {
@@ -447,9 +517,7 @@ export default function VirtualAssistant() {
         deleteOldestTodo();
       },
     },
-    //////////////////////////////////////////
     // <--------------- TIME --------------->
-    //////////////////////////////////////////
     {
       command: "set (a) timer for :timeout seconds",
       callback: (timeout) => {
@@ -487,9 +555,7 @@ export default function VirtualAssistant() {
       command: "what day is it",
       callback: () => fetchDay(),
     },
-    //////////////////////////////////////////
     // <-------------- WEATHER -------------->
-    //////////////////////////////////////////
     {
       command: ["get (the) weather", "fetch weather"],
       callback: () => {
@@ -530,114 +596,33 @@ export default function VirtualAssistant() {
       },
     },
   ];
-
-  const {
-    transcript,
-    interimTranscript,
-    finalTranscript,
-    resetTranscript,
-    listening,
-  } = useSpeechRecognition({ commands });
   /////////////////////////////////////////////////////////////////
   // <------------------------- HOOKS -------------------------> //
   /////////////////////////////////////////////////////////////////
+  // speech synth:
+  const onEnd = () => {
+    // You could do something here after speaking has finished
+  };
+  const { speak, /*cancel, speaking, supported,*/ voices } = useSpeechSynthesis(
+    {
+      onEnd,
+    }
+  );
+  const voice = voices[1] || null;
+  // speech recog:
+  const {
+    transcript,
+    // interimTranscript,
+    // finalTranscript,
+    resetTranscript,
+    listening,
+  } = useSpeechRecognition({ commands });
+  // toggle show commands modal:
   const { isShowing, toggle } = useCommandsModal();
-
-  // Fetch weather:
-  useEffect(() => {
-    // Geolocation:
-    const getLocation = async () => {
-      await navigator.geolocation.getCurrentPosition(function (position) {
-        setLat(position.coords.latitude);
-        setLong(position.coords.longitude);
-      });
-    };
-    getLocation();
-  }, []);
-  /////////////////////////////////////////////////////////////////
-  // <------------------ COMMAND FUNCTIONS---------------------> //
-  /////////////////////////////////////////////////////////////////
-  const fetchWeather = async () => {
-    const res = await fetch(
-      `${process.env.REACT_APP_WEATHER_API_URL}/onecall?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=imperial`
-    );
-    const weather = await res.json();
-    setWeatherData(weather);
-    return weather;
-  };
-
-  const getCurrentWeatherDescription = async () => {
-    if (weatherData) {
-      const weatherText = `${weatherData.current.weather[0].description}`;
-      speak({ text: weatherText });
-      setMessage(weatherText);
-    } else {
-      const weather = await fetchWeather();
-      if (weather) {
-        const weatherText = `${weather.current.weather[0].description}`;
-        speak({ text: weatherText });
-      }
-    }
-  };
-
-  const getCurrentTemperature = async () => {
-    if (weatherData) {
-      const weatherText = `${weatherData.current.temp.toString()} degrees`;
-      speak({ text: weatherText });
-      setMessage(weatherText);
-    } else {
-      const weather = await fetchWeather();
-      if (weather) {
-        const weatherText = `${weather.current.temp.toString()} degrees`;
-        speak({ text: weatherText });
-      }
-    }
-  };
-
-  const getMoonPhase = async () => {
-    //////////////////////////////////
-    // !!!!!!!! BAD LOGIC !!!!!!!!!!!
-    /////////////////////////////////
-    if (weatherData) {
-      // [daily.moon_phase] Moon phase. 0 and 1 are 'new moon', 0.25 is 'first quarter moon', 0.5 is 'full moon' and 0.75 is 'last quarter moon'. The periods in between are called 'waxing crescent', 'waxing gibous', 'waning gibous', and 'waning crescent', respectively.
-      const phase = weatherData.daily[0].moon_phase;
-      let currentPhase;
-      if (phase === 0.0 || 1) {
-        // "new moon"
-        currentPhase = "new moon";
-      } else if (phase === 0.25) {
-        // "first quarter"
-        currentPhase = "first quarter";
-      } else if (phase === 0.5) {
-        // "full moon"
-        currentPhase = "full moon";
-      } else if (phase === 0.75) {
-        // "last quarter"
-        currentPhase = "last quarter";
-      } else if (0 < phase < 0.25) {
-        // "waxing crescent"
-        currentPhase = "waxing crescent";
-      } else if (0.25 < phase < 0.5) {
-        // "waxing gibous"
-        currentPhase = "waxing gibous";
-      } else if (0.5 < phase < 0.75) {
-        // "waning gibous"
-        currentPhase = "waning gibous";
-      } else if (0.75 < phase < 1) {
-        // "waning crescent"
-        currentPhase = "waning crescent";
-      }
-      const weatherText = `${currentPhase}`;
-      speak({ text: weatherText });
-      setMessage(weatherText);
-      console.log("phase: ", weatherData.daily[0].moon_phase.toString());
-    } else {
-      speak({ text: "cannot fetch data" });
-    }
-  };
   /////////////////////////////////////////////////////////////////
   // <-------------------- EVENT HANDLERS ---------------------> //
   /////////////////////////////////////////////////////////////////
+  // start animation/start listening:
   const handleMouseDown = async (e) => {
     e.preventDefault();
     const VirtualAss = document.getElementsByClassName("virtual-assistant");
@@ -648,7 +633,7 @@ export default function VirtualAssistant() {
       language: "en-US",
     });
   };
-
+  // pause VA animation/stop listening:
   const handleMouseUp = async (e) => {
     e.preventDefault();
 
@@ -657,7 +642,7 @@ export default function VirtualAssistant() {
 
     await SpeechRecognition.stopListening();
   };
-
+  // PROPS:
   const settingsProps = {
     voiceIndex,
     setVoiceIndex,
@@ -669,124 +654,101 @@ export default function VirtualAssistant() {
   };
 
   return (
-    <SpeechContext.Provider value={() => {}}>
-      <div className="page" id="VirtualAssistant">
-        {/* ///////////////////////////////////////////////////////////////// */}
-        {/* <------------------------ COMMANDS MODAL -----------------------> */}
-        {/* ///////////////////////////////////////////////////////////////// */}
-        {/* <div> */}
-        <CommandsModal isShowing={isShowing} hide={toggle} />
-        {/* </div> */}
+    <div className="page" id="VirtualAssistant">
+      {/* ///////////////////////////////////////////////////////////////// */}
+      {/* <------------------------ COMMANDS MODAL -----------------------> */}
+      {/* ///////////////////////////////////////////////////////////////// */}
+      {/* <div> */}
+      <CommandsModal isShowing={isShowing} hide={toggle} />
+      {/* </div> */}
 
-        <div className="center-col virtual-assistant-container">
-          <div className="paused virtual-assistant"></div>
-        </div>
+      <div className="center-col virtual-assistant-container">
+        <div className="paused virtual-assistant"></div>
+      </div>
 
-        <div className="center-col main">
-          {showSettings && <Settings {...settingsProps} />}
-          {showTodos && <TodoList />}
-          {!showSettings && !showTodos && (
+      <div className="center-col main">
+        {showSettings && <Settings {...settingsProps} />}
+        {showTodos && <TodoList />}
+        {!showSettings && !showTodos && (
+          <div>
             <div>
-              <div>
-                <div className="instructions-container">
-                  {/* ///////////////////////////////////////////////////////////////// */}
-                  {/* <--------------------- INSTRUCTIONS DISPLAY --------------------> */}
-                  {/* ///////////////////////////////////////////////////////////////// */}
+              <div className="instructions-container">
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <----------------- INSTRUCTIONS/MESSAGE DISPLAY ----------------> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
 
-                  <div
-                    className=" glass-panel"
-                    id="instructions"
-                    style={{
-                      height: "150px",
-                      width: "550px",
-                      marginBottom: "1px",
-                      value: { message },
-                    }}
-                  >
-                    <p className="fade-out-text">
-                      Hello, I'm a virtual assistant.
-                    </p>
-                    <p className="fade-out-text">
-                      To allow microphone access, press the button below; hold
-                      down to talk.
-                    </p>
-                    {/* <p>To log in say "Log in"</p> */}
-                    {/* <p>To make a new account say "Sign up"</p> */}
-                    <p className="fade-out-text">
-                      To see more commands say "Show commands"
-                    </p>
-                    <p className="fade-out-text">
-                      To add a task to the to-do list, say "Add new task",
-                      followed by the task to add; then, say "add to list"
-                    </p>
-                  </div>
-                </div>
-                {/* <div className="message-display-container"> */}
-                {/* ///////////////////////////////////////////////////////////////// */}
-                {/* <----------------------- MESSAGE DISPLAY -----------------------> */}
-                {/* ///////////////////////////////////////////////////////////////// */}
-                {/* <textarea
+                <div
+                  className=" glass-panel"
+                  id="instructions"
                   style={{
                     height: "150px",
                     width: "550px",
-                    margin: "0px",
-                    marginTop: "1px",
-                    marginBottom: "0px",
+                    marginBottom: "1px",
+                    value: { message },
                   }}
-                  className="glass-panel"
-                  id="messages"
-                  placeholder={message}
-                  value={message}
                 >
-                  {message}
-                </textarea> */}
-                {/* </div> */}
-              </div>
-              <div className="transcript-display">
-                {/* ///////////////////////////////////////////////////////////////// */}
-                {/* <-------------------------- TRANSCRIPT -------------------------> */}
-                {/* ///////////////////////////////////////////////////////////////// */}
-                <textarea
-                  style={{
-                    margin: "0px",
-                    marginTop: "0px",
-                    height: "150px",
-                    width: "550px",
-                  }}
-                  className="glass-panel"
-                  id="transcript"
-                  // placeholder="transcript"
-                  value={transcript}
-                />{" "}
+                  <p className="fade-out-text">
+                    Hello, I'm a virtual assistant.
+                  </p>
+                  <p className="fade-out-text">
+                    To allow microphone access, press the button below; hold
+                    down to talk.
+                  </p>
+                  {/* <p>To log in say "Log in"</p> */}
+                  {/* <p>To make a new account say "Sign up"</p> */}
+                  <p className="fade-out-text">
+                    To see more commands say "Show commands"
+                  </p>
+                  <p className="fade-out-text">
+                    To add a task to the to-do list, say "Add new task",
+                    followed by the task to add; then, say "add to list"
+                  </p>
+                </div>
               </div>
             </div>
-          )}
-          <div className="form-container">
-            <div
-              className="center-col buttons"
-              style={{ position: "relative", margin: "10px" }}
+            <div className="transcript-display">
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <-------------------------- TRANSCRIPT -------------------------> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              <textarea
+                style={{
+                  margin: "0px",
+                  marginTop: "0px",
+                  height: "150px",
+                  width: "550px",
+                }}
+                className="glass-panel"
+                id="transcript"
+                value={transcript}
+              />{" "}
+            </div>
+          </div>
+        )}
+        <div className="form-container">
+          <div
+            className="center-col buttons"
+            style={{ position: "relative", margin: "10px" }}
+          >
+            <div>
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <------------------------ HOT MIC "BTN" ------------------------> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              <img className="hot-mic-btn" src={listening ? micOn : micOff} />
+            </div>
+            {/* ///////////////////////////////////////////////////////////////// */}
+            {/* <------------------------- LISTEN BTN --------------------------> */}
+            {/* ///////////////////////////////////////////////////////////////// */}
+            <button
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              className="mic-btn"
             >
-              <div>
-                {/* ///////////////////////////////////////////////////////////////// */}
-                {/* <------------------------ HOT MIC "BTN" ------------------------> */}
-                {/* ///////////////////////////////////////////////////////////////// */}
-                <img className="hot-mic-btn" src={listening ? micOn : micOff} />
-              </div>
-              {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <------------------------- LISTEN BTN --------------------------> */}
-              {/* ///////////////////////////////////////////////////////////////// */}
-              <button
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                className="mic-btn"
-              >
-                🎤
-              </button>
-            </div>
+              🎤
+            </button>
           </div>
         </div>
       </div>
-    </SpeechContext.Provider>
+    </div>
   );
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
