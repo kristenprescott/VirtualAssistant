@@ -76,8 +76,6 @@ export default function TodoForm() {
     <div className="TodoForm">
       <h1 className="todo-list-title">Todo List</h1>
 
-      {/* <hr></hr> */}
-
       <div className="todo-input-container">
         <div className="todo-input-wrapper">
           <input
