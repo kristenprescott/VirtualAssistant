@@ -22,7 +22,7 @@ async function createTodo(task) {
 }
 // UPDATE
 async function updateTodo(id, payload) {
-  const { data: newTodo } = await axios.patch(`${API_URL}/${id}`, payload);
+  const { data: newTodo } = await axios.put(`${API_URL}/${id}`, payload);
   return newTodo;
 }
 // DELETE
@@ -33,7 +33,7 @@ async function deleteTodo(id) {
 }
 
 // DELETE most current
-async function getLastAddedTodo() {
+async function getMostRecentTodo() {
   const lastTodo = await axios.get(`${API_URL}/`);
   return lastTodo;
 }
@@ -44,7 +44,7 @@ export default {
   createTodo,
   updateTodo,
   deleteTodo,
-  getLastAddedTodo,
+  getMostRecentTodo,
 };
 //////////////////////////////////////////////////////////////////////////////////
 // getAllTodos:                                                                 //

@@ -31,26 +31,49 @@ export default function VirtualAssistant() {
     fetchTodoAndSetTodos();
   }, []);
   // GET most recently aded task
-  const getLastAddedTodo = async () => {
-    const lastTodo = await TodoAPIHelper.getLastAddedTodo();
+  const getMostRecentTodo = async () => {
+    const lastTodo = await TodoAPIHelper.getMostRecentTodo();
     return lastTodo.data[0];
   };
   // GET oldest task
-  const getFirstAddedTodo = async () => {
-    const lastTodo = await TodoAPIHelper.getLastAddedTodo();
-    return lastTodo.data[lastTodo.data.length - 1];
+  const getOldestTodo = async () => {
+    const firstTodo = await TodoAPIHelper.getMostRecentTodo();
+    return firstTodo.data[firstTodo.data.length - 1];
   };
+  // // UPDATE most recent
+  // const updateMostRecentTodo = async (transcript) => {
+  //   // get last todo
+  //   const lastTodo = await TodoAPIHelper.getMostRecentTodo();
+  //   const lastTodoId = lastTodo.data[0]._id;
+  //   if (lastTodo) {
+  //     // Fix transcript var below: <---------------------------------
+  //     console.log(transcript);
+  //     TodoAPIHelper.updateTodo(lastTodoId, transcript.toString());
+  //   }
+  // };
+  // //UPDATE oldest
+  // const updateOldestTodo = async (transcript) => {
+  //   // get first added todo
+  //   const firstTodo = await TodoAPIHelper.getMostRecentTodo();
+  //   const firstTodoId = lastTodo.data[lastTodo.data.length - 1]._id;
+  //   if (firstTodo) {
+  //     // Fix transcript var below: <---------------------------------
+  //     console.log(transcript);
+  //     TodoAPIHelper.updateTodo(firstTodoId, transcript.toString());
+  //   }
+  // };
+
   // DELETE most recent task
-  const deleteLastAddedTodo = async () => {
-    const lastTodo = await TodoAPIHelper.getLastAddedTodo();
+  const deleteMostRecentTodo = async () => {
+    const lastTodo = await TodoAPIHelper.getMostRecentTodo();
     const lastTodoId = lastTodo.data[0]._id;
     if (lastTodoId) {
       TodoAPIHelper.deleteTodo(lastTodoId);
     }
   };
   // DELETE oldest task
-  const deleteFirstAddedTodo = async () => {
-    const lastTodo = await TodoAPIHelper.getLastAddedTodo();
+  const deleteOldestTodo = async () => {
+    const lastTodo = await TodoAPIHelper.getMostRecentTodo();
     const firstTodoId = lastTodo.data[lastTodo.data.length - 1]._id;
     if (firstTodoId) {
       TodoAPIHelper.deleteTodo(firstTodoId);
@@ -451,16 +474,31 @@ export default function VirtualAssistant() {
       callback: () => {
         setMessage("okay");
         speak({ text: "okay" });
-        getLastAddedTodo();
-        // console.log(todos.createdAt[0]);
+        getMostRecentTodo();
       },
     },
+    // {
+    //   command: "update first task with *",
+    //   callback: (transcript) => {
+    //     setMessage("okay");
+    //     speak({ text: "okay" });
+    //     updateOldestTodo(transcript);
+    //   },
+    // },
+    // {
+    //   command: "update most recent task with *",
+    //   callback: (transcript) => {
+    //     setMessage("okay");
+    //     speak({ text: "okay" });
+    //     updateMostRecentTodo(transcript);
+    //   },
+    // },
     {
       command: "get first added item",
       callback: () => {
         setMessage("okay");
         speak({ text: "okay" });
-        getFirstAddedTodo();
+        getOldestTodo();
       },
     },
     {
@@ -468,7 +506,7 @@ export default function VirtualAssistant() {
       callback: () => {
         setMessage("okay");
         speak({ text: "okay" });
-        deleteLastAddedTodo();
+        deleteMostRecentTodo();
       },
     },
     {
@@ -476,7 +514,7 @@ export default function VirtualAssistant() {
       callback: () => {
         setMessage("okay");
         speak({ text: "okay" });
-        deleteFirstAddedTodo();
+        deleteOldestTodo();
       },
     },
     //////////////////////////////////////////
