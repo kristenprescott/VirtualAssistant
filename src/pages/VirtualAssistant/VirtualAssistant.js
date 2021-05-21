@@ -468,14 +468,14 @@ export default function VirtualAssistant() {
         createTodo();
       },
     },
-    {
-      command: "get last added item",
-      callback: () => {
-        setMessage("okay");
-        speak({ text: "okay" });
-        getMostRecentTodo();
-      },
-    },
+    // {
+    //   command: "get last added item",
+    //   callback: () => {
+    //     setMessage("okay");
+    //     speak({ text: "okay" });
+    //     getMostRecentTodo();
+    //   },
+    // },
     // {
     //   command: "update first task with *",
     //   callback: (transcript) => {
@@ -492,16 +492,20 @@ export default function VirtualAssistant() {
     //     updateMostRecentTodo(transcript);
     //   },
     // },
+    // {
+    //   command: "get first added item",
+    //   callback: () => {
+    //     setMessage("okay");
+    //     speak({ text: "okay" });
+    //     getOldestTodo();
+    //   },
+    // },
     {
-      command: "get first added item",
-      callback: () => {
-        setMessage("okay");
-        speak({ text: "okay" });
-        getOldestTodo();
-      },
-    },
-    {
-      command: "delete last added item",
+      command: [
+        "delete most recent task",
+        "delete most recent item",
+        "delete last added item",
+      ],
       callback: () => {
         setMessage("okay");
         speak({ text: "okay" });
@@ -509,7 +513,11 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "delete first added item",
+      command: [
+        "delete oldest task",
+        "delete oldest item",
+        "delete first added item",
+      ],
       callback: () => {
         setMessage("okay");
         speak({ text: "okay" });
