@@ -6,8 +6,6 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import TodoForm from "./pages/Todos/TodoForm";
-// import { SpeechContext } from "./hooks/SpeechContext";
-import Test from "./components/test/Test";
 
 function App() {
   return (
