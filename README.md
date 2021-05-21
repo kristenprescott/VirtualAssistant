@@ -44,10 +44,19 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 
 </div>
 
-##### Dependencies:
+#### Dependencies:
 
 - [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition)
 - [react-speech-kit](https://github.com/MikeyParton/react-speech-kit)
+- axios
+
+##### Backend dependencies:
+
+- express
+- mongoose
+<!-- - bcryptjs
+- cors
+- jsonwebtoken -->
 
 ###### APIs:
 
@@ -135,10 +144,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 #### How to use/install:
 
-- fork and clone this repository
+<!-- - Fork and clone this repository
 - [Create-react-app README.md](https://github.com/facebook/create-react-app/blob/master/README.md)
-- install any dependencies (listed [here](#dependencies:)) with `yarn add <dependency>` or `npm install <dependency>`
+- Install any dependencies (listed [here](#dependencies:)) with `yarn add <dependency>` or `npm install <dependency>`
 - `yarn start` or `npm start` should run the app locally in your browser at `http://localhost:3000`
+
+[Link to backend repo](https://github.com/kristenprescott/VoiceAsst_backend)
+
+- Fork and clone the server api
+- Install any dependencies
+- Create an account on [MongoDB Atlas]() -->
 
 #### Making new commands:
 
@@ -209,11 +224,3 @@ For more information browse these docs:
 - [ ] Login/registration for user-specific todo lists
 - [ ] User varibale memory (for example, when you say "My name is :name", it is stored to memory)
 - [ ] Delete/update todo list tasks by voice command
-
----
-
-<center>
-
-[Link to backend repo](https://github.com/kristenprescott/VoiceAsst_backend)
-
-</center>
