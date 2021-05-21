@@ -208,8 +208,17 @@ export default function VirtualAssistant() {
       command: ["(get) commands", "show commands"],
       callback: () => {
         setMessage("Opening commands.");
-        speak({ text: "Opening commands.", voice, rate, pitch });
+        speak({ text: "Okay.", voice, rate, pitch });
         toggle();
+      },
+    },
+    {
+      command: "whisper *",
+      callback: (quietWords) => {
+        // setWhisper();
+        setMessage(`okay, ${quietWords}`);
+        speak({ text: `okay, ${quietWords}`, voice: voices[81], rate, pitch });
+        setVoiceIndex(voices[81]);
       },
     },
     {
@@ -296,6 +305,17 @@ export default function VirtualAssistant() {
       command: "hide settings",
       callback: () => setShowSettings(false),
     },
+    //////////////////////////////////////////
+    // <--------------- TODOS --------------->
+    //////////////////////////////////////////
+    // {
+    //   command: "create new task *",
+    //   callback: (task) => {
+    //     doSomething(task);
+    //     setMessage(`${task}`)
+    //     speak({text: `${task}`, voice, rate, pitch})
+    //   }
+    // },
     //////////////////////////////////////////
     // <--------------- TIME --------------->
     //////////////////////////////////////////

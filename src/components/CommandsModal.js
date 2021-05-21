@@ -79,6 +79,10 @@ const CommandsModal = ({ isShowing, hide }) =>
                   persist
                 </li>
                 <li>▸ "hide settings" :|: hides settings view</li>
+                <li>
+                  ▸ "whisper *" :|: whispers "okay, " + the words that follow;
+                  ideally, this will instead set whisper mode in the future
+                </li>
                 <center>
                   <li>
                     <h4>Weather:</h4>

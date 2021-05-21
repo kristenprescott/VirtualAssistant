@@ -42,6 +42,7 @@ export default function VoiceSynthesizer() {
               value={voiceIndex || ""}
               onChange={(e) => {
                 setVoiceIndex(e.target.value);
+                console.log(e.target.value);
               }}
             >
               <option value="">
