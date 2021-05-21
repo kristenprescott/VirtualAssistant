@@ -816,7 +816,11 @@ export default function VirtualAssistant() {
                 <div
                   className="glass-panel"
                   id="instructions"
-                  style={{ height: "150px", marginBottom: "1px" }}
+                  style={{
+                    height: "150px",
+                    width: "600px",
+                    marginBottom: "1px",
+                  }}
                 >
                   <p>Hello, I'm a virtual assistant.</p>
                   <p>
@@ -838,6 +842,8 @@ export default function VirtualAssistant() {
                 {/* ///////////////////////////////////////////////////////////////// */}
                 <textarea
                   style={{
+                    height: "150px",
+                    width: "600px",
                     margin: "0px",
                     marginTop: "1px",
                     marginBottom: "0px",
@@ -845,6 +851,8 @@ export default function VirtualAssistant() {
                   className="glass-panel"
                   id="messages"
                   placeholder={message}
+                  // placeholder="messages"
+                  value={message}
                 >
                   {message}
                 </textarea>
@@ -855,9 +863,15 @@ export default function VirtualAssistant() {
               {/* <-------------------------- TRANSCRIPT -------------------------> */}
               {/* ///////////////////////////////////////////////////////////////// */}
               <textarea
-                style={{ margin: "0px", marginTop: "0px" }}
+                style={{
+                  margin: "0px",
+                  marginTop: "0px",
+                  height: "150px",
+                  width: "600px",
+                }}
                 className="glass-panel"
                 id="transcript"
+                // placeholder="transcript"
                 value={transcript}
               />{" "}
             </div>
