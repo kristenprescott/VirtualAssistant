@@ -9,7 +9,7 @@ export default function Login() {
     history("../");
   };
   const redirectToLogin = () => {
-    history("../login");
+    history("https://virtual-assist-backend.herokuapp.com/login");
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,13 +37,16 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch("../login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...loginForm }),
-      });
+      const res = await fetch(
+        "https://virtual-assist-backend.herokuapp.com/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...loginForm }),
+        }
+      );
       setLoginForm({
         username: "",
         password: "",
