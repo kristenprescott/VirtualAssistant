@@ -223,7 +223,7 @@ export default function VirtualAssistant() {
       command: ["hello", "hi"],
       callback: () => {
         setMessage("Hello, how can I help you?");
-        speak({ text: "Hello, how can I help you?", voice, rate, pitch });
+        speak({ text: "Hello, how can I help you?" });
       },
     },
     {
@@ -268,9 +268,6 @@ export default function VirtualAssistant() {
         );
         speak({
           text: "To view all commands, say 'get commands' or simply 'commands'",
-          voice,
-          rate,
-          pitch,
         });
       },
     },
@@ -352,7 +349,7 @@ export default function VirtualAssistant() {
       ],
       callback: () => {
         setMessage("nerd.");
-        speak({ text: "nerd.", voice, rate, pitch });
+        speak({ text: "nerd." });
       },
     },
     {
@@ -369,11 +366,19 @@ export default function VirtualAssistant() {
     },
     {
       command: "show settings",
-      callback: () => setShowSettings(true),
+      callback: () => {
+        setMessage("showing settings");
+        speak({ text: "okay" });
+        setShowSettings(true);
+      },
     },
     {
       command: "hide settings",
-      callback: () => setShowSettings(false),
+      callback: () => {
+        setMessage("hiding settings");
+        speak({ text: "okay" });
+        setShowSettings(false);
+      },
     },
     //////////////////////////////////////////
     // <--------------- TODOS --------------->
@@ -766,7 +771,7 @@ export default function VirtualAssistant() {
               </div>
               <div className="message-display-container">
                 {/* ///////////////////////////////////////////////////////////////// */}
-                {/* <-------------------- TEXT RESPONSE DISPLAY --------------------> */}
+                {/* <----------------------- MESSAGE DISPLAY -----------------------> */}
                 {/* ///////////////////////////////////////////////////////////////// */}
                 <textarea
                   className="glass-panel"

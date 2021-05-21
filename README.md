@@ -12,17 +12,24 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 
 <br>
 
-<p align="center">
-<a target="_blank" rel="noopener noreferrer" href="">
-<img width="350px" src="https://user-images.githubusercontent.com/55470100/118386539-22730180-b5e6-11eb-936c-a867e0a90cd2.gif" style="max-width:100%;">
-</a>
-</p>
-
 <center>
 
 [Live Demo](https://virtual-asst.herokuapp.com/)
 
 </center>
+
+<!-- ![ez-showCommands](https://user-images.githubusercontent.com/55470100/119111518-242b3380-b9f1-11eb-8982-479dfa52cdae.gif) -->
+
+<!-- ![ez-showTodolist](https://user-images.githubusercontent.com/55470100/119111607-36a56d00-b9f1-11eb-8fac-fd79894a4b0f.gif) -->
+<!--
+![ez-showActivated](https://user-images.githubusercontent.com/55470100/119111659-43c25c00-b9f1-11eb-8a27-fdde8a9ff1da.gif) -->
+
+<p align="center">
+<!-- <a target="_blank" rel="noopener noreferrer" href=""> -->
+<img width="350px" src="https://user-images.githubusercontent.com/55470100/119111659-43c25c00-b9f1-11eb-8a27-fdde8a9ff1da.gif" style="max-width:100%;">
+<!-- </a> -->
+<img width="350px" src="https://user-images.githubusercontent.com/55470100/119111607-36a56d00-b9f1-11eb-8fac-fd79894a4b0f.gif" style="max-width:100%;">
+</p>
 
 <!-- ![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/55470100/118386539-22730180-b5e6-11eb-936c-a867e0a90cd2.gif) -->
 
@@ -40,11 +47,11 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 
 - [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition)
 - [react-speech-kit](https://github.com/MikeyParton/react-speech-kit)
-- [Web Speech API](https://wicg.github.io/speech-api/)
 
 ###### APIs:
 
 - [Open Weather Map](https://openweathermap.org/api)
+- [Web Speech API](https://wicg.github.io/speech-api/) (via linked libraries)
 
 <details><summary>This project was bootstrapped with Create React App.</summary>
 
@@ -121,21 +128,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 </details>
 
-<div align="center">
-
 ### Getting Started:
 
 ---
 
-<!--
 #### How to use/install:
 
 - fork and clone this repository
+- [Create-react-app README.md](https://github.com/facebook/create-react-app/blob/master/README.md)
 - install any dependencies (listed [here](#dependencies:)) with `yarn add <dependency>` or `npm install <dependency>`
-- `yarn start` or `npm start` should run the app locally in your browser at `http://localhost:3000` -->
-</div>
+- `yarn start` or `npm start` should run the app locally in your browser at `http://localhost:3000`
 
-##### Making new commands:
+#### Making new commands:
 
 - Commands are held in an array called "commands", located inside the VirtualAssistant component. Each command is an object with two properties:
   1. command: a string for Virtual Assistant to listen for
@@ -143,7 +147,29 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - A common pattern I've used here for action commands is to:
   1. Set some state `[state, setState] = useState(default)`
   2. Write `doFunction()` to `setState(newState)`
-  3. Call `doFunction()` to execute in the callback of the command
+  3. Call `doFunction()` to execute in the callback function of the new command
+- To set a verbal response in a command:
+
+  ```js
+  speak({"these words will be spoken"})
+  ```
+
+- To set a written response (displayed in the message display):
+  ```js
+  setMessage("these words will be displayed in text");
+  ```
+
+##### Example command:
+
+```js
+    {
+      command: "thank you",
+      callback: () => {
+        setMessage("You're welcome.");
+        speak({ text: "you're welcome" });
+      },
+    },
+```
 
 ##### More:
 
@@ -163,7 +189,7 @@ For more information browse these docs:
 
 ---
 
-- [ ] Make Voice Assistant global to the app
+- [ ] Make Voice Assistant global to the app - currently, components are rendered conditionally right on the Voice Assistant page
 - [ ] When fetching from weather api, a fetch command must first be made (once) before any further requests can be made to the weather API
 
 <!--
