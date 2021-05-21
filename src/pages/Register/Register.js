@@ -6,7 +6,7 @@ import "../Register/Register.css";
 export default function Register() {
   const history = useHistory();
   const redirectToLogin = () => {
-    history.push("../login");
+    history.push("https://virtual-assist-backend.herokuapp.com/login");
   };
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   // <------------------------------------------ STATE ------------------------------------------> //
@@ -34,13 +34,16 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      const res = await fetch("../register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...registrationForm }),
-      });
+      const res = await fetch(
+        "https://virtual-assist-backend.herokuapp.com/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...registrationForm }),
+        }
+      );
       setRegistrationForm({
         username: "",
         email: "",
