@@ -258,3 +258,5 @@ For more information browse these docs:
 - [ ] User restricted data access
 - [ ] User varibale memory (for example, when you say "My name is :name", it is stored to memory)
 - [ ] Delete/update todo list tasks by voice command
+- [ ] Voice memo recorder
+- [ ] Further utilization of command options for better command recognition
