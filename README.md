@@ -138,7 +138,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 </details>
 
+<div align="center">
+
 ### Planning Stages:
+
+</div>
 
 ---
 
@@ -168,7 +172,11 @@ My original plans for the app were somewhat vague - I wasn't quite sure yet what
 
 </details>
 
+<div align="center">
+
 ### Getting Started:
+
+</div>
 
 ---
 
