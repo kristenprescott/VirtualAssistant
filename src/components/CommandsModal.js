@@ -71,6 +71,12 @@ const CommandsModal = ({ isShowing, hide }) =>
                   ▸ "google search exact *" :|: searches google for exact *
                 </li>
                 <li>
+                  ▸ "add new task *" :|: gets new task ready to add to list
+                </li>
+                <li>
+                  ▸ "(yes) create new task" :|: adds new task to todo list
+                </li>
+                <li>
                   ▸ ["show me my to-do list", "show me my to-dos", "set to-dos",
                   "add to to-do list"] :|: opens to-do list
                 </li>
