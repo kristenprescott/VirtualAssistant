@@ -152,22 +152,22 @@ My original plans for the app were somewhat vague - I wasn't quite sure yet what
 
 <p align="center">
 <a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/55470100/119117484-43c55a80-b9f7-11eb-9764-6f80be6e7511.PNG">
-<img width="350px" src="https://user-images.githubusercontent.com/55470100/119117484-43c55a80-b9f7-11eb-9764-6f80be6e7511.PNG" style="max-width:100%;">
+<img width="250px" src="https://user-images.githubusercontent.com/55470100/119117484-43c55a80-b9f7-11eb-9764-6f80be6e7511.PNG" style="max-width:100%;">
 </a>
 
 <p align="center">
 <a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/55470100/119116542-5723f600-b9f6-11eb-868f-853b71d25550.PNG">
-<img width="350px" src="https://user-images.githubusercontent.com/55470100/119116542-5723f600-b9f6-11eb-868f-853b71d25550.PNG" style="max-width:100%;">
+<img width="250px" src="https://user-images.githubusercontent.com/55470100/119116542-5723f600-b9f6-11eb-868f-853b71d25550.PNG" style="max-width:100%;">
 </a>
 
 <a target="_blank" rel="noopener noreferer" href="https://user-images.githubusercontent.com/55470100/119116668-76228800-b9f6-11eb-989e-715dd7eba15f.PNG">
-<img width="350px" src="https://user-images.githubusercontent.com/55470100/119116668-76228800-b9f6-11eb-989e-715dd7eba15f.PNG" style="max-width:100%;">
+<img width="250px" src="https://user-images.githubusercontent.com/55470100/119116668-76228800-b9f6-11eb-989e-715dd7eba15f.PNG" style="max-width:100%;">
 </a>
 </p>
 
 <p align="center">
 <a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/55470100/119117400-314b2100-b9f7-11eb-87ad-74cad557bce7.PNG">
-<img width="350px" src="https://user-images.githubusercontent.com/55470100/119117400-314b2100-b9f7-11eb-87ad-74cad557bce7.PNG" style="max-width:100%;">
+<img width="250px" src="https://user-images.githubusercontent.com/55470100/119117400-314b2100-b9f7-11eb-87ad-74cad557bce7.PNG" style="max-width:100%;">
 </a>
 
 </details>
