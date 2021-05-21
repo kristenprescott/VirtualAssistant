@@ -107,6 +107,11 @@ const CommandsModal = ({ isShowing, hide }) =>
                   would if I could figure out that UTC/Linux time conversion
                   thing)
                 </li> */}
+                <center>
+                  <li>
+                    <h4>Time:</h4>
+                  </li>
+                </center>
                 <li>
                   "set (a) timer for :timeout seconds" :|: sets a timer for
                   :number seconds

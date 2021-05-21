@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import TodoAPIHelper from "../../helpers/TodoAPIHelper";
+import "./TodoForm.css";
 // import SpeechRecognition, {
 //   useSpeechRecognition,
 // } from "react-speech-recognition";
@@ -72,51 +73,51 @@ export default function TodoForm() {
   // } = useSpeechRecognition({ commands });
 
   return (
-    <div
-      style={{
-        margin: "25px",
-        padding: "20px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <h1>TODO LIST</h1>
+    <div className="TodoForm">
+      <h1 className="todo-list-title">Todo List</h1>
 
-      <hr></hr>
+      {/* <hr></hr> */}
 
-      <div className="">
-        <div>
+      <div className="todo-input-container">
+        <div className="todo-input-wrapper">
           <input
             id="todo-input"
             type="text"
             value={newTodo}
             onChange={({ target }) => setNewTodo(target.value)}
           />
-          <button type="button" onClick={createTodo}>
+          <button className="todo-add-btn" type="button" onClick={createTodo}>
             Add
           </button>
         </div>
 
-        <ol>
-          {todos.map(({ _id, task, done }, i) => (
-            <li
-              style={{ cursor: "pointer", backgroundColor: "gainsboro" }}
-              key={i}
-              onClick={(e) => updateTodo(e, _id)}
-              className={done ? "done" : ""}
-            >
-              {task}{" "}
-              <span
-                style={{ backgroundColor: "red", cursor: "pointer" }}
-                onClick={(e) => deleteTodo(e, _id)}
-              >
-                X
-              </span>
-            </li>
-          ))}
-        </ol>
+        <hr></hr>
+
+        <div className="todo-list-wrapper">
+          <ul className="todo-list">
+            {todos.map(({ _id, task, done }, i) => (
+              <div className="list-item-wrapper" key={i}>
+                <div>❏</div>{" "}
+                <li
+                  onClick={(e) => updateTodo(e, _id)}
+                  // className={done ? "done" : ""}
+                  className="list-item"
+                >
+                  {task}{" "}
+                  {/* <div className="todo-delete" onClick={(e) => deleteTodo(e, _id)}>
+                &times;
+              </div> */}
+                </li>
+                <div
+                  className="todo-delete"
+                  onClick={(e) => deleteTodo(e, _id)}
+                >
+                  <span>&times;</span>
+                </div>
+              </div>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

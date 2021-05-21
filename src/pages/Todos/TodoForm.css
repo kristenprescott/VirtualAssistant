@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;400&display=swap");
+.TodoForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  font-family: "IBM Plex Mono", monospace;
+}
+.todo-list-title {
+  font-size: 36px;
+  text-transform: uppercase;
+  margin-top: 10vmin;
+}
+.todo-input-container {
+  text-align: center;
+  margin-top: 5vmin;
+  margin-bottom: 5vmin;
+  /* border: none; */
+  border: 1px solid gainsboro;
+  border-radius: 9px;
+  /* background-color: pink; */
+}
+.todo-input-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 2.5vmin;
+  margin-bottom: 2.5vmin;
+}
+input[type="text"] {
+  border: none;
+  border: 1px solid gainsboro;
+  border-radius: 4px;
+  width: 40vmax;
+  height: 5vmax;
+}
+hr {
+  color: powderblue;
+  background-color: powderblue;
+  border: 1px solid powderblue;
+}
+.todo-list-wrapper {
+  margin: 20px;
+  font-size: 22px;
+}
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  justify-items: space-around;
+  /* border: 1px solid gainsboro; */
+  /* background-color: powderblue; */
+}
+/* .done {
+  text-decoration: line-through;
+} */
+.list-item-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid powderblue;
+}
+.list-item {
+  padding-left: 10px;
+  padding-right: 10px;
+  /* padding-top: 5px; */
+  /* padding-bottom: 5px; */
+}
+.todo-add-btn {
+  cursor: pointer;
+  width: 8vmax;
+  height: 5vmax;
+}
+.todo-delete {
+  cursor: pointer;
+  color: tomato;
+  font-size: 36px;
+  /* width: 50px; */
+  /* border-radius: 100px; */
+  /* border: 1px solid tomato; */
+  /* background-color: tomato; */
+}

@@ -4,8 +4,7 @@
 
 </div>
 
-[Demo](https://virtual-asst.herokuapp.com/)
-[Link to backend repo](https://github.com/kristenprescott/VoiceAsst_backend)
+[Live Demo](https://virtual-asst.herokuapp.com/)
 
 Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis. It combines the two hooks to enable voice command recognition and both visual and verbal feedback for commands.
 
@@ -174,3 +173,7 @@ For more information browse these docs:
 
 - [ ] Login/registration for user-specific todo lists
 - [ ] User varibale memory (for example, when you say "My name is :name", it is stored to memory)
+
+---
+
+[Link to backend repo](https://github.com/kristenprescott/VoiceAsst_backend)
