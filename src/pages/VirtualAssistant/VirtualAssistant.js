@@ -229,8 +229,8 @@ export default function VirtualAssistant() {
     {
       command: "thank you",
       callback: () => {
-        speak({ text: "you're welcome" });
         setMessage("You're welcome.");
+        speak({ text: "you're welcome" });
       },
     },
     {
@@ -383,7 +383,6 @@ export default function VirtualAssistant() {
         "show me my to do list",
         "show me my to-do list",
         "show (my) to-do list",
-        "add to to-do list",
       ],
       callback: () => {
         setShowTodos(true);
@@ -759,7 +758,10 @@ export default function VirtualAssistant() {
                   {/* <p>To log in say "Log in"</p> */}
                   {/* <p>To make a new account say "Sign up"</p> */}
                   <p>To see more commands say "Show commands"</p>
-                  <p>To make a to-do list, say "Set to-do list"</p>
+                  <p>
+                    To add a task to the to-do list, say "Add new task",
+                    followed by the task to add; then, say "add to list"
+                  </p>
                 </div>
               </div>
               <div className="message-display-container">

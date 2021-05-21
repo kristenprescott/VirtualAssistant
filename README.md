@@ -164,7 +164,7 @@ For more information browse these docs:
 ---
 
 - [ ] Make Voice Assistant global to the app
-- [ ] When fetching from weather api, a fetch command must first be made (once) before any further requests.
+- [ ] When fetching from weather api, a fetch command must first be made (once) before any further requests can be made to the weather API
 
 <!--
 - [ ] works
@@ -181,6 +181,7 @@ For more information browse these docs:
 
 - [ ] Login/registration for user-specific todo lists
 - [ ] User varibale memory (for example, when you say "My name is :name", it is stored to memory)
+- [ ] Delete/update todo list tasks by voice command
 
 ---
 
