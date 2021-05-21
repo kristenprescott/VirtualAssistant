@@ -48,7 +48,7 @@ const CommandsModal = ({ isShowing, hide }) =>
                 </li> */}
                 <li>▸ "clear" :|: clear transcript(spoken words)</li>
                 <li>
-                  ["(get) commands", "show commands"] :|: open commands modal
+                  ▸ ["(get) commands", "show commands"] :|: open commands modal
                 </li>
                 {/* <li>
                   ▸ ["log in", "login"] :|: open login page(opens in same
@@ -71,8 +71,8 @@ const CommandsModal = ({ isShowing, hide }) =>
                   ▸ "google search exact *" :|: searches google for exact *
                 </li>
                 <li>
-                  [ "show me my to-do list", "show me my to-dos", "set to-dos",
-                  "add to to-do list", ] :|: opens to-do list
+                  ▸ ["show me my to-do list", "show me my to-dos", "set to-dos",
+                  "add to to-do list"] :|: opens to-do list
                 </li>
                 <li>
                   ▸ "show settings" :|: shows settings view; changes made here
@@ -91,14 +91,14 @@ const CommandsModal = ({ isShowing, hide }) =>
                   making other weather commands.
                 </li>
                 <li>
-                  ▸ [ "(current) weather", "what's the weather", "what is the
-                  weather", "tell me the weather", ] :|: gives current weather
+                  ▸ ["(current) weather", "what's the weather", "what is the
+                  weather", "tell me the weather"] :|: gives current weather
                   description
                 </li>
                 <li>▸ "current temperature" :|: gives current temperature</li>
                 <li>
-                  ▸ [ "(current) moon phase", "what's the moon phase", "what
-                  phase is the moon (in)", ] :|: gives (currently incorrect I
+                  ▸ ["(current) moon phase", "what's the moon phase", "what
+                  phase is the moon (in)"] :|: gives (currently incorrect I
                   believe, I need to work on that function...) the current moon
                   phase.
                 </li>
@@ -112,18 +112,18 @@ const CommandsModal = ({ isShowing, hide }) =>
                   :number seconds
                 </li>
                 <li>
-                  "set a timer for :timeout minute" :|: sets a timer for :number
-                  minutes
+                  ▸ "set a timer for :timeout minute" :|: sets a timer for
+                  :number minutes
                 </li>
                 <li>
-                  "what time is it" :|: responds with the time (24hr only for
+                  ▸ "what time is it" :|: responds with the time (24hr only for
                   now)
                 </li>
                 <li>
-                  [ "what is todays date", "what's today's date", "what's the
+                  ▸ ["what is todays date", "what's today's date", "what's the
                   date" ] :|: responds with the date (YYYY-MM-DD)
                 </li>
-                <li>"what day is it" :|: responds with the weekday</li>
+                <li>▸ "what day is it" :|: responds with the weekday</li>
               </ul>
             </div>
           </div>
