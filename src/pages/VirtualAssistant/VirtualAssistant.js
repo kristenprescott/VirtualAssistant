@@ -210,6 +210,7 @@ export default function VirtualAssistant() {
     );
     const weather = await res.json();
     setWeatherData(weather);
+    console.log(weatherData);
     return weather;
   };
   // get current weather description:
@@ -236,6 +237,34 @@ export default function VirtualAssistant() {
       const weather = await fetchWeather();
       if (weather) {
         const weatherText = `${weather.current.temp.toString()} degrees`;
+        speak({ text: weatherText });
+      }
+    }
+  };
+  // get current clouds:
+  const getCurrentClouds = async () => {
+    if (weatherData) {
+      const weatherText = `${weatherData.current.clouds.toString()} %`;
+      speak({ text: weatherText });
+      setMessage(weatherText);
+    } else {
+      const weather = await fetchWeather();
+      if (weather) {
+        const weatherText = `${weather.current.clouds.toString()} %`;
+        speak({ text: weatherText });
+      }
+    }
+  };
+  // get current humidity:
+  const getCurrentHumidity = async () => {
+    if (weatherData) {
+      const weatherText = `${weatherData.current.humidity.toString()} %`;
+      speak({ text: weatherText });
+      setMessage(weatherText);
+    } else {
+      const weather = await fetchWeather();
+      if (weather) {
+        const weatherText = `${weather.current.humidity.toString()} %`;
         speak({ text: weatherText });
       }
     }
@@ -268,6 +297,134 @@ export default function VirtualAssistant() {
       console.log("phase: ", weatherData.daily[0].moon_phase.toString());
     } else {
       speak({ text: "cannot fetch data" });
+    }
+  };
+  // get sunrise time:
+  const getSunrise = async () => {
+    if (weatherData) {
+      const utc = `${weatherData.daily[0].sunrise}`;
+      const date = new Date(utc * 1000);
+      const timeString = date.toLocaleTimeString();
+      const weatherText = timeString.split(":").join();
+      speak({ text: weatherText });
+      setMessage(timeString);
+    } else {
+      const weather = await fetchWeather();
+      if (weather) {
+        const weatherText = `${weather.daily[0].sunrise}`;
+        speak({ text: weatherText });
+      }
+    }
+  };
+  // get sunset time:
+  const getSunset = async () => {
+    if (weatherData) {
+      const utc = `${weatherData.daily[0].sunset}`;
+      const date = new Date(utc * 1000);
+      const timeString = date.toLocaleTimeString();
+      const weatherText = timeString.split(":").join();
+      speak({ text: weatherText });
+      setMessage(timeString);
+    } else {
+      const weather = await fetchWeather();
+      if (weather) {
+        const weatherText = `${weather.daily[0].sunset}`;
+        speak({ text: weatherText });
+      }
+    }
+  };
+  // get moonrise time:
+  const getMoonrise = async () => {
+    if (weatherData) {
+      const utc = `${weatherData.daily[0].moonrise}`;
+      const date = new Date(utc * 1000);
+      const timeString = date.toLocaleTimeString();
+      const weatherText = timeString.split(":").join();
+      speak({ text: weatherText });
+      setMessage(timeString);
+    } else {
+      const weather = await fetchWeather();
+      if (weather) {
+        const weatherText = `${weather.daily[0].moonrise}`;
+        speak({ text: weatherText });
+      }
+    }
+  };
+  // get moonset time:
+  const getMoonset = async () => {
+    if (weatherData) {
+      const utc = `${weatherData.daily[0].moonset}`;
+      const date = new Date(utc * 1000);
+      const timeString = date.toLocaleTimeString();
+      const weatherText = timeString.split(":").join();
+      speak({ text: weatherText });
+      setMessage(timeString);
+    } else {
+      const weather = await fetchWeather();
+      if (weather) {
+        const weatherText = `${weather.daily[0].moonset}`;
+        speak({ text: weatherText });
+      }
+    }
+  };
+  // get forecast:
+  const getForecast = async () => {
+    if (weatherData) {
+      const monday = `${weatherData.daily[0].weather[0].description}`;
+      const tuesday = `${weatherData.daily[1].weather[0].description}`;
+      const wednesday = `${weatherData.daily[2].weather[0].description}`;
+      const thursday = `${weatherData.daily[3].weather[0].description}`;
+      const friday = `${weatherData.daily[4].weather[0].description}`;
+      const saturday = `${weatherData.daily[5].weather[0].description}`;
+      const sunday = `${weatherData.daily[6].weather[0].description}`;
+
+      speak({
+        text: `Monday: ${monday}, Tuesday: ${tuesday}, Wednesday: ${wednesday}, Thursday: ${thursday}, Friday: ${friday}, Saturday: ${saturday}, and Sunday: ${sunday}`,
+      });
+      setMessage(
+        `Monday: ${monday}, Tuesday: ${tuesday}, Wednesday: ${wednesday}, Thursday: ${thursday}, Friday: ${friday}, Saturday: ${saturday}, and Sunday: ${sunday}`
+      );
+    }
+  };
+  // get short forecast:
+  const getShortForecast = async () => {
+    if (weatherData) {
+      const monday = `${weatherData.daily[0].weather[0].main}`;
+      const tuesday = `${weatherData.daily[1].weather[0].main}`;
+      const wednesday = `${weatherData.daily[2].weather[0].main}`;
+      const thursday = `${weatherData.daily[3].weather[0].main}`;
+      const friday = `${weatherData.daily[4].weather[0].main}`;
+      const saturday = `${weatherData.daily[5].weather[0].main}`;
+      const sunday = `${weatherData.daily[6].weather[0].main}`;
+
+      speak({
+        text: `Monday: ${monday}, Tuesday: ${tuesday}, Wednesday: ${wednesday}, Thursday: ${thursday}, Friday: ${friday}, Saturday: ${saturday}, and Sunday: ${sunday}`,
+      });
+      setMessage(
+        `Monday: ${monday}, Tuesday: ${tuesday}, Wednesday: ${wednesday}, Thursday: ${thursday}, Friday: ${friday}, Saturday: ${saturday}, and Sunday: ${sunday}`
+      );
+    }
+  };
+  // get the high temp:
+  const getHigh = async () => {
+    if (weatherData) {
+      const weatherText = `${weatherData.daily[0].temp.max}`;
+
+      speak({
+        text: `${weatherText} degrees`,
+      });
+      setMessage(`${weatherText} degrees`);
+    }
+  };
+  // get the chance of rain:
+  const getRainChance = async () => {
+    if (weatherData) {
+      const weatherText = `${weatherData.daily[0].pop}`;
+
+      speak({
+        text: `${weatherText} %`,
+      });
+      setMessage(`${weatherText} %`);
     }
   };
   /////////////////////////////////////////////////////////////////
@@ -586,6 +743,30 @@ export default function VirtualAssistant() {
       },
     },
     {
+      command: ["what's the high (today)", "what's the high (for today)"],
+      callback: () => {
+        getHigh();
+      },
+    },
+    {
+      command: "how cloudy is it (today)",
+      callback: () => {
+        getCurrentClouds();
+      },
+    },
+    {
+      command: "what's the chance of rain",
+      callback: () => {
+        getRainChance();
+      },
+    },
+    {
+      command: "how humid is it (today)",
+      callback: () => {
+        getCurrentHumidity();
+      },
+    },
+    {
       command: [
         "(current) moon phase",
         "what's the moon phase",
@@ -593,6 +774,56 @@ export default function VirtualAssistant() {
       ],
       callback: () => {
         getMoonPhase();
+      },
+    },
+    {
+      command: ["what time is sunrise", "when is sunrise"],
+      callback: () => {
+        getSunrise();
+      },
+    },
+    {
+      command: ["what time is sunset", "when is sunset"],
+      callback: () => {
+        getSunset();
+      },
+    },
+    {
+      command: [
+        "what time is moonrise",
+        "when does the moonrise",
+        "what time does the moon rise",
+      ],
+      callback: () => {
+        getMoonrise();
+      },
+    },
+    {
+      command: [
+        "what time is moonset",
+        "when does the moonset",
+        "what time does the moon set",
+      ],
+      callback: () => {
+        getMoonset();
+      },
+    },
+    {
+      command: [
+        "what's the forecast (this week)",
+        "what's the forecast (for the week)",
+      ],
+      callback: () => {
+        getForecast();
+      },
+    },
+    {
+      command: [
+        "what's the quick forecast (this week)",
+        "what's the fast forecast (for the week)",
+      ],
+      callback: () => {
+        getShortForecast();
       },
     },
   ];
@@ -687,6 +918,8 @@ export default function VirtualAssistant() {
                     value: { message },
                   }}
                 >
+                  {message}
+
                   <p className="fade-out-text">
                     Hello, I'm a virtual assistant.
                   </p>
