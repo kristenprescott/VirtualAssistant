@@ -699,6 +699,9 @@ export default function VirtualAssistant() {
         "delete most recent task",
         "delete most recent item",
         "delete last added item",
+        "delete latest task",
+        "remove last added task",
+        "remove most recent task",
       ],
       callback: () => {
         setMessage("okay");
@@ -711,6 +714,8 @@ export default function VirtualAssistant() {
         "delete oldest task",
         "delete oldest item",
         "delete first added item",
+        "remove first (added) task",
+        "remove oldest task",
       ],
       callback: () => {
         setMessage("okay");
