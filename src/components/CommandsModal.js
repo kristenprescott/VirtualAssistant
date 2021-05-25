@@ -30,15 +30,15 @@ const CommandsModal = ({ isShowing, hide }) =>
                 <hr />
                 <br />
               </center>
-              <ul>
-                <center>
-                  <h2>Verbal response:</h2>
-                </center>
-                <li>▸ ["hello", "hi"]</li>
-                <li>▸ "(hello) my name is *"</li>
-                <li>▸ "help"</li>
-                {/* <li>▸ "up up down down left right left right b a (start)"</li> */}
-              </ul>
+              {/* <ul> */}
+              {/* <center> */}
+              {/* <h2>Verbal response:</h2> */}
+              {/* </center> */}
+              {/* <li>▸ ["hello", "hi"]</li> */}
+              {/* <li>▸ "(hello) my name is *"</li> */}
+              {/* <li>▸ "help"</li> */}
+              {/* <li>▸ "up up down down left right left right b a (start)"</li> */}
+              {/* </ul> */}
               <ul>
                 <center>
                   <h2>Action response:</h2>
