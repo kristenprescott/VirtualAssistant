@@ -31,6 +31,8 @@ export default function VirtualAssistant() {
   const [long, setLong] = useState([]);
   // // Weather:
   const [weatherData, setWeatherData] = useState(null);
+  // bored
+  const [boredomActivity, setBoredomActivity] = useState(null);
   // voice synth:
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
@@ -428,6 +430,32 @@ export default function VirtualAssistant() {
     }
   };
   /////////////////////////////////////////////////////////////////
+  // <------------------------- Other -------------------------> //
+  /////////////////////////////////////////////////////////////////
+  // bored:
+  const getBored = async () => {
+    const res = await fetch("http://www.boredapi.com/api/activity/");
+    const activity = await res.json();
+    setBoredomActivity(activity);
+    console.log(boredomActivity);
+    return activity;
+  };
+
+  // // get current weather description:
+  // const getCurrentWeatherDescription = async () => {
+  //   if (weatherData) {
+  //     const weatherText = `${weatherData.current.weather[0].description}`;
+  //     speak({ text: weatherText });
+  //     setMessage(weatherText);
+  //   } else {
+  //     const weather = await fetchWeather();
+  //     if (weather) {
+  //       const weatherText = `${weather.current.weather[0].description}`;
+  //       speak({ text: weatherText });
+  //     }
+  //   }
+  // };
+  /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
   /////////////////////////////////////////////////////////////////
   const commands = [
@@ -621,6 +649,22 @@ export default function VirtualAssistant() {
         setShowTodos(false);
       },
     },
+    // {
+    //   command: "add :task to to-do list",
+    //   callback: (task) => {
+    //     setMessage(`add ${task} to to-do list?`);
+    //     speak({
+    //       text: `add ${task} to to-do list?`,
+    //       voice,
+    //       rate,
+    //       pitch,
+    //     });
+    //     const newTodo = task.toString();
+    //     console.log(`task: ${task}`);
+    //     setNewTodo(task.toString());
+    //     console.log(newTodo);
+    //   },
+    // },
     {
       command: [
         "(add) new task *",
@@ -824,6 +868,12 @@ export default function VirtualAssistant() {
       ],
       callback: () => {
         getShortForecast();
+      },
+    },
+    {
+      command: "I'm bored",
+      callback: () => {
+        getBored();
       },
     },
   ];
