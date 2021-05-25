@@ -675,7 +675,7 @@ export default function VirtualAssistant() {
       callback: (task) => {
         setMessage(`add ${task} to to-do list?`);
         speak({
-          text: `add ${task} to to-do list?`,
+          text: `add ${task} to to do list?`,
           voice,
           rate,
           pitch,
