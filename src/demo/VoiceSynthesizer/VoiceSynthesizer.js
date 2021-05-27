@@ -7,7 +7,7 @@ export default function VoiceSynthesizer() {
   // <------------------------------------------ STATE ------------------------------------------> //
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   const [text, setText] = useState(
-    "Hello, I'm a virtual assistant. How can I help you?"
+    "I am the ghost inside of the machine. Type anything here you'd like for me to say."
   );
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);

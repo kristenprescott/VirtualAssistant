@@ -488,9 +488,9 @@ export default function VirtualAssistant() {
     {
       command: "I'm :hungry",
       callback: (hungry) => {
-        setMessage("Hi, hungry, I'm dad.");
+        setMessage(`Hi, ${hungry}, I'm dad.`);
         speak({
-          text: "Hi hungry, I'm dad.",
+          text: `Hi, ${hungry}, I'm dad.`,
           voice,
           rate,
           pitch,
@@ -607,11 +607,11 @@ export default function VirtualAssistant() {
     {
       command: "google search exact *",
       callback: (exactTerm) => {
-        window.open(`http://www.google.com/search?q="${exactTerm}"`);
+        window.open(`http://www.google.com/search?q="${exactTerm}`);
       },
     },
     {
-      command: "go to voice synthesizer",
+      command: ["go to voice synthesizer", "show voice synthesizer"],
       callback: () => {
         window.open("../voicesynthesizer", "_self");
       },
@@ -879,6 +879,16 @@ export default function VirtualAssistant() {
       command: "I'm bored",
       callback: () => {
         getBored();
+      },
+    },
+    // <-------------- WEATHER -------------->
+    {
+      command: "email",
+      callback: () => {
+        const setEmail = () => {
+          // document.querySelector()
+        };
+        setMessage(`<a href="mailto:KristenNPrescott@gmail.com">my email</a>`);
       },
     },
   ];
