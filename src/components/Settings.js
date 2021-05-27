@@ -53,6 +53,7 @@ export default function Settings(props) {
             type="range"
             min="0.5"
             max="2"
+            value={props.rate}
             defaultValue="1"
             step="0.1"
             id="rate"
@@ -74,6 +75,7 @@ export default function Settings(props) {
             type="range"
             min="0"
             max="2"
+            value={props.pitch}
             defaultValue="1"
             step="0.1"
             id="pitch"

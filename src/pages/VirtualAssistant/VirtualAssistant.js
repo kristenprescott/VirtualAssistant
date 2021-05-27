@@ -36,7 +36,7 @@ export default function VirtualAssistant() {
   // voice synth:
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
-  const [voiceIndex, setVoiceIndex] = useState(null);
+  const [voiceIndex, setVoiceIndex] = useState(1);
   const [message, setMessage] = useState("");
   /////////////////////////////////////////////////////////////////
   // <------------------------- TODOS -------------------------> //
@@ -121,7 +121,7 @@ export default function VirtualAssistant() {
         console.log("time elapsed: ", counter);
       }
       setMessage("beep.");
-      speak({ text: "beep.", voice: voices[2], rate, pitch });
+      speak({ text: "beep.", voice: voices[voiceIndex], rate, pitch });
       return;
     }, countdown);
 
@@ -138,7 +138,7 @@ export default function VirtualAssistant() {
         console.log(countdown);
       }
       setMessage("beep.");
-      speak({ text: "beep.", voice: voices[2], rate, pitch });
+      speak({ text: "beep.", voice: voices[voiceIndex], rate, pitch });
       return;
     }, countdown);
 
@@ -150,7 +150,7 @@ export default function VirtualAssistant() {
     const time =
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     setMessage(time);
-    speak({ text: `${time}`, voice: voices[2], rate, pitch });
+    speak({ text: `${time}`, voice: voices[voiceIndex], rate, pitch });
   };
   // current date:
   const fetchDate = () => {
@@ -162,7 +162,12 @@ export default function VirtualAssistant() {
       "-" +
       today.getDate();
     setMessage(date);
-    speak({ text: `the date is ${date}`, voice: voices[2], rate, pitch });
+    speak({
+      text: `the date is ${date}`,
+      voice: voices[voiceIndex],
+      rate,
+      pitch,
+    });
   };
   // current day:
   const fetchDay = () => {
@@ -171,25 +176,25 @@ export default function VirtualAssistant() {
     const day = today.getDay();
     if (day === 0) {
       setMessage("Today is Sunday.");
-      speak({ text: "sunday", voice: voices[2], rate, pitch });
+      speak({ text: "sunday", voice: voices[voiceIndex], rate, pitch });
     } else if (day === 1) {
       setMessage("Today is Monday.");
-      speak({ text: "monday", voice: voices[2], rate, pitch });
+      speak({ text: "monday", voice: voices[voiceIndex], rate, pitch });
     } else if (day === 2) {
       setMessage("Today is Tuesday.");
-      speak({ text: "tuesday", voice: voices[2], rate, pitch });
+      speak({ text: "tuesday", voice: voices[voiceIndex], rate, pitch });
     } else if (day === 3) {
       setMessage("Today is Wednesday.");
-      speak({ text: "wednesday", voice: voices[2], rate, pitch });
+      speak({ text: "wednesday", voice: voices[voiceIndex], rate, pitch });
     } else if (day === 4) {
       setMessage("Today is Thursday.");
-      speak({ text: "thursday", voice: voices[2], rate, pitch });
+      speak({ text: "thursday", voice: voices[voiceIndex], rate, pitch });
     } else if (day === 5) {
       setMessage("Today is Friday.");
-      speak({ text: "friday", voice: voices[2], rate, pitch });
+      speak({ text: "friday", voice: voices[voiceIndex], rate, pitch });
     } else if (day === 6) {
       setMessage("Today is Saturday.");
-      speak({ text: "saturday", voice: voices[2], rate, pitch });
+      speak({ text: "saturday", voice: voices[voiceIndex], rate, pitch });
     }
   };
   /////////////////////////////////////////////////////////////////
@@ -225,7 +230,7 @@ export default function VirtualAssistant() {
       const weather = await fetchWeather();
       if (weather) {
         const weatherText = `${weather.current.weather[0].description}`;
-        speak({ text: weatherText, voice: voices[2] });
+        speak({ text: weatherText, voice: voices[voiceIndex] });
       }
     }
   };
@@ -239,7 +244,7 @@ export default function VirtualAssistant() {
       const weather = await fetchWeather();
       if (weather) {
         const weatherText = `${weather.current.temp.toString()} degrees`;
-        speak({ text: weatherText, voice: voices[2] });
+        speak({ text: weatherText, voice: voices[voiceIndex] });
       }
     }
   };
@@ -253,7 +258,7 @@ export default function VirtualAssistant() {
       const weather = await fetchWeather();
       if (weather) {
         const weatherText = `${weather.current.clouds.toString()} %`;
-        speak({ text: weatherText, voice: voices[2] });
+        speak({ text: weatherText, voice: voices[voiceIndex] });
       }
     }
   };
@@ -267,7 +272,7 @@ export default function VirtualAssistant() {
       const weather = await fetchWeather();
       if (weather) {
         const weatherText = `${weather.current.humidity.toString()} %`;
-        speak({ text: weatherText, voice: voices[2] });
+        speak({ text: weatherText, voice: voices[voiceIndex] });
       }
     }
   };
@@ -295,7 +300,7 @@ export default function VirtualAssistant() {
       }
       const weatherText = `${currentPhase}`;
       // speak({ text: weatherText });
-      speak({ text: weatherText, voice: voices[2], rate, pitch });
+      speak({ text: weatherText, voice: voices[voiceIndex], rate, pitch });
       setMessage(weatherText);
       console.log("phase: ", weatherData.daily[0].moon_phase.toString());
     } else {
@@ -309,7 +314,7 @@ export default function VirtualAssistant() {
       const date = new Date(utc * 1000);
       const timeString = date.toLocaleTimeString();
       const weatherText = timeString.split(":").join();
-      speak({ text: weatherText, voice: voices[2] });
+      speak({ text: weatherText, voice: voices[voiceIndex] });
       setMessage(timeString);
     } else {
       const weather = await fetchWeather();
@@ -326,7 +331,7 @@ export default function VirtualAssistant() {
       const date = new Date(utc * 1000);
       const timeString = date.toLocaleTimeString();
       const weatherText = timeString.split(":").join();
-      speak({ text: weatherText, voice: voices[2] });
+      speak({ text: weatherText, voice: voices[voiceIndex] });
       setMessage(timeString);
     } else {
       const weather = await fetchWeather();
@@ -349,7 +354,7 @@ export default function VirtualAssistant() {
       const weather = await fetchWeather();
       if (weather) {
         const weatherText = `${weather.daily[0].moonrise}`;
-        speak({ text: weatherText, voice: voices[2] });
+        speak({ text: weatherText, voice: voices[voiceIndex] });
       }
     }
   };
@@ -366,7 +371,7 @@ export default function VirtualAssistant() {
       const weather = await fetchWeather();
       if (weather) {
         const weatherText = `${weather.daily[0].moonset}`;
-        speak({ text: weatherText, voice: voices[2] });
+        speak({ text: weatherText, voice: voices[voiceIndex] });
       }
     }
   };
@@ -383,7 +388,7 @@ export default function VirtualAssistant() {
 
       speak({
         text: `Monday: ${monday}, Tuesday: ${tuesday}, Wednesday: ${wednesday}, Thursday: ${thursday}, Friday: ${friday}, Saturday: ${saturday}, and Sunday: ${sunday}`,
-        voice: voices[2],
+        voice: voices[voiceIndex],
       });
       setMessage(
         `Monday: ${monday}, Tuesday: ${tuesday}, Wednesday: ${wednesday}, Thursday: ${thursday}, Friday: ${friday}, Saturday: ${saturday}, and Sunday: ${sunday}`
@@ -403,7 +408,7 @@ export default function VirtualAssistant() {
 
       speak({
         text: `Monday: ${monday}, Tuesday: ${tuesday}, Wednesday: ${wednesday}, Thursday: ${thursday}, Friday: ${friday}, Saturday: ${saturday}, and Sunday: ${sunday}`,
-        voice: voices[2],
+        voice: voices[voiceIndex],
       });
       setMessage(
         `Monday: ${monday}, Tuesday: ${tuesday}, Wednesday: ${wednesday}, Thursday: ${thursday}, Friday: ${friday}, Saturday: ${saturday}, and Sunday: ${sunday}`
@@ -417,7 +422,7 @@ export default function VirtualAssistant() {
 
       speak({
         text: `${weatherText} degrees`,
-        voice: voices[2],
+        voice: voices[voiceIndex],
       });
       setMessage(`${weatherText} degrees`);
     }
@@ -429,7 +434,7 @@ export default function VirtualAssistant() {
 
       speak({
         text: `${weatherText} %`,
-        voice: voices[2],
+        voice: voices[voiceIndex],
       });
       setMessage(`${weatherText} %`);
     }
@@ -460,6 +465,11 @@ export default function VirtualAssistant() {
   //     }
   //   }
   // };
+  const setWhisper = () => {
+    setVoiceIndex(81);
+    setMessage("ok i'll whisper");
+    speak({ text: "ok I'll be quiet.", voice: voices[81] });
+  };
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
   /////////////////////////////////////////////////////////////////
@@ -468,14 +478,17 @@ export default function VirtualAssistant() {
       command: ["hello", "hi"],
       callback: () => {
         setMessage("Hello, how can I help you?");
-        speak({ text: "Hello, how can I help you?", voice: voices[2] });
+        speak({
+          text: "Hello, how can I help you?",
+          voice: voices[voiceIndex],
+        });
       },
     },
     {
       command: "thank you",
       callback: () => {
         setMessage("You're welcome.");
-        speak({ text: "you're welcome", voice: voices[2] });
+        speak({ text: "you're welcome", voice: voices[voiceIndex] });
       },
     },
     {
@@ -484,7 +497,7 @@ export default function VirtualAssistant() {
         setMessage(`Hello, ${name}! I hope to remember that in the future.`);
         speak({
           text: `Hello, ${name}! I hope to remember that in the future.`,
-          voice: voices[2],
+          voice: voices[voiceIndex],
           rate,
           pitch,
         });
@@ -496,7 +509,7 @@ export default function VirtualAssistant() {
         setMessage(`Hi, ${hungry}, I'm dad.`);
         speak({
           text: `Hi, ${hungry}, I'm dad.`,
-          voice: voices[2],
+          voice: voices[voiceIndex],
           rate,
           pitch,
         });
@@ -525,7 +538,7 @@ export default function VirtualAssistant() {
         );
         speak({
           text: "To view all commands, say 'get commands' or simply 'commands'",
-          voice: voices[2],
+          voice: voices[voiceIndex],
         });
       },
     },
@@ -533,17 +546,14 @@ export default function VirtualAssistant() {
       command: ["(get) commands", "show commands"],
       callback: () => {
         setMessage("Opening commands.");
-        speak({ text: "Okay.", voice: voices[2], rate, pitch });
+        speak({ text: "Okay.", voice: voices[voiceIndex], rate, pitch });
         toggle();
       },
     },
     {
-      command: "whisper *",
-      callback: (quietWords) => {
-        // setWhisper();
-        setMessage(`okay, ${quietWords}`);
-        speak({ text: `okay, ${quietWords}`, voice: voices[81], rate, pitch });
-        setVoiceIndex(voices[81]);
+      command: "whisper",
+      callback: () => {
+        setWhisper();
       },
     },
     {
@@ -607,7 +617,7 @@ export default function VirtualAssistant() {
       ],
       callback: () => {
         setMessage("nerd.");
-        speak({ text: "nerd.", voice: voices[2] });
+        speak({ text: "nerd.", voice: voices[voiceIndex] });
       },
     },
     {
@@ -626,7 +636,7 @@ export default function VirtualAssistant() {
       command: "show settings",
       callback: () => {
         setMessage("showing settings");
-        speak({ text: "okay", voice: voices[2] });
+        speak({ text: "okay", voice: voices[voiceIndex] });
         setShowSettings(true);
       },
     },
@@ -634,7 +644,7 @@ export default function VirtualAssistant() {
       command: "hide settings",
       callback: () => {
         setMessage("hiding settings");
-        speak({ text: "okay", voice: voices[2] });
+        speak({ text: "okay", voice: voices[voiceIndex] });
         setShowSettings(false);
       },
     },
@@ -661,7 +671,7 @@ export default function VirtualAssistant() {
     //     setMessage(`add ${task} to to-do list?`);
     //     speak({
     //       text: `add ${task} to to-do list?`,
-    //       voice: voices[2],
+    //       voice: voices[voiceIndex],
     //       rate,
     //       pitch,
     //     });
@@ -682,7 +692,7 @@ export default function VirtualAssistant() {
         setMessage(`add ${task} to to-do list?`);
         speak({
           text: `add ${task} to to do list?`,
-          voice: voices[2],
+          voice: voices[voiceIndex],
           rate,
           pitch,
         });
@@ -696,7 +706,7 @@ export default function VirtualAssistant() {
       command: ["yes", "(yes) create to-do", "(yes) add to list"],
       callback: () => {
         setMessage(`creating to-do ${newTodo}.`);
-        speak({ text: "okay", voice: voices[2] });
+        speak({ text: "okay", voice: voices[voiceIndex] });
         createTodo();
       },
     },
@@ -711,7 +721,7 @@ export default function VirtualAssistant() {
       ],
       callback: () => {
         setMessage("okay");
-        speak({ text: "okay", voice: voices[2] });
+        speak({ text: "okay", voice: voices[voiceIndex] });
         deleteMostRecentTodo();
       },
     },
@@ -725,7 +735,7 @@ export default function VirtualAssistant() {
       ],
       callback: () => {
         setMessage("okay");
-        speak({ text: "okay", voice: voices[2] });
+        speak({ text: "okay", voice: voices[voiceIndex] });
         deleteOldestTodo();
       },
     },
@@ -738,7 +748,7 @@ export default function VirtualAssistant() {
         setMessage(`Timer set for ${timeout} seconds`);
         speak({
           text: `Timer set for ${timeout} seconds`,
-          voice: voices[2],
+          voice: voices[voiceIndex],
           rate,
           pitch,
         });
@@ -755,7 +765,7 @@ export default function VirtualAssistant() {
         setMessage(`Timer set for ${timeout} minutes`);
         speak({
           text: `Timer set for ${timeout} minutes`,
-          voice: voices[2],
+          voice: voices[voiceIndex],
           rate,
           pitch,
         });
@@ -920,7 +930,7 @@ export default function VirtualAssistant() {
       onEnd,
     }
   );
-  const voice = voices[2] || null;
+  const voice = voices[voiceIndex] || null;
   // speech recog:
   const {
     transcript,
@@ -1000,7 +1010,9 @@ export default function VirtualAssistant() {
                   }}
                 >
                   {message}
-
+                  <div>{voiceIndex}</div>
+                  <div>{pitch}</div>
+                  <div>{rate}</div>
                   <p className="fade-out-text">
                     Hello, I'm a virtual assistant.
                   </p>
