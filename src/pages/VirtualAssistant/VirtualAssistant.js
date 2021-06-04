@@ -215,7 +215,7 @@ export default function VirtualAssistant() {
   const getCurrentWeatherDescription = async () => {
     if (weatherData) {
       const weatherText = `${weatherData.current.weather[0].description}`;
-      speak({ text: weatherText });
+      speak({ text: weatherText, voice: voices[voiceIndex] });
       setMessage(weatherText);
     } else {
       const weather = await fetchWeather();
@@ -229,7 +229,7 @@ export default function VirtualAssistant() {
   const getCurrentTemperature = async () => {
     if (weatherData) {
       const weatherText = `${weatherData.current.temp.toString()} degrees`;
-      speak({ text: weatherText });
+      speak({ text: weatherText, voice: voices[voiceIndex] });
       setMessage(weatherText);
     } else {
       const weather = await fetchWeather();
@@ -257,7 +257,7 @@ export default function VirtualAssistant() {
   const getCurrentHumidity = async () => {
     if (weatherData) {
       const weatherText = `${weatherData.current.humidity.toString()} %`;
-      speak({ text: weatherText });
+      speak({ text: weatherText, voice: voices[voiceIndex] });
       setMessage(weatherText);
     } else {
       const weather = await fetchWeather();
@@ -290,12 +290,12 @@ export default function VirtualAssistant() {
         currentPhase = "waxing crescent";
       }
       const weatherText = `${currentPhase}`;
-      // speak({ text: weatherText });
+      // speak({ text: weatherText, voice: voices[voiceIndex], });
       speak({ text: weatherText, voice: voices[voiceIndex], rate, pitch });
       setMessage(weatherText);
       // console.log("phase: ", weatherData.daily[0].moon_phase.toString());
     } else {
-      speak({ text: "cannot fetch data" });
+      speak({ text: "cannot fetch data", voice: voices[voiceIndex] });
     }
   };
   // get sunrise time:
@@ -311,7 +311,7 @@ export default function VirtualAssistant() {
       const weather = await fetchWeather();
       if (weather) {
         const weatherText = `${weather.daily[0].sunrise}`;
-        speak({ text: weatherText });
+        speak({ text: weatherText, voice: voices[voiceIndex] });
       }
     }
   };
@@ -328,7 +328,7 @@ export default function VirtualAssistant() {
       const weather = await fetchWeather();
       if (weather) {
         const weatherText = `${weather.daily[0].sunset}`;
-        speak({ text: weatherText });
+        speak({ text: weatherText, voice: voices[voiceIndex] });
       }
     }
   };
@@ -339,7 +339,7 @@ export default function VirtualAssistant() {
       const date = new Date(utc * 1000);
       const timeString = date.toLocaleTimeString();
       const weatherText = timeString.split(":").join();
-      speak({ text: weatherText });
+      speak({ text: weatherText, voice: voices[voiceIndex] });
       setMessage(timeString);
     } else {
       const weather = await fetchWeather();
@@ -356,7 +356,7 @@ export default function VirtualAssistant() {
       const date = new Date(utc * 1000);
       const timeString = date.toLocaleTimeString();
       const weatherText = timeString.split(":").join();
-      speak({ text: weatherText });
+      speak({ text: weatherText, voice: voices[voiceIndex] });
       setMessage(timeString);
     } else {
       const weather = await fetchWeather();
@@ -435,21 +435,140 @@ export default function VirtualAssistant() {
   // const getCurrentWeatherDescription = async () => {
   //   if (weatherData) {
   //     const weatherText = `${weatherData.current.weather[0].description}`;
-  //     speak({ text: weatherText });
+  //     speak({ text: weatherText, voice: voices[voiceIndex], });
   //     setMessage(weatherText);
   //   } else {
   //     const weather = await fetchWeather();
   //     if (weather) {
   //       const weatherText = `${weather.current.weather[0].description}`;
-  //       speak({ text: weatherText });
+  //       speak({ text: weatherText, voice: voices[voiceIndex], });
   //     }
   //   }
   // };
+  //////////////////////////////////////////////////////////////
+  // <------------------------ Math ------------------------> //
+  //////////////////////////////////////////////////////////////
+  // Addition(2 nums):
+  const add = (a, b) => {
+    const c = parseInt(a) + parseInt(b);
+    const ans = c.toString();
+    setMessage(`${ans}`);
+    speak({ text: `${ans}`, voice: voices[voiceIndex] });
+    return ans;
+  };
+  // Subtraction(2 nums):
+  const subtract = (a, b) => {
+    const c = parseInt(a) - parseInt(b);
+    const ans = c.toString();
+    setMessage(`${ans}`);
+    speak({ text: `${ans}`, voice: voices[voiceIndex] });
+    return ans;
+  };
+  // Multiply(2 nums):
+  const multiply = (a, b) => {
+    const c = parseInt(a) * parseInt(b);
+    const ans = c.toString();
+    setMessage(`${ans}`);
+    speak({ text: `${ans}`, voice: voices[voiceIndex] });
+    return ans;
+  };
+  // Divide(2 nums):
+  const divide = (a, b) => {
+    const c = parseInt(a) / parseInt(b);
+    const ans = c.toString();
+    setMessage(`${ans}`);
+    speak({ text: `${ans}`, voice: voices[voiceIndex] });
+    return ans;
+  };
+  // Remainder:
+  const remainder = (a, b) => {
+    const c = parseInt(a) % parseInt(b);
+    const ans = c.toString();
+    setMessage(`${ans}`);
+    speak({ text: `${ans}`, voice: voices[voiceIndex] });
+    return ans;
+  };
   const setWhisper = () => {
     setVoiceIndex(81);
     setMessage("ok i'll whisper");
     speak({ text: "ok I'll be quiet.", voice: voices[81] });
   };
+
+  ////////////////////////////////////////////////////////////////
+  // <--------------------- VoiceIndices ---------------------> //
+  ////////////////////////////////////////////////////////////////
+  const voiceIndices = [
+    { code: "af-ZA", name: "Afrikaans" },
+    { code: "sq", name: "Albanian" },
+    { code: "ar-AE", name: "Arabic" },
+    { code: "hy", name: "Armenian" },
+    { code: "bn-BD", name: "Bengali (Bangladesh)" },
+    { code: "bn-IN", name: "Bengali (India)" },
+    { code: "bs", name: "Bosnian" },
+    { code: "my", name: "Burmese (Myanmar)" },
+    { code: "ca-ES", name: "Catalan" },
+    { code: "cmn-Hant-TW", name: "Chinese" },
+    { code: "hr-HR", name: "Croatian" },
+    { code: "cs-CZ", name: "Czech" },
+    { code: "da-DK", name: "Danish" },
+    { code: "nl-NL", name: "Dutch" },
+    { code: "en-AU", name: "English (Australia)" },
+    { code: "en-GB", name: "English (United Kingdom)" },
+    { code: "en-US", name: "English (United States)" },
+    { code: "eo", name: "Esperanto" },
+    { code: "et", name: "Estonian" },
+    { code: "fil-PH", name: "Filipino" },
+    { code: "fi-FI", name: "Finnish" },
+    { code: "fr-FR", name: "French" },
+    { code: "fr-CA", name: "French (Canada)" },
+    { code: "de-DE", name: "German" },
+    { code: "el-GR", name: "Greek" },
+    { code: "gu", name: "Gujarati" },
+    { code: "hi-IN", name: "Hindi" },
+    { code: "hu-HU", name: "Hungarian" },
+    { code: "is-IS", name: "Icelandic" },
+    { code: "id-ID", name: "Indonesian" },
+    { code: "it-IT", name: "Italian" },
+    { code: "ja-JP", name: "Japanese (Japan)" },
+    { code: "kn", name: "Kannada" },
+    { code: "km", name: "Khmer" },
+    { code: "ko-KR", name: "Korean" },
+    { code: "la", name: "Latin" },
+    { code: "lv", name: "Latvian" },
+    { code: "mk", name: "Macedonian" },
+    { code: "ml", name: "Malayalam" },
+    { code: "mr", name: "Marathi" },
+    { code: "ne", name: "Nepali" },
+    { code: "nb-NO", name: "Norwegian" },
+    { code: "pl-PL", name: "Polish" },
+    { code: "pt-BR", name: "Portuguese" },
+    { code: "ro-RO", name: "Romanian" },
+    { code: "ru-RU", name: "Russian" },
+    { code: "sr-RS", name: "Serbian" },
+    { code: "si", name: "Sinhala" },
+    { code: "sk-SK", name: "Slovak" },
+    { code: "es-MX", name: "Spanish (Mexico)" },
+    { code: "es-ES", name: "Spanish (Spain)" },
+    { code: "sw", name: "Swahili" },
+    { code: "sv-SE", name: "Swedish" },
+    { code: "ta", name: "Tamil" },
+    { code: "te", name: "Telugu" },
+    { code: "th-TH", name: "Thai" },
+    { code: "tr-TR", name: "Turkish" },
+    { code: "uk-UA", name: "Ukrainian" },
+    { code: "ur", name: "Urdu" },
+    { code: "vi-VN", name: "Vietnamese" },
+    { code: "cy", name: "Welsh" },
+  ];
+
+  // function findByCode(code) {
+  //   return this.find((l) => l.code === code);
+  // }
+
+  // function findByName(name) {
+  //   return this.find((l) => l.name === name);
+  // }
+
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
   /////////////////////////////////////////////////////////////////
@@ -465,11 +584,24 @@ export default function VirtualAssistant() {
       },
     },
     {
+      command: ["how are you (today)", "how are you doing"],
+      callback: () => {
+        setMessage(
+          "Something snarky but not really its just that I don't feel"
+        );
+        speak({
+          text: "Something snarky but not really its just that I don't feel",
+          voice: voices[voiceIndex],
+        });
+      },
+    },
+    {
       command: "What's your name",
       callback: () => {
-        setMessage("I don't have one yet.");
+        setMessage("My name is Iris.");
         speak({
-          text: "I don't have one yet.",
+          text: "My name is Iris.",
+          voice: voices[voiceIndex],
         });
       },
     },
@@ -484,7 +616,7 @@ export default function VirtualAssistant() {
       command: "speak",
       callback: () => {
         setMessage("woof.");
-        speak({ text: "woof" });
+        speak({ text: "woof", voice: voices[voiceIndex] });
       },
     },
     {
@@ -493,6 +625,7 @@ export default function VirtualAssistant() {
         setMessage("");
         speak({
           text: "I am the darkness. I will devour you.",
+          voice: voices[voiceIndex],
         });
       },
     },
@@ -512,6 +645,15 @@ export default function VirtualAssistant() {
           voice: voices[voiceIndex],
           rate,
           pitch,
+        });
+      },
+    },
+    {
+      command: "How do you pronounce *",
+      callback: (word) => {
+        speak({
+          text: `${word} - Should I repeat that?`,
+          voice: voices[voiceIndex],
         });
       },
     },
@@ -913,7 +1055,118 @@ export default function VirtualAssistant() {
         getShortForecast();
       },
     },
+    {
+      command: "The weather is :condition today",
+      callback: (condition) => setMessage(`Today, the weather is ${condition}`),
+    },
+    {
+      command: "My top sports are * and *",
+      callback: (sport1, sport2) => setMessage(`#1: ${sport1}, #2: ${sport2}`),
+    },
+    {
+      command: [
+        "add together * and *",
+        "what is * plus *",
+        "how much is * plus *",
+        "what's the total of * and *",
+        "what's the sum of * and *",
+      ],
+      callback: (a, b) => {
+        add(a, b);
+      },
+    },
+    {
+      command: [
+        "what is * minus *",
+        "what's * minus *",
+        "how much is * minus *",
+      ],
+      callback: (a, b) => {
+        subtract(a, b);
+      },
+    },
+    {
+      command: [
+        "multiply * and *",
+        "what is * times *",
+        "what's * times *",
+        "how much is * times *",
+      ],
+      callback: (a, b) => {
+        multiply(a, b);
+      },
+    },
+    {
+      command: [
+        "divide * into *",
+        "what is * divided by *",
+        "what's * divided by *",
+        "how much is * divided by *",
+        "how much is * over *",
+      ],
+      callback: (a, b) => {
+        divide(a, b);
+      },
+    },
+    {
+      command: [
+        "what is the remainder of * divided by *",
+        "what's the remainder of * divided by *",
+        "how much is left when * is divided by *",
+        "how much is left over when * is divided by *",
+      ],
+      callback: (a, b) => {
+        remainder(a, b);
+      },
+    },
+    {
+      command: "Hola",
+      callback: () => {
+        SpeechRecognition.startListening({ language: "es-MX" });
+        setVoiceIndex(64);
+        setMessage("¡Hola, Buenos días!");
+        speak({
+          text: "¡Hola, Buenos días!",
+          voice: voices[voiceIndex],
+        });
+      },
+    },
+    {
+      command: "Cómo estás",
+      callback: () => {
+        // SpeechRecognition.startListening({ language: "es-MX" });
+        // setVoiceIndex(64);
+        setMessage("");
+        speak({
+          text: "",
+          voice: voices[voiceIndex],
+        });
+      },
+    },
+    {
+      command: "Adiós",
+      callback: () => {
+        setMessage("Estoy muy bien.");
+        speak({ text: "Estoy muy bien", voice: voices[voiceIndex] });
+      },
+    },
   ];
+
+  // const convertLangs = (lang) => {
+  //   if (lang === "Dutch") {
+  //     const code = "nl-NL";
+  //     return code;
+  //   }
+  // };
+  // const switchLangs = (lang) => {
+  //   // EX: SpeechRecognition.startListening({ language: 'zh-CN' })
+  //   SpeechRecognition.startListening({ language: `${lang}` });
+  //   setMessage(`Ok, after this I'll listen for ${lang}`);
+  //   speak({
+  //     text: `Ok, after this I'll listen for ${lang}`,
+  //     voice: voices[voiceIndex],
+  //   });
+  // };
   /////////////////////////////////////////////////////////////////
   // <------------------------- HOOKS -------------------------> //
   /////////////////////////////////////////////////////////////////
@@ -1122,7 +1375,7 @@ export default function VirtualAssistant() {
             </div>
           </div>
         </div>
-        )}
+        )
       </div>
     );
   }
