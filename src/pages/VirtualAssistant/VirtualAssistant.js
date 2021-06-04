@@ -18,26 +18,28 @@ export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // commands(direct) : toggle show settings
   const [showSettings, setShowSettings] = useState(false);
-  // commands(direct) : sec/min timers
-  const [isActive, setIsActive] = useState(false);
+
   // commands(direct) : toggle show todo list
   const [showTodos, setShowTodos] = useState(false);
   // todos fetches(from APIHelper)
   const [todos, setTodos] = useState([]);
   // todos fetches & commands(direct)
   const [newTodo, setNewTodo] = useState("");
+
   // Geolocation(weather):
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
-  // // Weather:
+
+  // Weather:
   const [weatherData, setWeatherData] = useState(null);
-  // bored
-  const [boredomActivity, setBoredomActivity] = useState(null);
-  // voice synth:
+
+  // Voice Assistant state:
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
-  const [voiceIndex, setVoiceIndex] = useState(1);
+  const [voiceIndex, setVoiceIndex] = useState(2);
+  // Visual text feedback:
   const [message, setMessage] = useState("");
+
   /////////////////////////////////////////////////////////////////
   // <------------------------- TODOS -------------------------> //
   /////////////////////////////////////////////////////////////////
@@ -111,38 +113,27 @@ export default function VirtualAssistant() {
   // Seconds timer:
   const setSecondsTimer = (timeout) => {
     const countdown = parseInt(timeout) * 1000;
-    console.log("countdown: ", countdown);
     setTimeout(function (countdown) {
-      console.log("Timer set for: ", timeout, " seconds");
-
       let counter = 0;
       while (countdown > 0) {
         countdown--;
-        console.log("time elapsed: ", counter);
       }
       setMessage("beep.");
       speak({ text: "beep.", voice: voices[voiceIndex], rate, pitch });
       return;
     }, countdown);
-
-    console.log("setTimeout() example...");
   };
   // Minutes timer:
   const setMinutesTimer = (timeout) => {
     const countdown = parseInt(timeout) * 60000;
-    console.log("countdown: ", countdown);
     setTimeout(function (countdown) {
-      console.log("Timer set for: ", timeout, " minutes");
       while (countdown > 0) {
         countdown--;
-        console.log(countdown);
       }
       setMessage("beep.");
       speak({ text: "beep.", voice: voices[voiceIndex], rate, pitch });
       return;
     }, countdown);
-
-    console.log("setTimeout() example...");
   };
   // current time:
   const fetchTime = () => {
@@ -217,7 +208,7 @@ export default function VirtualAssistant() {
     );
     const weather = await res.json();
     setWeatherData(weather);
-    console.log(weatherData);
+    // console.log(weatherData);
     return weather;
   };
   // get current weather description:
@@ -302,7 +293,7 @@ export default function VirtualAssistant() {
       // speak({ text: weatherText });
       speak({ text: weatherText, voice: voices[voiceIndex], rate, pitch });
       setMessage(weatherText);
-      console.log("phase: ", weatherData.daily[0].moon_phase.toString());
+      // console.log("phase: ", weatherData.daily[0].moon_phase.toString());
     } else {
       speak({ text: "cannot fetch data" });
     }
@@ -439,17 +430,6 @@ export default function VirtualAssistant() {
       setMessage(`${weatherText} %`);
     }
   };
-  /////////////////////////////////////////////////////////////////
-  // <------------------------- Other -------------------------> //
-  /////////////////////////////////////////////////////////////////
-  // bored:
-  const getBored = async () => {
-    const res = await fetch("http://www.boredapi.com/api/activity/");
-    const activity = await res.json();
-    setBoredomActivity(activity);
-    console.log(boredomActivity);
-    return activity;
-  };
 
   // // get current weather description:
   // const getCurrentWeatherDescription = async () => {
@@ -485,10 +465,42 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "thank you",
+      command: "What's your name",
+      callback: () => {
+        setMessage("I don't have one yet.");
+        speak({
+          text: "I don't have one yet.",
+        });
+      },
+    },
+    {
+      command: ["thank you", "thanks"],
       callback: () => {
         setMessage("You're welcome.");
         speak({ text: "you're welcome", voice: voices[voiceIndex] });
+      },
+    },
+    {
+      command: "speak",
+      callback: () => {
+        setMessage("woof.");
+        speak({ text: "woof" });
+      },
+    },
+    {
+      command: ["respond", "say something"],
+      callback: () => {
+        setMessage("");
+        speak({
+          text: "I am the darkness. I will devour you.",
+        });
+      },
+    },
+    {
+      command: ["shush", "stop talking"],
+      callback: () => {
+        setMessage("ok");
+        speak({ text: "ok", voice: voices[81] });
       },
     },
     {
@@ -743,7 +755,7 @@ export default function VirtualAssistant() {
     {
       command: "set (a) timer for :timeout seconds",
       callback: (timeout) => {
-        setIsActive(true);
+        // setIsActive(true);
         setSecondsTimer(timeout);
         setMessage(`Timer set for ${timeout} seconds`);
         speak({
@@ -760,7 +772,7 @@ export default function VirtualAssistant() {
         "set a timer for :timeout minute",
       ],
       callback: (timeout) => {
-        setIsActive(true);
+        // setIsActive(true);
         setMinutesTimer(timeout);
         setMessage(`Timer set for ${timeout} minutes`);
         speak({
@@ -901,52 +913,67 @@ export default function VirtualAssistant() {
         getShortForecast();
       },
     },
-    {
-      command: "I'm bored",
-      callback: () => {
-        getBored();
-      },
-    },
-    // <-------------- OTHER -------------->
-    {
-      command: "email",
-      callback: () => {
-        const setEmail = () => {
-          // document.querySelector()
-        };
-        setMessage(`<a href="mailto:KristenNPrescott@gmail.com">my email</a>`);
-      },
-    },
   ];
   /////////////////////////////////////////////////////////////////
   // <------------------------- HOOKS -------------------------> //
   /////////////////////////////////////////////////////////////////
   // speech synth:
+  // <-----------------------------------------------------------
   const onEnd = () => {
     // You could do something here after speaking has finished
   };
-  const { speak, /*cancel, speaking, supported,*/ voices } = useSpeechSynthesis(
-    {
-      onEnd,
-    }
-  );
+
+  const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
+    onEnd,
+  });
+
+  // Purpose of code below? <------------------------------------
+  // I think it used to instantiate it? idk it's in the doc examples...
   const voice = voices[voiceIndex] || null;
-  // speech recog:
+
+  // // speech recog:
+  // const {
+  //   transcript,
+  //   interimTranscript,
+  //   finalTranscript,
+  //   resetTranscript,
+  //   listening,
+  // } = useSpeechRecognition({ commands });
+
   const {
     transcript,
-    // interimTranscript,
-    // finalTranscript,
+    interimTranscript,
+    finalTranscript,
     resetTranscript,
     listening,
-  } = useSpeechRecognition({ commands });
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition({
+    // transcribing,
+    // clearTranscriptOnListen,
+    commands,
+  });
+
+  /*
+  useEffect(() => {
+    if (interimTranscript !== '') {
+      console.log('Got interim result:', interimTranscript)
+    }
+    if (finalTranscript !== '') {
+      console.log('Got final result:', finalTranscript)
+    }
+  }, [interimTranscript, finalTranscript]);
+  */
+
   // toggle show commands modal:
   const { isShowing, toggle } = useCommandsModal();
+
   /////////////////////////////////////////////////////////////////
   // <-------------------- EVENT HANDLERS ---------------------> //
   /////////////////////////////////////////////////////////////////
   // start animation/start listening:
   const handleMouseDown = async (e) => {
     e.preventDefault();
+
     const VirtualAss = document.getElementsByClassName("virtual-assistant");
     VirtualAss[0].classList.remove("paused");
 
@@ -962,6 +989,11 @@ export default function VirtualAssistant() {
     const VirtualAss = document.getElementsByClassName("virtual-assistant");
     VirtualAss[0].classList.add("paused");
 
+    // IN CASE OF EMERGENCY! <<<--------------------------!!
+    // (Like when you try to make her read an entire monologue from Queen of the Damned for lulz and she get stuck unable to talk and you're afraid you broke it forever)
+    // anyway, this is how you cancel the speech:
+    // window.speechSynthesis.cancel();
+
     await SpeechRecognition.stopListening();
   };
   // PROPS:
@@ -972,110 +1004,128 @@ export default function VirtualAssistant() {
     setRate,
     pitch,
     setPitch,
-    voices,
+    // voices, <------ p sure I define this in settings anyway?
   };
 
-  return (
-    <div className="page" id="VirtualAssistant">
-      {/* ///////////////////////////////////////////////////////////////// */}
-      {/* <------------------------ COMMANDS MODAL -----------------------> */}
-      {/* ///////////////////////////////////////////////////////////////// */}
-      {/* <div> */}
-      <CommandsModal isShowing={isShowing} hide={toggle} />
-      {/* </div> */}
-
-      <div className="center-col virtual-assistant-container">
-        <div className="paused virtual-assistant"></div>
-      </div>
-
-      <div className="center-col main">
-        {showSettings && <Settings {...settingsProps} />}
-        {showTodos && <TodoList />}
-        {!showSettings && !showTodos && (
-          <div>
+  if (!browserSupportsSpeechRecognition) {
+    console.log("Browser support? ", browserSupportsSpeechRecognition);
+    return (
+      <span>
+        No browser support for Speech Recognition. Sorry, I'm trying to figure
+        out polyfills{" "}
+      </span>
+    );
+  }
+  if (!supported) {
+    return (
+      <span>
+        No browser support for Speech Synthesis. Sorry, I'm trying to figure out
+        polyfills{" "}
+      </span>
+    );
+  } else {
+    return (
+      <div className="page" id="VirtualAssistant">
+        {/* {!supported && (
+          <p>
+            Oh no, it looks like your browser doesn't support Speech Synthesis.
+          </p>
+        )} */}
+        {/* ///////////////////////////////////////////////////////////////// */}
+        {/* <------------------------ COMMANDS MODAL -----------------------> */}
+        {/* ///////////////////////////////////////////////////////////////// */}
+        <CommandsModal isShowing={isShowing} hide={toggle} />
+        <div className="center-col virtual-assistant-container">
+          <div className="paused virtual-assistant"></div>
+        </div>
+        <div className="center-col main">
+          {showSettings && <Settings {...settingsProps} />}
+          {showTodos && <TodoList />}
+          {!showSettings && !showTodos && (
             <div>
-              <div className="instructions-container">
-                {/* ///////////////////////////////////////////////////////////////// */}
-                {/* <----------------- INSTRUCTIONS/MESSAGE DISPLAY ----------------> */}
-                {/* ///////////////////////////////////////////////////////////////// */}
+              <div>
+                <div className="instructions-container">
+                  {/* ///////////////////////////////////////////////////////////////// */}
+                  {/* <----------------- INSTRUCTIONS/MESSAGE DISPLAY ----------------> */}
+                  {/* ///////////////////////////////////////////////////////////////// */}
 
-                <div
-                  className=" glass-panel"
-                  id="instructions"
-                  style={{
-                    height: "150px",
-                    width: "550px",
-                    marginBottom: "1px",
-                    value: { message },
-                  }}
-                >
-                  {message}
-                  <div>{voiceIndex}</div>
-                  <div>{pitch}</div>
-                  <div>{rate}</div>
-                  <p className="fade-out-text">
-                    Hello, I'm a virtual assistant.
-                  </p>
-                  <p className="fade-out-text">
-                    To allow microphone access, press the button below; hold
-                    down to talk.
-                  </p>
-                  {/* <p>To log in say "Log in"</p> */}
-                  {/* <p>To make a new account say "Sign up"</p> */}
-                  <p className="fade-out-text">
-                    To see more commands say "Show commands"
-                  </p>
-                  <p className="fade-out-text">
-                    To add a task to the to-do list, say "Add new task",
-                    followed by the task to add; then, say "add to list"
-                  </p>
+                  <div
+                    className=" glass-panel"
+                    id="instructions"
+                    style={{
+                      height: "150px",
+                      width: "550px",
+                      marginBottom: "1px",
+                      value: { message },
+                    }}
+                  >
+                    {message}
+
+                    <p className="fade-out-text">
+                      Hello, I'm a virtual assistant.
+                    </p>
+                    <p className="fade-out-text">
+                      To allow microphone access, press the button below; hold
+                      down to talk.
+                    </p>
+                    {/* <p>To log in say "Log in"</p> */}
+                    {/* <p>To make a new account say "Sign up"</p> */}
+                    <p className="fade-out-text">
+                      To see more commands say "Show commands"
+                    </p>
+                    <p className="fade-out-text">
+                      To add a task to the to-do list, say "Add new task",
+                      followed by the task to add; then, say "add to list"
+                    </p>
+                  </div>
                 </div>
               </div>
+              <div className="transcript-display">
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <-------------------------- TRANSCRIPT -------------------------> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
+                <textarea
+                  style={{
+                    margin: "0px",
+                    marginTop: "0px",
+                    height: "150px",
+                    width: "550px",
+                  }}
+                  className="glass-panel"
+                  id="transcript"
+                  value={transcript}
+                />{" "}
+              </div>
             </div>
-            <div className="transcript-display">
-              {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <-------------------------- TRANSCRIPT -------------------------> */}
-              {/* ///////////////////////////////////////////////////////////////// */}
-              <textarea
-                style={{
-                  margin: "0px",
-                  marginTop: "0px",
-                  height: "150px",
-                  width: "550px",
-                }}
-                className="glass-panel"
-                id="transcript"
-                value={transcript}
-              />{" "}
-            </div>
-          </div>
-        )}
-        <div className="form-container">
-          <div
-            className="center-col buttons"
-            style={{ position: "relative", margin: "10px" }}
-          >
-            <div>
-              {/* ///////////////////////////////////////////////////////////////// */}
-              {/* <------------------------ HOT MIC "BTN" ------------------------> */}
-              {/* ///////////////////////////////////////////////////////////////// */}
-              <img className="hot-mic-btn" src={listening ? micOn : micOff} />
-            </div>
-            {/* ///////////////////////////////////////////////////////////////// */}
-            {/* <------------------------- LISTEN BTN --------------------------> */}
-            {/* ///////////////////////////////////////////////////////////////// */}
-            <button
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              className="mic-btn"
+          )}
+          <div className="form-container">
+            <div
+              className="center-col buttons"
+              style={{ position: "relative", margin: "10px" }}
             >
-              🎤
-            </button>
+              <div>
+                {/* ///////////////////////////////////////////////////////////////// */}
+                {/* <------------------------ HOT MIC "BTN" ------------------------> */}
+                {/* ///////////////////////////////////////////////////////////////// */}
+                <img className="hot-mic-btn" src={listening ? micOn : micOff} />
+              </div>
+              {/* ///////////////////////////////////////////////////////////////// */}
+              {/* <------------------------- LISTEN BTN --------------------------> */}
+              {/* ///////////////////////////////////////////////////////////////// */}
+              <button
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                className="mic-btn"
+              >
+                🎤
+              </button>
+            </div>
           </div>
         </div>
+        )}
       </div>
-    </div>
-  );
+    );
+  }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // <-------------------------------- CREATE FALLBACK BEHAVIOR --------------------------------> //
