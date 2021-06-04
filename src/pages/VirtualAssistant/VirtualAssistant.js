@@ -12,32 +12,32 @@ import useCommandsModal from "../../hooks/useCommandsModal";
 import TodoAPIHelper from "../../helpers/TodoAPIHelper";
 import TodoList from "../Todos/TodoForm";
 
+/* DEEPL ENDPOINT EX
+// https://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc%3Afx&text=&target_lang=de
+*/
+
 export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // <------------------------- STATE -------------------------> //
   /////////////////////////////////////////////////////////////////
-  // commands(direct) : toggle show settings
+  //
+  // const [codes, setCodes] = useState(null);
+  const [langs, setLangs] = useState([]);
+  // Settings:
   const [showSettings, setShowSettings] = useState(false);
-
-  // commands(direct) : toggle show todo list
+  // Todos:
   const [showTodos, setShowTodos] = useState(false);
-  // todos fetches(from APIHelper)
   const [todos, setTodos] = useState([]);
-  // todos fetches & commands(direct)
   const [newTodo, setNewTodo] = useState("");
-
   // Geolocation(weather):
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
-
   // Weather:
   const [weatherData, setWeatherData] = useState(null);
-
-  // Voice Assistant state:
+  // Voice:
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(1);
   const [voiceIndex, setVoiceIndex] = useState(2);
-  // Visual text feedback:
   const [message, setMessage] = useState("");
 
   /////////////////////////////////////////////////////////////////
@@ -430,21 +430,6 @@ export default function VirtualAssistant() {
       setMessage(`${weatherText} %`);
     }
   };
-
-  // // get current weather description:
-  // const getCurrentWeatherDescription = async () => {
-  //   if (weatherData) {
-  //     const weatherText = `${weatherData.current.weather[0].description}`;
-  //     speak({ text: weatherText, voice: voices[voiceIndex], });
-  //     setMessage(weatherText);
-  //   } else {
-  //     const weather = await fetchWeather();
-  //     if (weather) {
-  //       const weatherText = `${weather.current.weather[0].description}`;
-  //       speak({ text: weatherText, voice: voices[voiceIndex], });
-  //     }
-  //   }
-  // };
   //////////////////////////////////////////////////////////////
   // <------------------------ Math ------------------------> //
   //////////////////////////////////////////////////////////////
@@ -493,82 +478,52 @@ export default function VirtualAssistant() {
     setMessage("ok i'll whisper");
     speak({ text: "ok I'll be quiet.", voice: voices[81] });
   };
-
-  ////////////////////////////////////////////////////////////////
-  // <--------------------- VoiceIndices ---------------------> //
-  ////////////////////////////////////////////////////////////////
-  const voiceIndices = [
-    { code: "af-ZA", name: "Afrikaans" },
-    { code: "sq", name: "Albanian" },
-    { code: "ar-AE", name: "Arabic" },
-    { code: "hy", name: "Armenian" },
-    { code: "bn-BD", name: "Bengali (Bangladesh)" },
-    { code: "bn-IN", name: "Bengali (India)" },
-    { code: "bs", name: "Bosnian" },
-    { code: "my", name: "Burmese (Myanmar)" },
-    { code: "ca-ES", name: "Catalan" },
-    { code: "cmn-Hant-TW", name: "Chinese" },
-    { code: "hr-HR", name: "Croatian" },
-    { code: "cs-CZ", name: "Czech" },
-    { code: "da-DK", name: "Danish" },
-    { code: "nl-NL", name: "Dutch" },
-    { code: "en-AU", name: "English (Australia)" },
-    { code: "en-GB", name: "English (United Kingdom)" },
-    { code: "en-US", name: "English (United States)" },
-    { code: "eo", name: "Esperanto" },
-    { code: "et", name: "Estonian" },
-    { code: "fil-PH", name: "Filipino" },
-    { code: "fi-FI", name: "Finnish" },
-    { code: "fr-FR", name: "French" },
-    { code: "fr-CA", name: "French (Canada)" },
-    { code: "de-DE", name: "German" },
-    { code: "el-GR", name: "Greek" },
-    { code: "gu", name: "Gujarati" },
-    { code: "hi-IN", name: "Hindi" },
-    { code: "hu-HU", name: "Hungarian" },
-    { code: "is-IS", name: "Icelandic" },
-    { code: "id-ID", name: "Indonesian" },
-    { code: "it-IT", name: "Italian" },
-    { code: "ja-JP", name: "Japanese (Japan)" },
-    { code: "kn", name: "Kannada" },
-    { code: "km", name: "Khmer" },
-    { code: "ko-KR", name: "Korean" },
-    { code: "la", name: "Latin" },
-    { code: "lv", name: "Latvian" },
-    { code: "mk", name: "Macedonian" },
-    { code: "ml", name: "Malayalam" },
-    { code: "mr", name: "Marathi" },
-    { code: "ne", name: "Nepali" },
-    { code: "nb-NO", name: "Norwegian" },
-    { code: "pl-PL", name: "Polish" },
-    { code: "pt-BR", name: "Portuguese" },
-    { code: "ro-RO", name: "Romanian" },
-    { code: "ru-RU", name: "Russian" },
-    { code: "sr-RS", name: "Serbian" },
-    { code: "si", name: "Sinhala" },
-    { code: "sk-SK", name: "Slovak" },
-    { code: "es-MX", name: "Spanish (Mexico)" },
-    { code: "es-ES", name: "Spanish (Spain)" },
-    { code: "sw", name: "Swahili" },
-    { code: "sv-SE", name: "Swedish" },
-    { code: "ta", name: "Tamil" },
-    { code: "te", name: "Telugu" },
-    { code: "th-TH", name: "Thai" },
-    { code: "tr-TR", name: "Turkish" },
-    { code: "uk-UA", name: "Ukrainian" },
-    { code: "ur", name: "Urdu" },
-    { code: "vi-VN", name: "Vietnamese" },
-    { code: "cy", name: "Welsh" },
-  ];
-
-  // function findByCode(code) {
-  //   return this.find((l) => l.code === code);
-  // }
-
-  // function findByName(name) {
-  //   return this.find((l) => l.name === name);
-  // }
-
+  /////////////////////////////////////////////////////////////////
+  // <----------------------- TRANSLATOR ----------------------> //
+  /////////////////////////////////////////////////////////////////
+  // Check API usage:
+  const getUsage = async () => {
+    const data = await fetch(
+      "https://api-free.deepl.com/v2/usage?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx"
+    ).then((data) => data.json());
+    console.log("usage data: ", data);
+    if (data) {
+      const charCount = `Your character count is at ${data.character_count.toString()} and your character limit is at ${data.character_limit.toString()}`;
+      speak({
+        text: charCount,
+        voice: voices[voiceIndex],
+      });
+      setMessage(
+        `Your character count is at ${data.character_count.toString()} and your character limit is at ${data.character_limit.toString()}`
+      );
+    } else {
+      speak({
+        text: "I'm sorry, I can't fetch that right now.",
+        voice: voices[voiceIndex],
+      });
+      setMessage("I'm sorry, I can't fetch that right now.");
+    }
+  };
+  // Fetch Languages:
+  const getLanguages = async () => {
+    const data = await fetch(
+      "https://api-free.deepl.com/v2/languages?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx"
+    ).then((data) => data.json());
+    setLangs([...data]);
+    if (data) {
+      return langs.data;
+    } else {
+      speak({
+        text: "I'm sorry, I can't fetch that data right now.",
+        voice: voices[voiceIndex],
+      });
+      setMessage("I'm sorry, I can't fetch that data right now.");
+    }
+  };
+  // Get translation:
+  const getTranslation = async () => {
+    //
+  };
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
   /////////////////////////////////////////////////////////////////
@@ -819,22 +774,6 @@ export default function VirtualAssistant() {
         setShowTodos(false);
       },
     },
-    // {
-    //   command: "add :task to to-do list",
-    //   callback: (task) => {
-    //     setMessage(`add ${task} to to-do list?`);
-    //     speak({
-    //       text: `add ${task} to to-do list?`,
-    //       voice: voices[voiceIndex],
-    //       rate,
-    //       pitch,
-    //     });
-    //     const newTodo = task.toString();
-    //     console.log(`task: ${task}`);
-    //     setNewTodo(task.toString());
-    //     console.log(newTodo);
-    //   },
-    // },
     {
       command: [
         "(add) new task *",
@@ -1063,6 +1002,7 @@ export default function VirtualAssistant() {
       command: "My top sports are * and *",
       callback: (sport1, sport2) => setMessage(`#1: ${sport1}, #2: ${sport2}`),
     },
+    // <--------------- MATH --------------->
     {
       command: [
         "add together * and *",
@@ -1120,7 +1060,25 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "Hola",
+      command: "Beijing",
+      callback: (command, spokenPhrase, similarityRatio) =>
+        setMessage(
+          `${command} and ${spokenPhrase} are ${similarityRatio * 100}% similar`
+        ),
+      // If the spokenPhrase is "Benji", the message would be "Beijing and Benji are 40% similar"
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: ["eat", "sleep", "leave"],
+      callback: (command) => setMessage(`Best matching command: ${command}`),
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+      bestMatchOnly: true,
+    },
+    // <--------------- LANGUAGE --------------->
+    {
+      command: "hola",
       callback: () => {
         SpeechRecognition.startListening({ language: "es-MX" });
         setVoiceIndex(64);
@@ -1132,10 +1090,8 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "Cómo estás",
+      command: ["buenos dias", "como estas"],
       callback: () => {
-        // SpeechRecognition.startListening({ language: "es-MX" });
-        // setVoiceIndex(64);
         setMessage("");
         speak({
           text: "",
@@ -1144,29 +1100,43 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "Adiós",
+      command: "adios",
       callback: () => {
-        setMessage("Estoy muy bien.");
-        speak({ text: "Estoy muy bien", voice: voices[voiceIndex] });
+        SpeechRecognition.startListening({ language: "en-BG" });
+        setVoiceIndex(2);
+        setMessage("Adiós!");
+        speak({ text: "Adios!", voice: voices[voiceIndex] });
+      },
+    },
+    {
+      command: "what does my translator usage look like",
+      callback: () => {
+        getUsage();
+      },
+    },
+    {
+      command: [
+        "what languages can you speak",
+        "what languages do you speak",
+        "how many languages do you speak",
+      ],
+      callback: () => {
+        getLanguages();
+        if (langs) {
+          speak({
+            text: `I can speak nine languages. ${langs[3].name}, ${langs[5].name}, ${langs[6].name}, ${langs[9].name}, ${langs[11].name}, ${langs[12].name}, ${langs[17].name}, ${langs[19].name}, and ${langs[23].name}, `,
+            voice: voices[voiceIndex],
+          });
+          setMessage(
+            `I can speak nine languages - ${langs[3].name}, ${langs[5].name}, ${langs[6].name}, ${langs[9].name}, ${langs[11].name}, ${langs[12].name}, ${langs[17].name}, ${langs[19].name}, and ${langs[23].name}, `
+          );
+          console.log("code: ", langs[0].language);
+          console.log("lang: ", langs[0].name);
+          console.log("Lang obj: ", langs);
+        }
       },
     },
   ];
-
-  // const convertLangs = (lang) => {
-  //   if (lang === "Dutch") {
-  //     const code = "nl-NL";
-  //     return code;
-  //   }
-  // };
-  // const switchLangs = (lang) => {
-  //   // EX: SpeechRecognition.startListening({ language: 'zh-CN' })
-  //   SpeechRecognition.startListening({ language: `${lang}` });
-  //   setMessage(`Ok, after this I'll listen for ${lang}`);
-  //   speak({
-  //     text: `Ok, after this I'll listen for ${lang}`,
-  //     voice: voices[voiceIndex],
-  //   });
-  // };
   /////////////////////////////////////////////////////////////////
   // <------------------------- HOOKS -------------------------> //
   /////////////////////////////////////////////////////////////////
