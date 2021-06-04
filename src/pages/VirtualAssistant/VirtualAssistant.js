@@ -12,10 +12,17 @@ import useCommandsModal from "../../hooks/useCommandsModal";
 import TodoAPIHelper from "../../helpers/TodoAPIHelper";
 import TodoList from "../Todos/TodoForm";
 
+/* DEEPL ENDPOINT EX
+// https://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc%3Afx&text=&target_lang=de
+*/
+
 export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // <------------------------- STATE -------------------------> //
   /////////////////////////////////////////////////////////////////
+  //
+  // const [codes, setCodes] = useState(null);
+  const [langs, setLangs] = useState([]);
   // Settings:
   const [showSettings, setShowSettings] = useState(false);
   // Todos:
@@ -471,7 +478,52 @@ export default function VirtualAssistant() {
     setMessage("ok i'll whisper");
     speak({ text: "ok I'll be quiet.", voice: voices[81] });
   };
-
+  /////////////////////////////////////////////////////////////////
+  // <----------------------- TRANSLATOR ----------------------> //
+  /////////////////////////////////////////////////////////////////
+  // Check API usage:
+  const getUsage = async () => {
+    const data = await fetch(
+      "https://api-free.deepl.com/v2/usage?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx"
+    ).then((data) => data.json());
+    console.log("usage data: ", data);
+    if (data) {
+      const charCount = `Your character count is at ${data.character_count.toString()} and your character limit is at ${data.character_limit.toString()}`;
+      speak({
+        text: charCount,
+        voice: voices[voiceIndex],
+      });
+      setMessage(
+        `Your character count is at ${data.character_count.toString()} and your character limit is at ${data.character_limit.toString()}`
+      );
+    } else {
+      speak({
+        text: "I'm sorry, I can't fetch that right now.",
+        voice: voices[voiceIndex],
+      });
+      setMessage("I'm sorry, I can't fetch that right now.");
+    }
+  };
+  // Fetch Languages:
+  const getLanguages = async () => {
+    const data = await fetch(
+      "https://api-free.deepl.com/v2/languages?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx"
+    ).then((data) => data.json());
+    setLangs([...data]);
+    if (data) {
+      return langs.data;
+    } else {
+      speak({
+        text: "I'm sorry, I can't fetch that data right now.",
+        voice: voices[voiceIndex],
+      });
+      setMessage("I'm sorry, I can't fetch that data right now.");
+    }
+  };
+  // Get translation:
+  const getTranslation = async () => {
+    //
+  };
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
   /////////////////////////////////////////////////////////////////
@@ -1054,6 +1106,34 @@ export default function VirtualAssistant() {
         setVoiceIndex(2);
         setMessage("Adiós!");
         speak({ text: "Adios!", voice: voices[voiceIndex] });
+      },
+    },
+    {
+      command: "what does my translator usage look like",
+      callback: () => {
+        getUsage();
+      },
+    },
+    {
+      command: [
+        "what languages can you speak",
+        "what languages do you speak",
+        "how many languages do you speak",
+      ],
+      callback: () => {
+        getLanguages();
+        if (langs) {
+          speak({
+            text: `I can speak nine languages. ${langs[3].name}, ${langs[5].name}, ${langs[6].name}, ${langs[9].name}, ${langs[11].name}, ${langs[12].name}, ${langs[17].name}, ${langs[19].name}, and ${langs[23].name}, `,
+            voice: voices[voiceIndex],
+          });
+          setMessage(
+            `I can speak nine languages - ${langs[3].name}, ${langs[5].name}, ${langs[6].name}, ${langs[9].name}, ${langs[11].name}, ${langs[12].name}, ${langs[17].name}, ${langs[19].name}, and ${langs[23].name}, `
+          );
+          console.log("code: ", langs[0].language);
+          console.log("lang: ", langs[0].name);
+          console.log("Lang obj: ", langs);
+        }
       },
     },
   ];
