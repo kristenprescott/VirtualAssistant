@@ -20,8 +20,15 @@ export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // <------------------------- STATE -------------------------> //
   /////////////////////////////////////////////////////////////////
-  //
-  // const [codes, setCodes] = useState(null);
+  // deepl secret key:
+  const deeplApiKey = process.env.REACT_APP_DEEPL_KEY;
+  const [apiKey, setApiKey] = useState(deeplApiKey ?? "");
+  const [isDeeplKeyValid, setIsDeeplKeyValid] = useState(false);
+  // Translation POST data:
+  const [translationPhrase, setTranslationPhrase] = useState("");
+  const [translatedText, setTranslatedText] = useState(null);
+  const [queryLanguage, setQueryLanguage] = useState("");
+  // Translation GET data:
   const [langs, setLangs] = useState([]);
   // Settings:
   const [showSettings, setShowSettings] = useState(false);
@@ -520,10 +527,31 @@ export default function VirtualAssistant() {
       setMessage("I'm sorry, I can't fetch that data right now.");
     }
   };
-  // Get translation:
-  const getTranslation = async () => {
-    //
-  };
+  // // Translate:
+  // const translate = async (text) => {
+  //   const translationText = text.split(" ").join("%20");
+  //   try {
+  //     const res = await fetch(
+  //       `http://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx&text=${translationText}&target_lang=es&source_lang=en`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/x-www-form-urlencoded",
+  //         },
+  //         body: JSON.stringify(translationText),
+  //       }
+  //     );
+  //     await data
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  //   if (data) {
+  //     setTranslation(data);
+  //     console.log("translation obj: ", data.translation[0]);
+  //     console.log("translation: arr: ", data.translation);
+  //   }
+  // };
+
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
   /////////////////////////////////////////////////////////////////
@@ -1133,6 +1161,30 @@ export default function VirtualAssistant() {
           console.log("code: ", langs[0].language);
           console.log("lang: ", langs[0].name);
           console.log("Lang obj: ", langs);
+        }
+      },
+    },
+    {
+      command: "how do you say * in *",
+      callback: (phrase, lang) => {
+        const getTranslation = async (phrase, lang) => {
+          setQueryLanguage(lang);
+          setTranslationPhrase(phrase);
+        };
+
+        // setTranslation(translatedText)
+        if (translatedText) {
+          setMessage(`In ${lang} you would say ${phrase}`);
+          speak({
+            text: `In ${lang} you would say ${phrase}.`,
+            voice: voices[voiceIndex],
+          });
+        } else {
+          setMessage("I'm sorry, I can't fetch that data right now.");
+          speak({
+            text: "I'm sorry, I can't fetch that data right now.",
+            voice: voices[voiceIndex],
+          });
         }
       },
     },
