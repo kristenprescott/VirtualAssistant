@@ -1,7 +1,5 @@
-import micOn from "../../assets/images/icons/mic_on.png";
-import micOff from "../../assets/images/icons/mic_off.png";
-import "./VirtualAssistant.css";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -11,6 +9,9 @@ import CommandsModal from "../../components/CommandsModal";
 import useCommandsModal from "../../hooks/useCommandsModal";
 import TodoAPIHelper from "../../helpers/TodoAPIHelper";
 import TodoList from "../Todos/TodoForm";
+import micOn from "../../assets/images/icons/mic_on.png";
+import micOff from "../../assets/images/icons/mic_off.png";
+import "./VirtualAssistant.css";
 
 /* DEEPL ENDPOINT EX
 // https://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc%3Afx&text=&target_lang=de
@@ -20,14 +21,13 @@ export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // <------------------------- STATE -------------------------> //
   /////////////////////////////////////////////////////////////////
+  // err msg:
+  const [errorMessage, setErrorMessage] = useState("");
   // deepl secret key:
   const deeplApiKey = process.env.REACT_APP_DEEPL_KEY;
-  const [apiKey, setApiKey] = useState(deeplApiKey ?? "");
-  const [isDeeplKeyValid, setIsDeeplKeyValid] = useState(false);
   // Translation POST data:
-  const [translationPhrase, setTranslationPhrase] = useState("");
-  const [translatedText, setTranslatedText] = useState(null);
-  const [queryLanguage, setQueryLanguage] = useState("");
+  const [langCode, setLangCode] = useState("");
+  const [translations, setTranslations] = useState(null);
   // Translation GET data:
   const [langs, setLangs] = useState([]);
   // Settings:
@@ -1165,30 +1165,135 @@ export default function VirtualAssistant() {
       },
     },
     {
+      command: "translate",
+      callback: () => {
+        console.log("this command was heard.");
+      },
+    },
+    // <<============TRANSLATION IS BROKEN, DON'T.============>>
+    {
       command: "how do you say * in *",
       callback: (phrase, lang) => {
-        const getTranslation = async (phrase, lang) => {
-          setQueryLanguage(lang);
-          setTranslationPhrase(phrase);
+        const doTranslation = async (phrase, lang) => {
+          // convert lang => code:
+          let queryCode = lang.toLowerCase();
+          if (queryCode === "german") {
+            queryCode = "DE".toLowerCase().toString();
+          } else if (queryCode === "english") {
+            queryCode = "EN".toLowerCase().toString();
+          } else if (queryCode === "spanish") {
+            queryCode = "ES".toLowerCase().toString();
+          } else if (queryCode === "french") {
+            queryCode = "FF".toLowerCase().toString();
+          } else if (queryCode === "italian") {
+            queryCode = "IT".toLowerCase().toString();
+          } else if (queryCode === "japanese") {
+            queryCode = "JA".toLowerCase().toString();
+          } else if (queryCode === "portuguese") {
+            queryCode = "PT".toLowerCase().toString();
+          } else if (queryCode === "russian") {
+            queryCode = "RU".toLowerCase().toString();
+          } else if (queryCode === "chinese") {
+            queryCode = "ZH".toLowerCase().toString();
+          }
+          // convert phrase into string:
+          const queryString = phrase.split(" ").join("%20").toString();
+          // POST req:
+          const transText = { text: queryString };
+          const headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+          };
+          axios
+            .post(
+              `http://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc&text=${queryString}&target_lang=${queryCode}&source_lang=en`,
+              transText,
+              { headers }
+            )
+            .then((res) => setTranslations({ text: res.data.text }))
+            .catch((error) => {
+              setErrorMessage({ errorMessage: error.message });
+              console.error("Error: ", error);
+              console.log("error: ", error);
+              if (error.res) {
+                console.log("err data: ", error.res.data);
+                console.log("err status: ", error.res.status);
+                console.log("err headers: ", error.res.headers);
+              }
+            });
+
+          if (translations) {
+            setMessage(`In ${lang} you would say ${phrase}`);
+            speak({
+              text: `In ${lang} you would say ${phrase}.`,
+              voice: voices[voiceIndex],
+            });
+          } else if (!translations) {
+            setMessage("I'm sorry, I can't fetch that data right now.");
+            speak({
+              text: "I'm sorry, I can't fetch that data right now.",
+              voice: voices[voiceIndex],
+            });
+          }
         };
 
-        // setTranslation(translatedText)
-        if (translatedText) {
-          setMessage(`In ${lang} you would say ${phrase}`);
-          speak({
-            text: `In ${lang} you would say ${phrase}.`,
-            voice: voices[voiceIndex],
-          });
-        } else {
-          setMessage("I'm sorry, I can't fetch that data right now.");
-          speak({
-            text: "I'm sorry, I can't fetch that data right now.",
-            voice: voices[voiceIndex],
-          });
-        }
+        doTranslation(phrase, lang);
       },
     },
   ];
+  /*
+   const data = await fetch(
+      "https://api-free.deepl.com/v2/languages?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx"
+    ).then((data) => data.json());
+    setLangs([...data]);
+    if (data) {
+      return langs.data;
+    } else {
+      speak({
+        text: "I'm sorry, I can't fetch that data right now.",
+        voice: voices[voiceIndex],
+      });
+      setMessage("I'm sorry, I can't fetch that data right now.");
+    }
+  */
+  //  try {
+  //     const res = await fetch(
+  //       `http://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx&text=${translationText}&target_lang=es&source_lang=en`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/x-www-form-urlencoded",
+  //         },
+  //         body: JSON.stringify(translationText),
+  //       }
+  //     );
+  //     await data
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  //   if (data) {
+  //     setTranslation(data);
+
+  //   const translationText = text.split(" ").join("%20");
+  //   try {
+  //     const res = await fetch(
+  //       `http://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx&text=${translationText}&target_lang=es&source_lang=en`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/x-www-form-urlencoded",
+  //         },
+  //         body: JSON.stringify(translationText),
+  //       }
+  //     );
+  //     await data
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  //   if (data) {
+  //     setTranslation(data);
+  //     console.log("translation obj: ", data.translation[0]);
+  //     console.log("translation: arr: ", data.translation);
+  //   }
   /////////////////////////////////////////////////////////////////
   // <------------------------- HOOKS -------------------------> //
   /////////////////////////////////////////////////////////////////
