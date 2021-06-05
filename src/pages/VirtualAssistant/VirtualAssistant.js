@@ -804,10 +804,10 @@ export default function VirtualAssistant() {
     },
     {
       command: [
-        "(add) new task *",
-        "set new task *",
-        "add new to-do *",
-        "add new to do *",
+        "(add) new task * (to to-do list)",
+        "set new task * (on to-do list)",
+        "add new to-do * (to to-do list)",
+        "add new to do * (to to-do list)",
       ],
       callback: (task) => {
         setMessage(`add ${task} to to-do list?`);
@@ -833,12 +833,12 @@ export default function VirtualAssistant() {
     },
     {
       command: [
-        "delete most recent task",
-        "delete most recent item",
-        "delete last added item",
-        "delete latest task",
-        "remove last added task",
-        "remove most recent task",
+        "delete most recent task (from to-do list)",
+        "delete most recent item (from to-do list)",
+        "delete last added item (from to-do list)",
+        "delete latest task (from to-do list)",
+        "remove last added task (from to-do list)",
+        "remove most recent task (from to-do list)",
       ],
       callback: () => {
         setMessage("okay");
@@ -848,11 +848,11 @@ export default function VirtualAssistant() {
     },
     {
       command: [
-        "delete oldest task",
-        "delete oldest item",
-        "delete first added item",
-        "remove first (added) task",
-        "remove oldest task",
+        "delete oldest task (from to-do list)",
+        "delete oldest item (from to-do list)",
+        "delete first added item (from to-do list)",
+        "remove first (added) task (from to-do list)",
+        "remove oldest task (from to-do list)",
       ],
       callback: () => {
         setMessage("okay");
@@ -1171,74 +1171,75 @@ export default function VirtualAssistant() {
       },
     },
     // <<============TRANSLATION IS BROKEN, DON'T.============>>
-    {
-      command: "how do you say * in *",
-      callback: (phrase, lang) => {
-        const doTranslation = async (phrase, lang) => {
-          // convert lang => code:
-          let queryCode = lang.toLowerCase();
-          if (queryCode === "german") {
-            queryCode = "DE".toLowerCase().toString();
-          } else if (queryCode === "english") {
-            queryCode = "EN".toLowerCase().toString();
-          } else if (queryCode === "spanish") {
-            queryCode = "ES".toLowerCase().toString();
-          } else if (queryCode === "french") {
-            queryCode = "FF".toLowerCase().toString();
-          } else if (queryCode === "italian") {
-            queryCode = "IT".toLowerCase().toString();
-          } else if (queryCode === "japanese") {
-            queryCode = "JA".toLowerCase().toString();
-          } else if (queryCode === "portuguese") {
-            queryCode = "PT".toLowerCase().toString();
-          } else if (queryCode === "russian") {
-            queryCode = "RU".toLowerCase().toString();
-          } else if (queryCode === "chinese") {
-            queryCode = "ZH".toLowerCase().toString();
-          }
-          // convert phrase into string:
-          const queryString = phrase.split(" ").join("%20").toString();
-          // POST req:
-          const transText = { text: queryString };
-          const headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-          };
-          axios
-            .post(
-              `http://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc&text=${queryString}&target_lang=${queryCode}&source_lang=en`,
-              transText,
-              { headers }
-            )
-            .then((res) => setTranslations({ text: res.data.text }))
-            .catch((error) => {
-              setErrorMessage({ errorMessage: error.message });
-              console.error("Error: ", error);
-              console.log("error: ", error);
-              if (error.res) {
-                console.log("err data: ", error.res.data);
-                console.log("err status: ", error.res.status);
-                console.log("err headers: ", error.res.headers);
-              }
-            });
 
-          if (translations) {
-            setMessage(`In ${lang} you would say ${phrase}`);
-            speak({
-              text: `In ${lang} you would say ${phrase}.`,
-              voice: voices[voiceIndex],
-            });
-          } else if (!translations) {
-            setMessage("I'm sorry, I can't fetch that data right now.");
-            speak({
-              text: "I'm sorry, I can't fetch that data right now.",
-              voice: voices[voiceIndex],
-            });
-          }
-        };
+    // {
+    //   command: "how do you say * in *",
+    //   callback: (phrase, lang) => {
+    //     const doTranslation = async (phrase, lang) => {
+    //       // convert lang => code:
+    //       let queryCode = lang.toLowerCase();
+    //       if (queryCode === "german") {
+    //         queryCode = "DE".toLowerCase().toString();
+    //       } else if (queryCode === "english") {
+    //         queryCode = "EN".toLowerCase().toString();
+    //       } else if (queryCode === "spanish") {
+    //         queryCode = "ES".toLowerCase().toString();
+    //       } else if (queryCode === "french") {
+    //         queryCode = "FF".toLowerCase().toString();
+    //       } else if (queryCode === "italian") {
+    //         queryCode = "IT".toLowerCase().toString();
+    //       } else if (queryCode === "japanese") {
+    //         queryCode = "JA".toLowerCase().toString();
+    //       } else if (queryCode === "portuguese") {
+    //         queryCode = "PT".toLowerCase().toString();
+    //       } else if (queryCode === "russian") {
+    //         queryCode = "RU".toLowerCase().toString();
+    //       } else if (queryCode === "chinese") {
+    //         queryCode = "ZH".toLowerCase().toString();
+    //       }
+    //       // convert phrase into string:
+    //       const queryString = phrase.split(" ").join("%20").toString();
+    //       // POST req:
+    //       const transText = { text: queryString };
+    //       const headers = {
+    //         "Content-Type": "application/x-www-form-urlencoded",
+    //       };
+    //       axios
+    //         .post(
+    //           `http://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc&text=${queryString}&target_lang=${queryCode}&source_lang=en`,
+    //           transText,
+    //           { headers }
+    //         )
+    //         .then((res) => setTranslations({ text: res.data.text }))
+    //         .catch((error) => {
+    //           setErrorMessage({ errorMessage: error.message });
+    //           console.error("Error: ", error);
+    //           console.log("error: ", error);
+    //           if (error.res) {
+    //             console.log("err data: ", error.res.data);
+    //             console.log("err status: ", error.res.status);
+    //             console.log("err headers: ", error.res.headers);
+    //           }
+    //         });
 
-        doTranslation(phrase, lang);
-      },
-    },
+    //       if (translations) {
+    //         setMessage(`In ${lang} you would say ${phrase}`);
+    //         speak({
+    //           text: `In ${lang} you would say ${phrase}.`,
+    //           voice: voices[voiceIndex],
+    //         });
+    //       } else if (!translations) {
+    //         setMessage("I'm sorry, I can't fetch that data right now.");
+    //         speak({
+    //           text: "I'm sorry, I can't fetch that data right now.",
+    //           voice: voices[voiceIndex],
+    //         });
+    //       }
+    //     };
+
+    //     doTranslation(phrase, lang);
+    //   },
+    // },
   ];
   /*
    const data = await fetch(
@@ -1359,6 +1360,7 @@ export default function VirtualAssistant() {
 
     await SpeechRecognition.startListening({
       continuous: false,
+      // continuous: true,
       language: "en-US",
     });
   };
