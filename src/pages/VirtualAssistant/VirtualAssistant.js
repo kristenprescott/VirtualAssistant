@@ -23,6 +23,8 @@ import SynthChime9 from "../../assets/sounds/testing/SynthChime9.mp3";
 import SynthChime11 from "../../assets/sounds/testing/SynthChime11.mp3";
 import Quirky7 from "../../assets/sounds/testing/UI_Quirky7.mp3";
 import Quirky8 from "../../assets/sounds/testing/UI_Quirky8.mp3";
+import Sprinkle from "../../assets/sounds/testing/sprinkle.mp3";
+import LowTuTone from "../../assets/sounds/testing/lowTuTone.mp3";
 import "./VirtualAssistant.css";
 
 /* DEEPL ENDPOINT EX
@@ -577,11 +579,20 @@ export default function VirtualAssistant() {
     playBells11();
   };
   // LoadingTone:
-  const [playLoadingTone, { sound }] = useSound(LoadingTone);
+  const [playLoadingTone, { sound, stop, isPlaying }] = useSound(LoadingTone);
   const handlePlayLoadingTone = () => {
     playLoadingTone();
     // Can loop - canNOT end loop...
-    // sound.loop(true);
+    sound.loop(true);
+  };
+  useEffect(() => stop, []);
+  // useEffect(() => {
+  //   return () => {
+  //     stop();
+  //   };
+  // }, [stop]);
+  const handleStopLoadingTone = () => {
+    stop();
   };
   // PowerDown7:
   const [playPowerDown7] = useSound(PowerDown7);
@@ -626,6 +637,16 @@ export default function VirtualAssistant() {
   const handlePlayQuirky8 = () => {
     playQuirky8();
   };
+  // Sprinkle:
+  const [playSprinkle] = useSound(Sprinkle);
+  const handlePlaySprinkle = () => {
+    playSprinkle();
+  };
+  // LowTuTone:
+  const [playLowTuTone] = useSound(LowTuTone);
+  const handlePlayLowTuTone = () => {
+    playLowTuTone();
+  };
 
   // Test:
   const [playSparkle] = useSound(hilo_sparkle);
@@ -667,11 +688,17 @@ export default function VirtualAssistant() {
       command: ["play audio for load", "play audio for loading"],
       callback: () => {
         handlePlayLoadingTone();
-        console.log("Playing: LoadingTone");
-        // console.log("Looping: LoadingTone");
+        // console.log("Playing: LoadingTone");
+        console.log("Looping: LoadingTone");
       },
     },
-
+    {
+      command: ["stop audio for load", "stop audio for loading"],
+      callback: () => {
+        handleStopLoadingTone();
+        console.log("Stopping: LoadingTone");
+      },
+    },
     {
       command: ["play audio for ended listening"],
       callback: () => {
@@ -727,6 +754,20 @@ export default function VirtualAssistant() {
       callback: () => {
         handlePlayQuirky8();
         console.log("Playing: Quirky8");
+      },
+    },
+    {
+      command: ["play audio sprinkle"],
+      callback: () => {
+        handlePlaySprinkle();
+        console.log("Playing: Sprinkle");
+      },
+    },
+    {
+      command: ["play audio low two tone", "play audio low 2 tone"],
+      callback: () => {
+        handlePlayLowTuTone();
+        console.log("Playing: LowTuTone");
       },
     },
     {
