@@ -582,15 +582,9 @@ export default function VirtualAssistant() {
   const [playLoadingTone, { sound, stop, isPlaying }] = useSound(LoadingTone);
   const handlePlayLoadingTone = () => {
     playLoadingTone();
-    // Can loop - canNOT end loop...
     sound.loop(true);
   };
   useEffect(() => stop, []);
-  // useEffect(() => {
-  //   return () => {
-  //     stop();
-  //   };
-  // }, [stop]);
   const handleStopLoadingTone = () => {
     stop();
   };
@@ -684,21 +678,34 @@ export default function VirtualAssistant() {
         console.log("Playing: Bells11");
       },
     },
+    // ================ TOGGLE SOUNDS: ================
     {
-      command: ["play audio for load", "play audio for loading"],
-      callback: () => {
-        handlePlayLoadingTone();
-        // console.log("Playing: LoadingTone");
-        console.log("Looping: LoadingTone");
+      command: ["* loading audio", "* loading sound"],
+      callback: (action) => {
+        if (action === "start" || "play") {
+          handlePlayLoadingTone();
+          console.log("Looping: LoadingTone");
+        }
+        if (action === "end" || "stop") {
+          handleStopLoadingTone();
+          console.log("Ending Loop: LoadingTone");
+        }
       },
     },
-    {
-      command: ["stop audio for load", "stop audio for loading"],
-      callback: () => {
-        handleStopLoadingTone();
-        console.log("Stopping: LoadingTone");
-      },
-    },
+    // {
+    //   command: ["play loading audio", "play loading sound"],
+    //   callback: () => {
+    //     handlePlayLoadingTone();
+    //     console.log("Looping: LoadingTone");
+    //   },
+    // },
+    // {
+    //   command: ["stop loading audio", "stop loading sound"],
+    //   callback: () => {
+    //     handleStopLoadingTone();
+    //     console.log("Stopping: LoadingTone");
+    //   },
+    // },
     {
       command: ["play audio for ended listening"],
       callback: () => {
