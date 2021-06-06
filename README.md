@@ -49,6 +49,7 @@ Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBr
 - [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition)
 - [react-speech-kit](https://github.com/MikeyParton/react-speech-kit)
 - axios
+- [use-sound](https://github.com/joshwcomeau/use-sound)
 
 ##### Backend dependencies:
 
