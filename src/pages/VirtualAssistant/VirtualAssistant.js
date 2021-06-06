@@ -576,15 +576,31 @@ export default function VirtualAssistant() {
   const handlePlayBells11 = () => {
     playBells11();
   };
-  // LoadingTone:
-  const [playLoadingTone, { sound }] = useSound(LoadingTone);
+  // Testing loop audio(LoadingTone):
+  const [loop, setLoop] = useState(false);
+  // const [playLoadingTone, { sound }] = useSound(LoadingTone);
+  const [playLoadingTone, { sound, stop }] = useSound(LoadingTone, {
+    loop,
+  });
   const handlePlayLoadingTone = () => {
     playLoadingTone();
-    // Can loop - canNOT end loop...
+    // // Can loop - canNOT end loop...
+    // const soundLoop = sound.loop(true);
+    // setLoop(soundLoop);
     // sound.loop(true);
   };
-  // PowerDown7:
-  const [playPowerDown7] = useSound(PowerDown7);
+  // const handleStopLoadingTone = () => {
+  //   playLoadingTone();
+  //   // Can loop - canNOT end loop...
+  //   const soundLoop = sound.loop(false);
+  //   setLoop(soundLoop);
+  // };
+  // Testing onstop (PowerDown7):
+  const [playPowerDown7] = useSound(PowerDown7, {
+    onstop: () => {
+      console.log("Audio has stopped.");
+    },
+  });
   const handlePlayPowerDown7 = () => {
     playPowerDown7();
   };
@@ -603,7 +619,7 @@ export default function VirtualAssistant() {
   const handlePlaySynthChime9 = () => {
     playSynthChime9();
   };
-  // SynthChime11:
+  // Test speech onend of audio(SynthChime11):
   const [playSynthChime11] = useSound(SynthChime11, {
     onend: () => {
       speak({
@@ -667,11 +683,27 @@ export default function VirtualAssistant() {
       command: ["play audio for load", "play audio for loading"],
       callback: () => {
         handlePlayLoadingTone();
+        // const soundLoop = sound.loop(true);
+        // setLoop(soundLoop);
         console.log("Playing: LoadingTone");
         // console.log("Looping: LoadingTone");
       },
     },
-
+    // {
+    //   command: [
+    //     "end audio for load",
+    //     "end audio for loading",
+    //     "stop audio for load",
+    //     "stop audio for loading",
+    //   ],
+    //   callback: () => {
+    //     handleStopLoadingTone();
+    //     const soundLoop = sound.loop(false);
+    //     setLoop(soundLoop);
+    //     console.log("Ending loop: LoadingTone");
+    //     // console.log("Looping: LoadingTone");
+    //   },
+    // },
     {
       command: ["play audio for ended listening"],
       callback: () => {
