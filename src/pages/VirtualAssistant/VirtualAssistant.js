@@ -577,9 +577,11 @@ export default function VirtualAssistant() {
     playBells11();
   };
   // LoadingTone:
-  const [playLoadingTone] = useSound(LoadingTone);
+  const [playLoadingTone, { sound }] = useSound(LoadingTone);
   const handlePlayLoadingTone = () => {
     playLoadingTone();
+    // Can loop - canNOT end loop...
+    // sound.loop(true);
   };
   // PowerDown7:
   const [playPowerDown7] = useSound(PowerDown7);
@@ -602,7 +604,15 @@ export default function VirtualAssistant() {
     playSynthChime9();
   };
   // SynthChime11:
-  const [playSynthChime11] = useSound(SynthChime11);
+  const [playSynthChime11] = useSound(SynthChime11, {
+    onend: () => {
+      speak({
+        text: "testing speech after audio",
+        voice: voices[voiceIndex],
+      });
+      console.info("Sound has ended");
+    },
+  });
   const handlePlaySynthChime11 = () => {
     playSynthChime11();
   };
@@ -630,6 +640,10 @@ export default function VirtualAssistant() {
     console.log("speaking : ", window.speechSynthesis.speaking);
     console.log("msg: ", message);
   };
+  const handlePlayAudioAndThenSpeak = () => {
+    playSynthChime11();
+    console.log();
+  };
 
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
@@ -654,8 +668,10 @@ export default function VirtualAssistant() {
       callback: () => {
         handlePlayLoadingTone();
         console.log("Playing: LoadingTone");
+        // console.log("Looping: LoadingTone");
       },
     },
+
     {
       command: ["play audio for ended listening"],
       callback: () => {
@@ -682,6 +698,13 @@ export default function VirtualAssistant() {
       callback: () => {
         handlePlaySynthChime9();
         console.log("Playing: SynthChime9");
+      },
+    },
+    {
+      command: ["play audio chime 11"],
+      callback: () => {
+        handlePlaySynthChime11();
+        console.log("Playing: SynthChime11");
       },
     },
     {
@@ -716,16 +739,35 @@ export default function VirtualAssistant() {
     },
     {
       command: [
+        "test sound and then speak",
+        "test audio and then speak",
+        "play sound and then speak",
+        "play audio and then speak",
+      ],
+      callback: () => {
+        onEnd();
+        handlePlayAudioAndThenSpeak();
+        console.log("onEnd => speaking : ", window.speechSynthesis.speaking);
+      },
+    },
+    {
+      command: [
         "test sound and speak",
         "test audio and speak",
         "play sound and speak",
         "play audio and speak",
       ],
       callback: () => {
-        speak({ text: "okay then", voice: voices[voiceIndex] });
+        speak({
+          text: "testing speech during audio",
+          voice: voices[voiceIndex],
+        });
         onEnd();
         handlePlayAudio();
-        console.log("onEnd => speaking : ", window.speechSynthesis.speaking);
+        console.log(
+          "speechSynthesis.onEnd => speaking : ",
+          window.speechSynthesis.speaking
+        );
       },
     },
     {
@@ -1084,7 +1126,7 @@ export default function VirtualAssistant() {
     {
       command: ["get (the) weather", "fetch weather"],
       callback: () => {
-        handlePlayLoadingTone();
+        // handlePlayLoadingTone();
         fetchWeather();
         setMessage("weather fetched");
         console.log(message);
