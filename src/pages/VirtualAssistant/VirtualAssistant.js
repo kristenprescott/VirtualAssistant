@@ -665,14 +665,14 @@ export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   const commands = [
     {
-      command: "play audio bells",
+      command: ["play bell sound", "play bell audio"],
       callback: () => {
         handlePlayBells10();
         console.log("Playing: Bells10");
       },
     },
     {
-      command: ["play audio for search", "play audio for searching"],
+      command: ["play search sound", "play search audio"],
       callback: () => {
         handlePlayBells11();
         console.log("Playing: Bells11");
@@ -707,71 +707,63 @@ export default function VirtualAssistant() {
     //   },
     // },
     {
-      command: ["play audio for ended listening"],
+      command: ["play ended listening sound", "play ended listening audio"],
       callback: () => {
         handlePlayPowerDown7();
         console.log("Playing: PowerDown7");
       },
     },
     {
-      command: ["play audio for success"],
-      callback: () => {
-        handlePlayPowerUp18();
-        console.log("Playing: PowerUp18");
-      },
-    },
-    {
-      command: ["play audio for listening"],
+      command: ["play listening sound", "play listening audio"],
       callback: () => {
         handlePlaySynthChime8();
         console.log("Playing: SynthChime8");
       },
     },
     {
-      command: ["play audio chime"],
+      command: ["play success sound", "play success audio"],
+      callback: () => {
+        handlePlayPowerUp18();
+        console.log("Playing: PowerUp18");
+      },
+    },
+    {
+      command: ["play chime sound", "play chime audio"],
       callback: () => {
         handlePlaySynthChime9();
         console.log("Playing: SynthChime9");
       },
     },
     {
-      command: ["play audio chime 11"],
+      command: ["play other chime sound", "play other chime audio"],
       callback: () => {
         handlePlaySynthChime11();
         console.log("Playing: SynthChime11");
       },
     },
     {
-      command: [
-        "play audio click seven",
-        "play audio click 7",
-        "play low high",
-      ],
+      command: ["play first click sound", "play first click audio"],
       callback: () => {
         handlePlayQuirky7();
         console.log("Playing: Quirky7");
       },
     },
     {
-      command: [
-        "play audio click eight",
-        "play audio click 8",
-        "play high low",
-      ],
+      command: ["play second click sound", "play second click audio"],
       callback: () => {
         handlePlayQuirky8();
         console.log("Playing: Quirky8");
       },
     },
     {
-      command: ["play audio sprinkle"],
+      command: ["play sprinkle sound", "play sprinkle audio"],
       callback: () => {
         handlePlaySprinkle();
         console.log("Playing: Sprinkle");
       },
     },
     {
-      command: ["play audio low two tone", "play audio low 2 tone"],
+      command: ["play double tone sound", "play double tone audio"],
       callback: () => {
         handlePlayLowTuTone();
         console.log("Playing: LowTuTone");
