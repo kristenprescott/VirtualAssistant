@@ -11,8 +11,18 @@ import TodoAPIHelper from "../../helpers/TodoAPIHelper";
 import TodoList from "../Todos/TodoForm";
 import micOn from "../../assets/images/icons/mic_on.png";
 import micOff from "../../assets/images/icons/mic_off.png";
-import audioFile from "../../assets/sounds/testing/hilo_sparkle.mp3";
 import useSound from "use-sound";
+import hilo_sparkle from "../../assets/sounds/testing/hilo_sparkle.mp3";
+import Bells10 from "../../assets/sounds/testing/Bells10.mp3";
+import Bells11 from "../../assets/sounds/testing/Bells11.mp3";
+import LoadingTone from "../../assets/sounds/testing/Mech-Drone-12.mp3";
+import PowerDown7 from "../../assets/sounds/testing/PowerDown7.mp3";
+import PowerUp18 from "../../assets/sounds/testing/PowerUp18.mp3";
+import SynthChime8 from "../../assets/sounds/testing/SynthChime8.mp3";
+import SynthChime9 from "../../assets/sounds/testing/SynthChime9.mp3";
+import SynthChime11 from "../../assets/sounds/testing/SynthChime11.mp3";
+import Quirky7 from "../../assets/sounds/testing/UI_Quirky7.mp3";
+import Quirky8 from "../../assets/sounds/testing/UI_Quirky8.mp3";
 import "./VirtualAssistant.css";
 
 /* DEEPL ENDPOINT EX
@@ -556,23 +566,166 @@ export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // <--------------------- AUDIO EARCONS ---------------------> //
   /////////////////////////////////////////////////////////////////
+  // Bells10:
+  const [playBells10] = useSound(Bells10);
+  const handlePlayBells10 = () => {
+    playBells10();
+  };
+  // Bells11:
+  const [playBells11] = useSound(Bells11);
+  const handlePlayBells11 = () => {
+    playBells11();
+  };
+  // LoadingTone:
+  const [playLoadingTone] = useSound(LoadingTone);
+  const handlePlayLoadingTone = () => {
+    playLoadingTone();
+  };
+  // PowerDown7:
+  const [playPowerDown7] = useSound(PowerDown7);
+  const handlePlayPowerDown7 = () => {
+    playPowerDown7();
+  };
+  // PowerUp18:
+  const [playPowerUp18] = useSound(PowerUp18);
+  const handlePlayPowerUp18 = () => {
+    playPowerUp18();
+  };
+  // SynthChime8:
+  const [playSynthChime8] = useSound(SynthChime8);
+  const handlePlaySynthChime8 = () => {
+    playSynthChime8();
+  };
+  // SynthChime9:
+  const [playSynthChime9] = useSound(SynthChime9);
+  const handlePlaySynthChime9 = () => {
+    playSynthChime9();
+  };
+  // SynthChime11:
+  const [playSynthChime11] = useSound(SynthChime11);
+  const handlePlaySynthChime11 = () => {
+    playSynthChime11();
+  };
+  // Quirky7:
+  const [playQuirky7] = useSound(Quirky7);
+  const handlePlayQuirky7 = () => {
+    playQuirky7();
+  };
+  // Quirky8:
+  const [playQuirky8] = useSound(Quirky8);
+  const handlePlayQuirky8 = () => {
+    playQuirky8();
+  };
+
   // Test:
-  const [playSparkle] = useSound(audioFile);
+  const [playSparkle] = useSound(hilo_sparkle);
   const handlePlayAudio = () => {
     playSparkle();
-    console.log("playing audioFile");
-    console.log("audioFile: ", audioFile);
+    // console.log("playing hilo_sparkle");
+    // console.log("hilo_sparkle: ", hilo_sparkle);
   };
+  const onEnd = () => {
+    // Do something here after speaking has finished:
+    setMessage("audio testing...");
+    console.log("speaking : ", window.speechSynthesis.speaking);
+    console.log("msg: ", message);
+  };
+
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
   /////////////////////////////////////////////////////////////////
   const commands = [
     {
+      command: "play audio bells",
+      callback: () => {
+        handlePlayBells10();
+        console.log("Playing: Bells10");
+      },
+    },
+    {
+      command: ["play audio for search", "play audio for searching"],
+      callback: () => {
+        handlePlayBells11();
+        console.log("Playing: Bells11");
+      },
+    },
+    {
+      command: ["play audio for load", "play audio for loading"],
+      callback: () => {
+        handlePlayLoadingTone();
+        console.log("Playing: LoadingTone");
+      },
+    },
+    {
+      command: ["play audio for ended listening"],
+      callback: () => {
+        handlePlayPowerDown7();
+        console.log("Playing: PowerDown7");
+      },
+    },
+    {
+      command: ["play audio for success"],
+      callback: () => {
+        handlePlayPowerUp18();
+        console.log("Playing: PowerUp18");
+      },
+    },
+    {
+      command: ["play audio for listening"],
+      callback: () => {
+        handlePlaySynthChime8();
+        console.log("Playing: SynthChime8");
+      },
+    },
+    {
+      command: ["play audio chime"],
+      callback: () => {
+        handlePlaySynthChime9();
+        console.log("Playing: SynthChime9");
+      },
+    },
+    {
+      command: [
+        "play audio click seven",
+        "play audio click 7",
+        "play low high",
+      ],
+      callback: () => {
+        handlePlayQuirky7();
+        console.log("Playing: Quirky7");
+      },
+    },
+    {
+      command: [
+        "play audio click eight",
+        "play audio click 8",
+        "play high low",
+      ],
+      callback: () => {
+        handlePlayQuirky8();
+        console.log("Playing: Quirky8");
+      },
+    },
+    {
       command: ["test sound", "test audio", "play sound", "play audio"],
       callback: () => {
-        // speak({ text: "", voice: voices[voiceIndex] });
-        setMessage("");
+        setMessage("audio testing...");
+        console.log("msg: ", message);
         handlePlayAudio();
+      },
+    },
+    {
+      command: [
+        "test sound and speak",
+        "test audio and speak",
+        "play sound and speak",
+        "play audio and speak",
+      ],
+      callback: () => {
+        speak({ text: "okay then", voice: voices[voiceIndex] });
+        onEnd();
+        handlePlayAudio();
+        console.log("onEnd => speaking : ", window.speechSynthesis.speaking);
       },
     },
     {
@@ -931,8 +1084,10 @@ export default function VirtualAssistant() {
     {
       command: ["get (the) weather", "fetch weather"],
       callback: () => {
+        handlePlayLoadingTone();
         fetchWeather();
         setMessage("weather fetched");
+        console.log(message);
       },
     },
     {
@@ -1264,9 +1419,9 @@ export default function VirtualAssistant() {
   /////////////////////////////////////////////////////////////////
   // speech synth:
   // <-----------------------------------------------------------
-  const onEnd = () => {
-    // You could do something here after speaking has finished
-  };
+  // const onEnd = () => {
+  //   // You could do something here after speaking has finished
+  // };
 
   const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
     onEnd,
@@ -1324,7 +1479,6 @@ export default function VirtualAssistant() {
 
     await SpeechRecognition.startListening({
       continuous: false,
-      // continuous: true,
       language: "en-US",
     });
   };
@@ -1339,6 +1493,15 @@ export default function VirtualAssistant() {
     // (Like when you try to make her read an entire monologue from Queen of the Damned for lulz and she get stuck unable to talk and you're afraid you broke it forever)
     // anyway, this is how you cancel the speech:
     // window.speechSynthesis.cancel();
+    /*
+    Tests:    
+    console.log("speaking : ", window.speechSynthesis.speaking);
+    console.log("listening : ", window.speechRecognition.listening);
+    console.log("transcript : ", window.speechRecognition.transcript);
+    console.log("interimTranscript : ", window.speechRecognition.interimTranscript);
+    console.log("finalTranscript : ", window.speechRecognition.finalTranscript);
+    console.log("commands : ", window.speechRecognition.commands);
+    */
 
     await SpeechRecognition.stopListening();
   };
