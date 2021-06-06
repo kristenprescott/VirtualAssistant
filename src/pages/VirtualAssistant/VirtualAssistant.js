@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -11,6 +11,8 @@ import TodoAPIHelper from "../../helpers/TodoAPIHelper";
 import TodoList from "../Todos/TodoForm";
 import micOn from "../../assets/images/icons/mic_on.png";
 import micOff from "../../assets/images/icons/mic_off.png";
+import audioFile from "../../assets/sounds/testing/hilo_sparkle.mp3";
+import useSound from "use-sound";
 import "./VirtualAssistant.css";
 
 /* DEEPL ENDPOINT EX
@@ -551,11 +553,23 @@ export default function VirtualAssistant() {
   //     console.log("translation: arr: ", data.translation);
   //   }
   // };
-
+  const [play, { stop }] = useSound(audioFile);
+  const handlePlayAudio = () => {
+    play();
+    console.log("no audio");
+  };
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
   /////////////////////////////////////////////////////////////////
   const commands = [
+    {
+      command: ["test sound", "test audio", "play sound", "play audio"],
+      callback: () => {
+        // speak({ text: "", voice: voices[voiceIndex] });
+        setMessage("");
+        handlePlayAudio();
+      },
+    },
     {
       command: ["hello", "hi"],
       callback: () => {
@@ -1171,7 +1185,6 @@ export default function VirtualAssistant() {
       },
     },
     // <<============TRANSLATION IS BROKEN, DON'T.============>>
-
     // {
     //   command: "how do you say * in *",
     //   callback: (phrase, lang) => {
@@ -1241,60 +1254,6 @@ export default function VirtualAssistant() {
     //   },
     // },
   ];
-  /*
-   const data = await fetch(
-      "https://api-free.deepl.com/v2/languages?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx"
-    ).then((data) => data.json());
-    setLangs([...data]);
-    if (data) {
-      return langs.data;
-    } else {
-      speak({
-        text: "I'm sorry, I can't fetch that data right now.",
-        voice: voices[voiceIndex],
-      });
-      setMessage("I'm sorry, I can't fetch that data right now.");
-    }
-  */
-  //  try {
-  //     const res = await fetch(
-  //       `http://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx&text=${translationText}&target_lang=es&source_lang=en`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/x-www-form-urlencoded",
-  //         },
-  //         body: JSON.stringify(translationText),
-  //       }
-  //     );
-  //     await data
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  //   if (data) {
-  //     setTranslation(data);
-
-  //   const translationText = text.split(" ").join("%20");
-  //   try {
-  //     const res = await fetch(
-  //       `http://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc:fx&text=${translationText}&target_lang=es&source_lang=en`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/x-www-form-urlencoded",
-  //         },
-  //         body: JSON.stringify(translationText),
-  //       }
-  //     );
-  //     await data
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  //   if (data) {
-  //     setTranslation(data);
-  //     console.log("translation obj: ", data.translation[0]);
-  //     console.log("translation: arr: ", data.translation);
-  //   }
   /////////////////////////////////////////////////////////////////
   // <------------------------- HOOKS -------------------------> //
   /////////////////////////////////////////////////////////////////
