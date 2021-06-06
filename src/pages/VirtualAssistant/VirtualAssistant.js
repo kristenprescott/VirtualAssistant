@@ -553,10 +553,15 @@ export default function VirtualAssistant() {
   //     console.log("translation: arr: ", data.translation);
   //   }
   // };
-  const [play, { stop }] = useSound(audioFile);
+  /////////////////////////////////////////////////////////////////
+  // <--------------------- AUDIO EARCONS ---------------------> //
+  /////////////////////////////////////////////////////////////////
+  // Test:
+  const [playSparkle] = useSound(audioFile);
   const handlePlayAudio = () => {
-    play();
-    console.log("no audio");
+    playSparkle();
+    console.log("playing audioFile");
+    console.log("audioFile: ", audioFile);
   };
   /////////////////////////////////////////////////////////////////
   // <----------------------- COMMANDS -----------------------> //
