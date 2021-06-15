@@ -4,14 +4,14 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { useSpeechSynthesis } from "react-speech-kit";
-import Settings from "../../components/Settings";
-import CommandsModal from "../../components/CommandsModal";
-import useCommandsModal from "../../hooks/useCommandsModal";
-import TodoAPIHelper from "../../helpers/TodoAPIHelper";
-import TodoList from "../Todos/TodoForm";
 import micOn from "../../assets/images/icons/mic_on.png";
 import micOff from "../../assets/images/icons/mic_off.png";
 import useSound from "use-sound";
+import CommandsModal from "../../components/CommandsModal";
+import useCommandsModal from "../../hooks/useCommandsModal";
+import Settings from "../../components/Settings";
+import TodoAPIHelper from "../../helpers/TodoAPIHelper";
+import TodoList from "../Todos/TodoForm";
 import hilo_sparkle from "../../assets/sounds/testing/hilo_sparkle.mp3";
 import Bells10 from "../../assets/sounds/testing/Bells10.mp3";
 import Bells11 from "../../assets/sounds/testing/Bells11.mp3";
@@ -25,6 +25,8 @@ import Quirky7 from "../../assets/sounds/testing/UI_Quirky7.mp3";
 import Quirky8 from "../../assets/sounds/testing/UI_Quirky8.mp3";
 import Sprinkle from "../../assets/sounds/testing/sprinkle.mp3";
 import LowTuTone from "../../assets/sounds/testing/lowTuTone.mp3";
+import Heard from "../../assets/sounds/testing/heard.mp3";
+import timer from "../../assets/sounds/testing/timer.mp3";
 import "./VirtualAssistant.css";
 
 /* DEEPL ENDPOINT EX
@@ -139,9 +141,9 @@ export default function VirtualAssistant() {
       while (countdown > 0) {
         countdown--;
       }
+      handlePlayTimer();
       setMessage("beep.");
-      speak({ text: "beep.", voice: voices[voiceIndex], rate, pitch });
-      return;
+      // speak({ text: "beep.", voice: voices[voiceIndex], rate, pitch });
     }, countdown);
   };
   // Minutes timer:
@@ -641,6 +643,36 @@ export default function VirtualAssistant() {
   const handlePlayLowTuTone = () => {
     playLowTuTone();
   };
+  // Heard:
+  const [playHeard] = useSound(Heard);
+  const handlePlayHeard = () => {
+    playHeard();
+  };
+  // timer:
+  const [playTimer, { timerSound, timerStop, isTimerPlaying }] = useSound(
+    timer,
+    {
+      onend: () => {
+        speak({
+          text: "timer has ended",
+          voice: voices[voiceIndex],
+        });
+        console.info("Timer has ended");
+      },
+    }
+  );
+  const handlePlayTimer = () => {
+    // would like to loop a couple times
+    playTimer();
+    timerSound.loop();
+  };
+  useEffect(() => timerStop, []);
+  const handleTimerTone = () => {
+    timerSound.loop();
+    setTimeout(function (timerStop) {
+      timerStop();
+    }, 5000);
+  };
 
   // Test:
   const [playSparkle] = useSound(hilo_sparkle);
@@ -651,9 +683,9 @@ export default function VirtualAssistant() {
   };
   const onEnd = () => {
     // Do something here after speaking has finished:
-    setMessage("audio testing...");
-    console.log("speaking : ", window.speechSynthesis.speaking);
-    console.log("msg: ", message);
+    // setMessage("audio testing...");
+    // console.log("speaking : ", window.speechSynthesis.speaking);
+    // console.log("msg: ", message);
   };
   const handlePlayAudioAndThenSpeak = () => {
     playSynthChime11();
@@ -767,6 +799,13 @@ export default function VirtualAssistant() {
       callback: () => {
         handlePlayLowTuTone();
         console.log("Playing: LowTuTone");
+      },
+    },
+    {
+      command: ["play heard sound", "play heard audio"],
+      callback: () => {
+        handlePlayHeard();
+        console.log("Playing: Heard");
       },
     },
     {
@@ -908,15 +947,23 @@ export default function VirtualAssistant() {
     },
     {
       command: ["reset", "clear"],
-      callback: () => resetTranscript(),
+      callback: () => {
+        handlePlayHeard();
+        console.log("Playing: Heard");
+        resetTranscript();
+      },
     },
-    {
-      command: "clear",
-      callback: ({ resetTranscript }) => resetTranscript(),
-    },
+    // { ===== currently auto-clears transcript =====
+    //   command: "clear",
+    //   callback: ({ resetTranscript }) => resetTranscript(),
+    // },
     {
       command: ["quit", "end", "exit"],
-      callback: () => SpeechRecognition.stopListening(),
+      callback: () => {
+        handlePlayHeard();
+        console.log("Playing: Heard");
+        SpeechRecognition.stopListening();
+      },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
       bestMatchOnly: true,
@@ -937,7 +984,9 @@ export default function VirtualAssistant() {
       command: ["(get) commands", "show commands"],
       callback: () => {
         setMessage("Opening commands.");
-        speak({ text: "Okay.", voice: voices[voiceIndex], rate, pitch });
+        // speak({ text: "Okay.", voice: voices[voiceIndex], rate, pitch });
+        handlePlayHeard();
+        console.log("Showing commands modal.");
         toggle();
       },
     },
@@ -950,55 +999,83 @@ export default function VirtualAssistant() {
     {
       command: ["log in", "login"],
       callback: () => {
+        handlePlayHeard();
+        console.log("Going to login page.");
         window.open("../login", "_self");
       },
     },
     {
       command: ["log out", "logout"],
       callback: () => {
+        handlePlayHeard();
+        console.log("Logging out.");
         window.open("../login", "_self");
       },
     },
     {
       command: ["register", "sign up", "signup"],
       callback: () => {
+        handlePlayHeard();
+        console.log("Going to registration page.");
         window.open("../register", "_self");
       },
     },
     {
       command: "go to demo",
       callback: () => {
+        handlePlayHeard();
+        console.log("Going to demo.");
         window.open("../demo", "_self");
       },
     },
     {
       command: "go to test",
       callback: () => {
+        handlePlayHeard();
+        console.log("Going to test page.");
         window.open("../test", "_self");
       },
     },
     {
       command: "(go) back",
       callback: () => {
+        handlePlayHeard();
+        console.log("Going back in history.");
         window.history.history.go(-1);
       },
     },
     {
       command: "(go) forward",
       callback: () => {
+        handlePlayHeard();
+        console.log("Going forward in history.");
         window.history.go(1);
       },
     },
     {
       command: "open webpage *",
       callback: (website) => {
+        handlePlayHeard();
+        console.log(`Opening http://${website}/com in new window.`);
         window.open("http://" + website.split(" ").join("") + ".com");
       },
     },
     {
       command: "search google for *",
       callback: (searchTerm) => {
+        handlePlayHeard();
+        console.log(`Searching Google for ${searchTerm} in new window.`);
         window.open(`http://www.google.com/search?q=${searchTerm}`);
+      },
+    },
+    {
+      command: "google search exact *",
+      callback: (exactTerm) => {
+        handlePlayHeard();
+        console.log(
+          `Searching Google for exact term: ${exactTerm} in new window.`
+        );
+        window.open(`http://www.google.com/search?q="${exactTerm}`);
       },
     },
     {
@@ -1012,30 +1089,30 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: "google search exact *",
-      callback: (exactTerm) => {
-        window.open(`http://www.google.com/search?q="${exactTerm}`);
-      },
-    },
-    {
       command: ["go to voice synthesizer", "show voice synthesizer"],
       callback: () => {
+        handlePlayHeard();
+        console.log("Opening Voice Synthesizer component.");
         window.open("../voicesynthesizer", "_self");
       },
     },
     {
       command: "show settings",
       callback: () => {
-        setMessage("showing settings");
-        speak({ text: "okay", voice: voices[voiceIndex] });
+        handlePlayHeard();
+        console.log("Opening Settings component.");
+        setMessage("Showing settings.");
+        // speak({ text: "okay", voice: voices[voiceIndex] });
         setShowSettings(true);
       },
     },
     {
       command: "hide settings",
       callback: () => {
-        setMessage("hiding settings");
-        speak({ text: "okay", voice: voices[voiceIndex] });
+        handlePlayHeard();
+        console.log("Closing Settings component.");
+        setMessage("Hiding settings.");
+        // speak({ text: "okay", voice: voices[voiceIndex] });
         setShowSettings(false);
       },
     },
@@ -1047,12 +1124,16 @@ export default function VirtualAssistant() {
         "show (my) to-do list",
       ],
       callback: () => {
+        handlePlayHeard();
+        console.log("Opening TodoList component.");
         setShowTodos(true);
       },
     },
     {
       command: ["hide to-do list", "hide to do list", "hide to-dos"],
       callback: () => {
+        handlePlayHeard();
+        console.log("Closing TodoList component.");
         setShowTodos(false);
       },
     },
@@ -1095,8 +1176,10 @@ export default function VirtualAssistant() {
         "remove most recent task (from to-do list)",
       ],
       callback: () => {
-        setMessage("okay");
-        speak({ text: "okay", voice: voices[voiceIndex] });
+        handlePlayHeard();
+        console.log("Removing last added task from to-do list.");
+        setMessage("Removing last added task from to-do list.");
+        // speak({ text: "okay", voice: voices[voiceIndex] });
         deleteMostRecentTodo();
       },
     },
@@ -1109,14 +1192,16 @@ export default function VirtualAssistant() {
         "remove oldest task (from to-do list)",
       ],
       callback: () => {
-        setMessage("okay");
-        speak({ text: "okay", voice: voices[voiceIndex] });
+        handlePlayHeard();
+        console.log("Removing oldest task from to-do list.");
+        setMessage("Removing oldest task from to-do list.");
+        // speak({ text: "okay", voice: voices[voiceIndex] });
         deleteOldestTodo();
       },
     },
     // <--------------- TIME --------------->
     {
-      command: "set (a) timer for :timeout seconds",
+      command: "set (a) timer for :timeout second(s)",
       callback: (timeout) => {
         // setIsActive(true);
         setSecondsTimer(timeout);
@@ -1130,10 +1215,7 @@ export default function VirtualAssistant() {
       },
     },
     {
-      command: [
-        "set (a) timer for :timeout minutes",
-        "set a timer for :timeout minute",
-      ],
+      command: ["set (a) timer for :timeout minute(s)"],
       callback: (timeout) => {
         // setIsActive(true);
         setMinutesTimer(timeout);
@@ -1671,6 +1753,7 @@ export default function VirtualAssistant() {
                   </div>
                 </div>
               </div>
+
               <div className="transcript-display">
                 {/* ///////////////////////////////////////////////////////////////// */}
                 {/* <-------------------------- TRANSCRIPT -------------------------> */}
