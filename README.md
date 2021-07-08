@@ -4,7 +4,7 @@
 
 </div>
 
-Virtual Assistant uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis. It combines these libraries to enable voice command recognition - users have the ability to add/remove items on a to-do list, get current weather data, and set a timer (amongst other commands).
+Virtual Assistant is a React web app that uses the [react-speech-recognition](https://github.com/JamesBrill/react-speech-recognition) and [react-speech-kit](https://github.com/MikeyParton/react-speech-kit) hooks to utilize the [Web Speech API](https://wicg.github.io/speech-api/) for Speech Recognition and Voice Synthesis. It combines these libraries to enable voice command recognition - users have the ability to follow commands such as add/remove items on a to-do list, get current weather data, and set a timer.
 
 <!-- This is my capstone project for General Assembly's Software Engineering Immersive program. -->
 
