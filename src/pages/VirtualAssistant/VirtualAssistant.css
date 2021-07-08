@@ -105,7 +105,6 @@ textarea {
   border-radius: 9px;
   backdrop-filter: blur(3px);
   box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-  /* background-color: rgba(117, 46, 126, 0.379); */
   background-color: rgba(19, 3, 3, 0.4);
   border: 3px rgba(255, 255, 255, 0.4) solid;
   border-bottom: 3px rgba(40, 40, 40, 0.35) solid;
@@ -119,7 +118,6 @@ textarea {
   text-align: center;
   font-family: "Cutive", serif;
   line-height: 1.7rem;
-  /* --------------------- */
   padding-bottom: 30px;
   margin-bottom: 30px;
 }
@@ -128,7 +126,6 @@ textarea {
   border-radius: 9px;
   backdrop-filter: blur(3px);
   box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-  /* background-color: rgba(117, 46, 126, 0.379); */
   background-color: rgba(19, 3, 3, 0.4);
   border: 3px rgba(255, 255, 255, 0.4) solid;
   border-bottom: 3px rgba(40, 40, 40, 0.35) solid;
@@ -150,7 +147,6 @@ textarea {
   border-radius: 9px;
   backdrop-filter: blur(3px);
   box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-  /* background-color: rgba(117, 46, 126, 0.379); */
   background-color: rgba(19, 3, 3, 0.4);
   border: 3px rgba(255, 255, 255, 0.4) solid;
   border-bottom: 3px rgba(40, 40, 40, 0.35) solid;
@@ -164,7 +160,6 @@ textarea {
   text-align: center;
   font-family: "Cutive", serif;
   line-height: 1.9rem;
-  /* --------------------- */
   margin-top: 2px;
 }
 .glass-button {
@@ -230,7 +225,6 @@ textarea {
   backdrop-filter: blur(3px);
   box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
   background-color: rgba(117, 46, 126, 0.379);
-  /* background-color: rgba(19, 3, 3, 0.4); */
   border: 3px rgba(255, 255, 255, 0.4) solid;
   border-bottom: 3px rgba(40, 40, 40, 0.35) solid;
   border-right: 3px rgba(40, 40, 40, 0.35) solid;
@@ -268,7 +262,6 @@ textarea {
 }
 .hot-mic-btn {
   top: 0;
-  /* position: absolute; */
   width: 70px;
   height: 70px;
 }
@@ -402,11 +395,11 @@ textarea {
 /* <----------------------------- VANISHING TEXT ---------------------------> */
 /* ////////////////////////////////////////////////////////////////////////// */
 .fade-out-text {
-  animation: fadeOut linear 13s;
-  -webkit-animation: fadeOut linear 13s;
-  -moz-animation: fadeOut linear 13s;
-  -o-animation: fadeOut linear 13s;
-  -ms-animation: fadeOut linear 13s;
+  animation: fadeOut linear 60s;
+  -webkit-animation: fadeOut linear 60s;
+  -moz-animation: fadeOut linear 60s;
+  -o-animation: fadeOut linear 60s;
+  -ms-animation: fadeOut linear 60s;
   animation-fill-mode: forwards;
 }
 
