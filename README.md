@@ -1,6 +1,15 @@
 <div align="center">
 
 # Virtual Assistant
+  
+  
+<div align="center">
+
+[Demo](https://virtual-asst.herokuapp.com/)
+
+</div>
+  
+  <br />
 
 </div>
 
@@ -10,11 +19,11 @@ Virtual Assistant is a React web app that uses the [react-speech-recognition](ht
 
 <br>
 
-<div align="center">
+<!-- <div align="center">
 
 [Live Demo](https://virtual-asst.herokuapp.com/)
 
-</div>
+</div> -->
 
 <!-- ![ez-showCommands](https://user-images.githubusercontent.com/55470100/119111518-242b3380-b9f1-11eb-8982-479dfa52cdae.gif) -->
 
