@@ -1,17 +1,23 @@
+import "./VirtualAssistant.css";
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { useSpeechSynthesis } from "react-speech-kit";
+import useSound from "use-sound";
+
 import micOn from "../../assets/images/icons/mic_on.png";
 import micOff from "../../assets/images/icons/mic_off.png";
-import useSound from "use-sound";
-import CommandsModal from "../../components/CommandsModal";
+
 import useCommandsModal from "../../hooks/useCommandsModal";
+
+import CommandsModal from "../../components/CommandsModal";
 import Settings from "../../components/Settings";
+
 import TodoAPIHelper from "../../helpers/TodoAPIHelper";
+
 import TodoList from "../Todos/TodoForm";
+
 import hilo_sparkle from "../../assets/sounds/testing/hilo_sparkle.mp3";
 import Bells10 from "../../assets/sounds/testing/Bells10.mp3";
 import Bells11 from "../../assets/sounds/testing/Bells11.mp3";
@@ -27,7 +33,6 @@ import Sprinkle from "../../assets/sounds/testing/sprinkle.mp3";
 import LowTuTone from "../../assets/sounds/testing/lowTuTone.mp3";
 import Heard from "../../assets/sounds/testing/heard.mp3";
 import timer from "../../assets/sounds/testing/timer.mp3";
-import "./VirtualAssistant.css";
 
 /* DEEPL ENDPOINT EX
 // https://api-free.deepl.com/v2/translate?auth_key=26b78442-234b-ac27-1823-37eb1d698edc%3Afx&text=&target_lang=de
@@ -933,18 +938,18 @@ export default function VirtualAssistant() {
         });
       },
     },
-    {
-      command: "I'm :hungry",
-      callback: (hungry) => {
-        setMessage(`Hi, ${hungry}, I'm dad.`);
-        speak({
-          text: `Hi, ${hungry}, I'm dad.`,
-          voice: voices[voiceIndex],
-          rate,
-          pitch,
-        });
-      },
-    },
+    // {
+    //   command: "I'm :hungry",
+    //   callback: (hungry) => {
+    //     setMessage(`Hi, ${hungry}, I'm dad.`);
+    //     speak({
+    //       text: `Hi, ${hungry}, I'm dad.`,
+    //       voice: voices[voiceIndex],
+    //       rate,
+    //       pitch,
+    //     });
+    //   },
+    // },
     {
       command: ["reset", "clear"],
       callback: () => {
